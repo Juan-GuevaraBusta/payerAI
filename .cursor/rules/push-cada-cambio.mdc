@@ -1,0 +1,14 @@
+---
+description: Cada cambio se commitea y se pushea a origin en la misma sesion
+alwaysApply: true
+---
+
+# Push de cada cambio
+
+Cada cambio, por pequeño que sea, termina en `origin` en la misma sesión. Un diff solo local no está terminado.
+
+1. Commitea el cambio con el autor ya configurado en Git. No cambies `git config`. No añadas `Co-Authored-By`.
+2. Pushea esa rama a `origin` antes de dar el trabajo por cerrado.
+3. Si el remoto rechaza el push, dilo y detente. No uses `--force`, `--force-with-lease` ni `reset --hard`.
+4. Un cambio de autorización, pagos, datos bancarios, secretos o aislamiento entre empresas se pushea en su rama, y no entra a `main` sin revisión humana.
+5. No publiques `.env`, tokens ni datos reales de clientes.
