@@ -1,6 +1,7 @@
 # Tarea 07 — Autoridad, autonomía e IA
 
 **Estado:** discovery. Los límites de autoridad están decididos. Los modelos y JEV no.
+**Orquestador:** `.cursor/agents/autoridad-ia.md`. Skill: `karpathy-guidelines`.
 **Fuente:** documento maestro, secciones 9 y 11.
 **Depende de:** [validación](04-validacion-de-facturas.md) y [workflows](05-workflows-de-aprobacion.md).
 

@@ -1,6 +1,7 @@
 # Tarea 10 — Seguridad, multi-tenancy y auditoría
 
 **Estado:** discovery. Los requisitos de esta tarea valen para la demo. El esquema de identidad sigue abierto.
+**Orquestador:** `.cursor/agents/seguridad-tenancy.md`. Skill: `review-security`.
 **Fuente:** documento maestro, secciones 7, 9, 13 y 15.
 **Relacionada con:** todas las tareas anteriores. No se aplaza hasta después de tener pantallas.
 

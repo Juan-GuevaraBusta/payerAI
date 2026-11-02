@@ -1,6 +1,7 @@
 # Tarea 08 — Arquitectura y separación
 
 **Estado:** discovery. Hay módulos conceptuales. No hay arquitectura concreta ni stack de frontend.
+**Orquestador:** `.cursor/agents/arquitectura-separacion.md`. Skill: `how`.
 **Fuente:** documento maestro, secciones 10, 12 y 15.
 **Depende de:** las tareas 01 a 07 para saber qué responsabilidades son reales. No al revés: no inventar servicios y luego buscarles un uso.
 

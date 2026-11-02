@@ -1,6 +1,7 @@
 # Tarea 02 — Ingesta de correo y documentos
 
 **Estado:** discovery. No elegir proveedor ni escribir integración.
+**Orquestador:** `.cursor/agents/ingesta-documentos.md`. Skill: `principle-make-operations-idempotent`.
 **Fuente:** documento maestro, secciones 5.2, 6, 11, 12 y 14.
 **Depende de:** [modelo de dominio](01-modelo-de-dominio-y-estados.md) para no tratar cada archivo como una operación nueva.
 

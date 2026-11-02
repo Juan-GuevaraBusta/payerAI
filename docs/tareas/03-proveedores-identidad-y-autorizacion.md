@@ -1,6 +1,7 @@
 # Tarea 03 — Proveedores: identidad y autorización
 
 **Estado:** discovery. El modelo híbrido ya está decidido. El flujo concreto no.
+**Orquestador:** `.cursor/agents/proveedores-identidad.md`. Skill: `principle-boundary-discipline`.
 **Fuente:** documento maestro, secciones 5.2, 7 y 13.
 **Depende de:** [modelo de dominio](01-modelo-de-dominio-y-estados.md).
 

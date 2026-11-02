@@ -44,6 +44,7 @@ Cada tarea dice qué debe quedar definido, qué ya está decidido y qué no hay 
 
 Infraestructura de trabajo en paralelo, separada del producto:
 
+- [Asignación de skills](orchestrator/asignaciones.md)
 - [Contrato](../ORCHESTRATOR.md)
 - [Uso](orchestrator/uso.md)
 - [Arquitectura](orchestrator/arquitectura.md)

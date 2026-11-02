@@ -1,6 +1,7 @@
 # Tarea 11 — Edge cases y pruebas
 
 **Estado:** discovery. Esta lista es requisito de diseño. No es una suite implementada.
+**Orquestador:** `.cursor/agents/edge-cases-pruebas.md`. Skill: `interrogate`.
 **Fuente:** documento maestro, sección 14.
 **Depende de:** tareas 01 a 10. Cada caso debe citar qué concepto, control o estado lo cubre.
 

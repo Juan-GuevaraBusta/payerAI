@@ -1,6 +1,7 @@
 # Tarea 05 — Workflows de aprobación
 
 **Estado:** discovery. Hay capacidades decididas y el modelo fino está abierto.
+**Orquestador:** `.cursor/agents/workflows-aprobacion.md`. Skill: `principle-separate-before-serializing-shared-state`.
 **Fuente:** documento maestro, secciones 5.2 (puntos 9–11), 9 y 13.
 **Depende de:** [validación](04-validacion-de-facturas.md) y [autoridad](07-autoridad-autonomia-e-ia.md).
 

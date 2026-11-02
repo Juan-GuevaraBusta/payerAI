@@ -1,6 +1,7 @@
 # Tarea 09 — Infraestructura, costo y despliegue
 
 **Estado:** discovery. Hay preferencia de plataforma. No hay selección cerrada de cada servicio.
+**Orquestador:** `.cursor/agents/infraestructura-costo.md`. Skill: `figure-it-out`.
 **Fuente:** documento maestro, sección 12. Límites citados el 2026-11-01. Volver a leer las páginas oficiales antes de cualquier implementación.
 
 ## Objetivo

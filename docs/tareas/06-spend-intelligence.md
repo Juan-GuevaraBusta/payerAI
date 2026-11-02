@@ -1,6 +1,7 @@
 # Tarea 06 — Spend intelligence
 
 **Estado:** discovery. El módulo B es alcance del MVP. Su profundidad de datos no.
+**Orquestador:** `.cursor/agents/spend-intelligence.md`. Skill: `show-me-your-work`.
 **Fuente:** documento maestro, sección 5.2, módulo B.
 **Depende de:** facturas y documentos ya modelados en las tareas 01 y 04. No depende de bancos ni de un IdP.
 

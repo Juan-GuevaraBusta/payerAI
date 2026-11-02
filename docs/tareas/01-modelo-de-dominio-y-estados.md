@@ -1,6 +1,7 @@
 # Tarea 01 — Modelo de dominio y estados
 
 **Estado:** discovery. No implementar.
+**Orquestador:** `.cursor/agents/dominio-estados.md`. Skill: `architect`.
 **Fuente:** documento maestro, secciones 5, 6, 7, 8, 9 y 13.
 **Depende de:** nada de código. Bloquea el resto de tareas de diseño si los conceptos se mezclan.
 

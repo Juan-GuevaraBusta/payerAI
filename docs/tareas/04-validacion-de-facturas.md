@@ -1,6 +1,7 @@
 # Tarea 04 — Validación de facturas
 
 **Estado:** discovery. El orden de validación está decidido. Las reglas numéricas no.
+**Orquestador:** `.cursor/agents/validacion-facturas.md`. Skill: `principle-explain-the-number`.
 **Fuente:** documento maestro, secciones 5.2 (módulo A), 8 y 13.
 **Depende de:** [dominio](01-modelo-de-dominio-y-estados.md), [ingesta](02-ingesta-correo-y-documentos.md) y [proveedores](03-proveedores-identidad-y-autorizacion.md).
 
