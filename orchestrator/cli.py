@@ -18,7 +18,6 @@ from orchestrator.engine import (
     install_hooks,
     integrate_task,
     load_state,
-    publish_task,
     product_guard,
     push_base,
     push_task,
@@ -121,8 +120,6 @@ def main(argv: list[str] | None = None) -> int:
             _print_task(approve_task(repo, args.task_id, args.approver))
         elif args.cmd == "integrate":
             _print_task(integrate_task(repo, args.task_id))
-            publish_task(repo, args.task_id)
-            print("publicado en origin")
         elif args.cmd == "release":
             _print_task(release_worktree(repo, args.task_id))
         elif args.cmd == "prompt":

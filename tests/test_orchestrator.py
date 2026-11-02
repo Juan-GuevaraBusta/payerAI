@@ -306,6 +306,51 @@ class OrchestratorTest(unittest.TestCase):
         )
         self.assertEqual(shown.stdout, "publicado\n")
 
+    def test_cli_integrate_merges_without_remote(self):
+        add_task(self.repo, "L", "local", ["docs"], "bajo", "main", validate_cmd="true")
+        worktree = Path(create_worktree(self.repo, "L")["worktree"])
+        self.write_commit(worktree, "docs/l.txt", "local\n", "nota")
+        self.assertEqual(review_task(self.repo, "L")["status"], "APPROVED")
+        code = main(["--repo", str(self.repo), "integrate", "L"])
+        self.assertEqual(code, 0)
+        self.assertEqual(load_state(self.repo)["tasks"]["L"]["status"], "MERGED")
+        self.assertEqual((self.repo / "docs" / "l.txt").read_text(), "local\n")
+
+    def test_cli_integrate_does_not_push(self):
+        bare = Path(self.tmp.name) / "bare.git"
+        self.git(["init", "--bare", "-b", "main", str(bare)])
+        self.git(["remote", "add", "origin", str(bare)])
+        self.git(["push", "origin", "main"])
+        remote_before = subprocess.run(
+            ["git", "--git-dir", str(bare), "rev-parse", "main"],
+            text=True,
+            capture_output=True,
+            check=True,
+        ).stdout.strip()
+        add_task(self.repo, "R", "remoto", ["docs"], "bajo", "main", validate_cmd="true")
+        worktree = Path(create_worktree(self.repo, "R")["worktree"])
+        self.write_commit(worktree, "docs/r.txt", "remoto\n", "nota")
+        self.assertEqual(review_task(self.repo, "R")["status"], "APPROVED")
+        local_before = self.git(["rev-parse", "HEAD"]).stdout.strip()
+        code = main(["--repo", str(self.repo), "integrate", "R"])
+        self.assertEqual(code, 0)
+        self.assertEqual(load_state(self.repo)["tasks"]["R"]["status"], "MERGED")
+        self.assertNotEqual(self.git(["rev-parse", "HEAD"]).stdout.strip(), local_before)
+        remote_after = subprocess.run(
+            ["git", "--git-dir", str(bare), "rev-parse", "main"],
+            text=True,
+            capture_output=True,
+            check=True,
+        ).stdout.strip()
+        self.assertEqual(remote_after, remote_before)
+        branch = load_state(self.repo)["tasks"]["R"]["branch"]
+        missing = subprocess.run(
+            ["git", "--git-dir", str(bare), "rev-parse", branch],
+            text=True,
+            capture_output=True,
+        )
+        self.assertNotEqual(missing.returncode, 0)
+
     def test_publish_without_remote_is_blocked(self):
         with self.assertRaises(OrchestratorError) as caught:
             publish_task(self.repo, "missing")
