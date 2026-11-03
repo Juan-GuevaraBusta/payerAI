@@ -18,6 +18,7 @@ from orchestrator.engine import (
     allocate,
     approve_task,
     create_worktree,
+    forbid,
     install_hooks,
     integrate_task,
     load_state,
@@ -141,6 +142,36 @@ class OrchestratorTest(unittest.TestCase):
         second = Path(load_state(self.repo)["tasks"]["T2"]["worktree"])
         self.assertEqual((second / "docs" / "a.txt").read_text(), "uno\n")
 
+    def test_review_rejects_files_outside_owns(self):
+        add_task(self.repo, "O", "docs", ["docs"], "bajo", "main", validate_cmd="true")
+        worktree = Path(create_worktree(self.repo, "O")["worktree"])
+        self.write_commit(worktree, "docs/ok.txt", "ok\n", "dentro")
+        self.write_commit(worktree, "other/no.txt", "no\n", "fuera")
+        before = self.git(["rev-parse", "HEAD"]).stdout.strip()
+        reviewed = review_task(self.repo, "O")
+        self.assertEqual(reviewed["status"], "FAILED")
+        owns = next(item for item in reviewed["checks"] if item["name"] == "owns")
+        self.assertEqual(owns["result"], "FAIL")
+        self.assertIn("other/no.txt", owns["evidence"])
+        with self.assertRaises(OrchestratorError) as caught:
+            integrate_task(self.repo, "O")
+        self.assertEqual(caught.exception.code, "blocked")
+        self.assertEqual(self.git(["rev-parse", "HEAD"]).stdout.strip(), before)
+
+    def test_integrate_rejects_commit_after_approval(self):
+        add_task(self.repo, "P2", "docs", ["docs"], "bajo", "main", validate_cmd="true")
+        worktree = Path(create_worktree(self.repo, "P2")["worktree"])
+        self.write_commit(worktree, "docs/ok.txt", "ok\n", "dentro")
+        self.assertEqual(review_task(self.repo, "P2")["status"], "APPROVED")
+        self.write_commit(worktree, "other/later.txt", "no\n", "despues")
+        before = self.git(["rev-parse", "HEAD"]).stdout.strip()
+        with self.assertRaises(OrchestratorError) as caught:
+            integrate_task(self.repo, "P2")
+        self.assertEqual(caught.exception.code, "blocked")
+        self.assertIn("other/later.txt", str(caught.exception))
+        self.assertEqual(load_state(self.repo)["tasks"]["P2"]["status"], "FAILED")
+        self.assertEqual(self.git(["rev-parse", "HEAD"]).stdout.strip(), before)
+
     def test_high_risk_and_sensitive_path_need_human(self):
         add_task(self.repo, "H", "politica", ["docs"], "alto", "main", validate_cmd="true")
         worktree = Path(create_worktree(self.repo, "H")["worktree"])
@@ -187,6 +218,38 @@ class OrchestratorTest(unittest.TestCase):
             with self.assertRaises(OrchestratorError) as caught:
                 run_git(args, self.repo)
             self.assertEqual(caught.exception.code, "forbidden")
+
+    def test_forbid_blocks_disguised_destructive_git(self):
+        denied = (
+            ["push", "-uf", "origin", "main"],
+            ["push", "--force-with-lease=main", "origin", "main"],
+            ["push", "--force-if-includes"],
+            ["push", "--no-verify", "origin", "main"],
+            ["push", "origin", "+main"],
+            ["push", "-f", "origin", "main"],
+            ["clean", "-f", "-d"],
+            ["clean", "--force", "-d"],
+            ["clean", "--force", "--dry-run", "-d"],
+            ["clean", "-df"],
+            ["reset", "--hard", "HEAD"],
+        )
+        for args in denied:
+            with self.assertRaises(OrchestratorError) as caught:
+                forbid(args)
+            self.assertEqual(caught.exception.code, "forbidden", args)
+        allowed = (
+            ["push", "origin", "main"],
+            ["push", "-u", "origin", "HEAD"],
+            ["push", "origin", "HEAD:main"],
+            ["clean", "-f"],
+            ["clean", "--force"],
+            ["clean", "-n", "-d"],
+            ["reset", "HEAD"],
+            ["rebase", "--onto", "main"],
+            ["commit", "-m", "x"],
+        )
+        for args in allowed:
+            forbid(args)
 
     def test_child_cannot_integrate_or_push_base(self):
         os.environ["ORCH_ROLE"] = "child"

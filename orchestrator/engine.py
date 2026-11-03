@@ -69,20 +69,31 @@ def state_path(repo: Path) -> Path:
     return orch_dir(repo) / "state.json"
 
 
+def _short_has(arg: str, letter: str) -> bool:
+    return arg.startswith("-") and not arg.startswith("--") and letter in arg[1:]
+
+
 def forbid(args: list[str]) -> None:
     if not args:
         raise OrchestratorError("comando git vacio")
     cmd = args[0]
-    if cmd == "push" and (
-        "--force" in args or "--force-with-lease" in args or "-f" in args
-    ):
-        raise OrchestratorError("push forzado prohibido", "forbidden")
+    if cmd == "push":
+        for arg in args[1:]:
+            if (
+                arg == "--no-verify"
+                or arg.startswith("--force")
+                or arg.startswith("+")
+                or _short_has(arg, "f")
+            ):
+                raise OrchestratorError("push forzado prohibido", "forbidden")
     if cmd == "reset" and "--hard" in args:
         raise OrchestratorError("reset --hard prohibido", "forbidden")
     if cmd == "clean":
-        for arg in args[1:]:
-            if arg.startswith("-") and "f" in arg and "d" in arg:
-                raise OrchestratorError("git clean destructivo prohibido", "forbidden")
+        flags = args[1:]
+        force = any(arg == "--force" or _short_has(arg, "f") for arg in flags)
+        directories = any(_short_has(arg, "d") for arg in flags)
+        if force and directories:
+            raise OrchestratorError("git clean destructivo prohibido", "forbidden")
 
 
 def run_git(args: list[str], cwd: Path, env: dict | None = None, check: bool = True) -> subprocess.CompletedProcess:
@@ -208,6 +219,12 @@ def overlaps(left: str, right: str) -> bool:
         return True
     n = min(len(a), len(b))
     return a[:n] == b[:n]
+
+
+def outside_owns(owns: list[str], files: list[str]) -> list[str]:
+    if not owns:
+        return []
+    return [path for path in files if not any(overlaps(owned, path) for owned in owns)]
 
 
 def ownership_conflict(tasks: dict, task_id: str, owns: list[str]) -> str | None:
@@ -388,6 +405,9 @@ def review_task(repo: Path, task_id: str) -> dict:
         else:
             checks.append({"name": "validate_cmd", "result": "BLOCKED", "evidence": "no hay comando"})
         files = changed_files(repo, task["base"], task["branch"])
+        outside = outside_owns(task.get("owns") or [], files)
+        if outside:
+            checks.append({"name": "owns", "result": "FAIL", "evidence": ", ".join(outside)})
         sensitive = task["risk"] in SENSITIVE_RISKS or any(path_is_sensitive(item) for item in files)
         task["checks"] = checks
         task["sensitive_diff"] = sensitive
@@ -451,6 +471,16 @@ def integrate_task(repo: Path, task_id: str) -> dict:
                 )
             if porcelain(Path(task["worktree"])):
                 raise OrchestratorError("el worktree sigue sucio", "blocked")
+            outside = outside_owns(
+                task.get("owns") or [],
+                changed_files(repo, task["base"], task["branch"]),
+            )
+            if outside:
+                task["status"] = "FAILED"
+                task["block_reason"] = "fuera de owns: " + ", ".join(outside)
+                save_state(repo, state)
+                log_event(repo, "owns", task=task_id, files=outside)
+                raise OrchestratorError(task["block_reason"], "blocked")
             before = rev(repo)
             merge = run_git(
                 ["merge", "--no-ff", "--no-edit", "-m", f"Integra {task_id}: {task['title']}", task["branch"]],
