@@ -18,6 +18,7 @@ from orchestrator.engine import (
     allocate,
     approve_task,
     create_worktree,
+    forbid,
     install_hooks,
     integrate_task,
     load_state,
@@ -217,6 +218,38 @@ class OrchestratorTest(unittest.TestCase):
             with self.assertRaises(OrchestratorError) as caught:
                 run_git(args, self.repo)
             self.assertEqual(caught.exception.code, "forbidden")
+
+    def test_forbid_blocks_disguised_destructive_git(self):
+        denied = (
+            ["push", "-uf", "origin", "main"],
+            ["push", "--force-with-lease=main", "origin", "main"],
+            ["push", "--force-if-includes"],
+            ["push", "--no-verify", "origin", "main"],
+            ["push", "origin", "+main"],
+            ["push", "-f", "origin", "main"],
+            ["clean", "-f", "-d"],
+            ["clean", "--force", "-d"],
+            ["clean", "--force", "--dry-run", "-d"],
+            ["clean", "-df"],
+            ["reset", "--hard", "HEAD"],
+        )
+        for args in denied:
+            with self.assertRaises(OrchestratorError) as caught:
+                forbid(args)
+            self.assertEqual(caught.exception.code, "forbidden", args)
+        allowed = (
+            ["push", "origin", "main"],
+            ["push", "-u", "origin", "HEAD"],
+            ["push", "origin", "HEAD:main"],
+            ["clean", "-f"],
+            ["clean", "--force"],
+            ["clean", "-n", "-d"],
+            ["reset", "HEAD"],
+            ["rebase", "--onto", "main"],
+            ["commit", "-m", "x"],
+        )
+        for args in allowed:
+            forbid(args)
 
     def test_child_cannot_integrate_or_push_base(self):
         os.environ["ORCH_ROLE"] = "child"

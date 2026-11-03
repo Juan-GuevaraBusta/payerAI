@@ -69,20 +69,31 @@ def state_path(repo: Path) -> Path:
     return orch_dir(repo) / "state.json"
 
 
+def _short_has(arg: str, letter: str) -> bool:
+    return arg.startswith("-") and not arg.startswith("--") and letter in arg[1:]
+
+
 def forbid(args: list[str]) -> None:
     if not args:
         raise OrchestratorError("comando git vacio")
     cmd = args[0]
-    if cmd == "push" and (
-        "--force" in args or "--force-with-lease" in args or "-f" in args
-    ):
-        raise OrchestratorError("push forzado prohibido", "forbidden")
+    if cmd == "push":
+        for arg in args[1:]:
+            if (
+                arg == "--no-verify"
+                or arg.startswith("--force")
+                or arg.startswith("+")
+                or _short_has(arg, "f")
+            ):
+                raise OrchestratorError("push forzado prohibido", "forbidden")
     if cmd == "reset" and "--hard" in args:
         raise OrchestratorError("reset --hard prohibido", "forbidden")
     if cmd == "clean":
-        for arg in args[1:]:
-            if arg.startswith("-") and "f" in arg and "d" in arg:
-                raise OrchestratorError("git clean destructivo prohibido", "forbidden")
+        flags = args[1:]
+        force = any(arg == "--force" or _short_has(arg, "f") for arg in flags)
+        directories = any(_short_has(arg, "d") for arg in flags)
+        if force and directories:
+            raise OrchestratorError("git clean destructivo prohibido", "forbidden")
 
 
 def run_git(args: list[str], cwd: Path, env: dict | None = None, check: bool = True) -> subprocess.CompletedProcess:
