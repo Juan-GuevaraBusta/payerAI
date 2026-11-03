@@ -14,7 +14,7 @@ Antes de proponer o cambiar algo, leer en este orden:
 
 `docs/decisiones/abiertas.md` manda: lo que figura allí no se cierra sin una decisión explícita.
 
-No existe `MASTER_PROMPT_FINANCIAL_OPERATIONS.md`. No inventarlo. `docs/documento-maestro.md` no lo sustituye.
+No existe `MASTER_PROMPT_FINANCIAL_OPERATIONS.md`. No inventarlo. `docs/documento-maestro.md` no lo sustituye. Su ausencia bloquea cambios de producto o código, no el discovery ni la documentación.
 
 ## Reglas no negociables
 
