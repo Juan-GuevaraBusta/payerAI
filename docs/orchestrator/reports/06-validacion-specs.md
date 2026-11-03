@@ -111,6 +111,10 @@ Los huecos de seguridad H1–H9 del informe `02-seguridad.md` siguen abiertos. R
 5. Los agentes 07, 10 y 11 tienen fallback para OpenCode: leen el `SKILL.md` por ruta y no simulan subagentes inexistentes.
 6. `AGENTS.md` y `docs/modelo/` quedan en esta rama hasta que se decida integrarlos.
 
+## Actualización posterior
+
+- 2026-11-02: por decisión del responsable, `docs/01-modelo-dominio` y `fix/forbid-huecos` se integraron en `main` con merges `--no-ff`. Los puntos 3 y 6 quedan superados. La tarea 06 parte de `main` actualizado.
+
 ## Evidencia ejecutada
 
 - `git ls-remote origin docs/01-modelo-dominio` y `git rev-parse HEAD`: local y remoto coinciden en cada push.
