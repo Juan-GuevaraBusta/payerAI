@@ -3,7 +3,7 @@
 **Estado:** discovery. Los límites de autoridad están decididos. Los modelos y JEV no.
 **Orquestador:** `.cursor/agents/autoridad-ia.md`. Skill: `karpathy-guidelines`.
 **Fuente:** documento maestro, secciones 9 y 11.
-**Depende de:** [validación](04-validacion-de-facturas.md) y [workflows](05-workflows-de-aprobacion.md).
+**Depende de:** [validación](04-validacion-de-facturas.md). **Orden acordado:** esta tarea se define antes que [workflows](05-workflows-de-aprobacion.md), que consume su marco.
 
 ## Objetivo
 

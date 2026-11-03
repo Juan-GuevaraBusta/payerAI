@@ -6,7 +6,7 @@ Lee [ORCHESTRATOR.md](../../ORCHESTRATOR.md) antes de este documento. No lances 
 
 Antes de cambiar archivos:
 
-1. Lee completo `MASTER_PROMPT_FINANCIAL_OPERATIONS.md`.
+1. Lee completo `MASTER_PROMPT_FINANCIAL_OPERATIONS.md` si existe. Si no existe, no lo inventes: para discovery y documentación usa `docs/documento-maestro.md`, el glosario y el registro de decisiones; los cambios de producto o código quedan bloqueados.
 2. Inspecciona las instrucciones del repositorio y del entorno. Busca, cuando existan:
    - `AGENTS.md` y variantes por subdirectorio.
    - `CLAUDE.md`, `.claude/` y reglas de Claude Code.

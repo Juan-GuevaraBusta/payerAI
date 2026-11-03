@@ -44,14 +44,15 @@ Cada tarea dice qué debe quedar definido, qué ya está decidido y qué no hay 
 
 Infraestructura de trabajo en paralelo, separada del producto:
 
+- [Instrucciones para agentes](../AGENTS.md)
+- [Contrato de orquestación](../ORCHESTRATOR.md)
 - [Asignación de skills](orchestrator/asignaciones.md)
-- [Contrato](../ORCHESTRATOR.md)
 - [Uso](orchestrator/uso.md)
 - [Arquitectura](orchestrator/arquitectura.md)
 - [Inventario de esta sesión](orchestrator/inventario-sesion.md)
 - [Binarios y skills](orchestrator/inventario-entorno.md)
 
-`python3 -m orchestrator product-guard` bloquea cambios de producto hasta que exista `MASTER_PROMPT_FINANCIAL_OPERATIONS.md` en la raíz.
+`python3 -m orchestrator product-guard` bloquea cambios de producto o código hasta que exista `MASTER_PROMPT_FINANCIAL_OPERATIONS.md` en la raíz. No bloquea el trabajo de discovery ni la documentación, que se apoyan en `documento-maestro.md` y en el registro de decisiones.
 
 ## Forma de trabajo
 
