@@ -7,7 +7,7 @@ No lanza el producto financiero. Sirve para partir un trabajo ya definido en tar
 ## Requisitos
 
 - Git y Python 3.
-- Al menos un commit en la rama base. Este repositorio todavía no tiene commits, así que aquí `worktree` fallará hasta el primero.
+- Al menos un commit en la rama base.
 - `.worktrees/` dentro de `.gitignore`. Ya está.
 - Hook instalado:
 
