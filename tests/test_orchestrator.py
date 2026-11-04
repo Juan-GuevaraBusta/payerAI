@@ -2,7 +2,6 @@ import os
 import subprocess
 import sys
 import tempfile
-import time
 import unittest
 from pathlib import Path
 
@@ -251,13 +250,24 @@ class OrchestratorTest(unittest.TestCase):
         for args in allowed:
             forbid(args)
 
-    def test_child_cannot_integrate_or_push_base(self):
+    def test_child_cannot_integrate_push_or_publish(self):
+        add_task(self.repo, "B", "base hija", ["docs"], "bajo", "main", validate_cmd="true")
+        worktree = Path(create_worktree(self.repo, "B")["worktree"])
+        self.write_commit(worktree, "docs/b.txt", "b\n", "b")
+        self.assertEqual(review_task(self.repo, "B")["status"], "APPROVED")
+        integrate_task(self.repo, "B")
+
         os.environ["ORCH_ROLE"] = "child"
         try:
-            with self.assertRaises(OrchestratorError):
+            with self.assertRaises(OrchestratorError) as integrate_caught:
                 integrate_task(self.repo, "missing")
-            with self.assertRaises(OrchestratorError):
-                push_base(self.repo, "missing")
+            self.assertEqual(integrate_caught.exception.code, "forbidden")
+            with self.assertRaises(OrchestratorError) as push_caught:
+                push_base(self.repo, "B")
+            self.assertEqual(push_caught.exception.code, "forbidden")
+            with self.assertRaises(OrchestratorError) as publish_caught:
+                publish_task(self.repo, "B")
+            self.assertEqual(publish_caught.exception.code, "forbidden")
         finally:
             os.environ.pop("ORCH_ROLE", None)
 
@@ -268,24 +278,28 @@ class OrchestratorTest(unittest.TestCase):
             "sys.path.insert(0, sys.argv[1])\n"
             "from orchestrator.engine import integration_lock\n"
             "with integration_lock(Path(sys.argv[2])):\n"
+            "    print('locked', flush=True)\n"
             "    time.sleep(8)\n"
         )
-        proc = subprocess.Popen([sys.executable, "-c", code, str(ROOT), str(self.repo)])
+        proc = subprocess.Popen(
+            [sys.executable, "-c", code, str(ROOT), str(self.repo)],
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
         try:
-            caught = None
-            for _ in range(40):
-                try:
-                    integrate_task(self.repo, "missing")
-                except OrchestratorError as exc:
-                    caught = exc
-                    if exc.code == "busy":
-                        break
-                time.sleep(0.05)
-            self.assertIsNotNone(caught)
-            self.assertEqual(caught.code, "busy")
+            ready = proc.stdout.readline().strip()
+            if ready != "locked":
+                error = proc.stderr.read().strip()
+                self.fail(f"el hijo no tomo el lock: {error or ready}")
+            with self.assertRaises(OrchestratorError) as caught:
+                integrate_task(self.repo, "missing")
+            self.assertEqual(caught.exception.code, "busy")
         finally:
             proc.kill()
             proc.wait(timeout=5)
+            proc.stdout.close()
+            proc.stderr.close()
 
     def test_hook_blocks_non_ff_and_agent_push_to_main(self):
         bare = Path(self.tmp.name) / "bare.git"
@@ -415,8 +429,13 @@ class OrchestratorTest(unittest.TestCase):
         self.assertNotEqual(missing.returncode, 0)
 
     def test_publish_without_remote_is_blocked(self):
+        add_task(self.repo, "N", "sin remoto", ["docs"], "bajo", "main", validate_cmd="true")
+        worktree = Path(create_worktree(self.repo, "N")["worktree"])
+        self.write_commit(worktree, "docs/n.txt", "n\n", "n")
+        self.assertEqual(review_task(self.repo, "N")["status"], "APPROVED")
+        integrate_task(self.repo, "N")
         with self.assertRaises(OrchestratorError) as caught:
-            publish_task(self.repo, "missing")
+            publish_task(self.repo, "N")
         self.assertEqual(caught.exception.code, "blocked")
 
     def test_missing_validation_does_not_pass(self):
@@ -424,6 +443,28 @@ class OrchestratorTest(unittest.TestCase):
         worktree = Path(create_worktree(self.repo, "V")["worktree"])
         self.write_commit(worktree, "docs/v.txt", "v\n", "v")
         self.assertEqual(review_task(self.repo, "V")["status"], "BLOCKED")
+
+    def test_failing_validation_does_not_pass(self):
+        add_task(self.repo, "F", "validacion falla", ["docs"], "bajo", "main", validate_cmd="false")
+        worktree = Path(create_worktree(self.repo, "F")["worktree"])
+        self.write_commit(worktree, "docs/f.txt", "f\n", "f")
+        reviewed = review_task(self.repo, "F")
+        self.assertEqual(reviewed["status"], "FAILED")
+        validate = next(item for item in reviewed["checks"] if item["name"] == "validate_cmd")
+        self.assertEqual(validate["result"], "FAIL")
+        with self.assertRaises(OrchestratorError) as caught:
+            integrate_task(self.repo, "F")
+        self.assertEqual(caught.exception.code, "blocked")
+
+    def test_dirty_worktree_blocks_review(self):
+        add_task(self.repo, "W", "worktree sucio", ["docs"], "bajo", "main", validate_cmd="true")
+        worktree = Path(create_worktree(self.repo, "W")["worktree"])
+        (worktree / "docs").mkdir(exist_ok=True)
+        (worktree / "docs" / "sin-commit.txt").write_text("x\n")
+        with self.assertRaises(OrchestratorError) as caught:
+            review_task(self.repo, "W")
+        self.assertEqual(caught.exception.code, "blocked")
+        self.assertEqual(load_state(self.repo)["tasks"]["W"]["status"], "RUNNING")
 
     def test_self_dependency_is_rejected(self):
         with self.assertRaises(OrchestratorError):
