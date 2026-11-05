@@ -34,6 +34,10 @@ python3 -m orchestrator release T1
 
 `approve` solo después de `NEEDS_HUMAN_REVIEW`. Sin esa revisión, `integrate` sale con código 2.
 
+`review` fija el SHA del worktree. `integrate` rechaza si la rama avanzó después del review.
+
+En worktrees de agente, exporta `CI_ROOT` al root del worktree (o usa `scripts/run-agent.sh`) para que `check_docs.py` no reporte cero archivos.
+
 `push` sube la rama `agent/...`. `push-base` sube la rama base y solo si la tarea ya está `MERGED` o `DONE`. Ninguno usa `--force`.
 
 Un agente hijo debe tener `ORCH_ROLE=child`. Con esa variable, integrar y pushear la base se rechaza.
@@ -53,7 +57,16 @@ Un agente hijo debe tener `ORCH_ROLE=child`. Con esa variable, integrar y pushea
 python3 -m unittest tests.test_orchestrator -v
 ```
 
-Cubren aislamiento de worktrees, ownership solapado, merge de riesgo bajo, bloqueo humano, conflicto con abort, árbol sucio, lock de integración, rechazo de `push --force` y push de `main` desde un worktree.
+Cubren aislamiento de worktrees, ownership solapado, merge de riesgo bajo, bloqueo humano, SHA revisado, conflicto con abort, árbol sucio, lock de integración, rechazo de `push --force` y push de `main` desde un worktree.
+
+## Agentes headless
+
+```bash
+python3 -m orchestrator allocate --max-slots 4
+bash scripts/run-agent.sh t12-preflight cursor-agent
+```
+
+Logs en `.orchestrator/logs/`. Sin `--yolo` ni flags que salten permisos.
 
 ## Estado local
 

@@ -205,6 +205,11 @@ def product_guard(repo: Path) -> None:
             f"No se puede leer {MASTER_NAME}. No hay cambios de producto.{hint}",
             "blocked",
         )
+    if not master.read_text(encoding="utf-8").strip():
+        raise OrchestratorError(
+            f"{MASTER_NAME} esta vacio. No hay cambios de producto.",
+            "blocked",
+        )
 
 
 def path_is_sensitive(path: str) -> bool:
@@ -414,9 +419,12 @@ def review_task(repo: Path, task_id: str) -> dict:
         failed = any(item["result"] != "PASS" for item in checks)
         if failed:
             task["status"] = "BLOCKED" if any(item["result"] == "BLOCKED" for item in checks) else "FAILED"
+            task.pop("reviewed_sha", None)
         elif sensitive:
+            task["reviewed_sha"] = rev(worktree)
             task["status"] = "NEEDS_HUMAN_REVIEW"
         else:
+            task["reviewed_sha"] = rev(worktree)
             task["status"] = "APPROVED"
         save_state(repo, state)
         log_event(repo, "review", task=task_id, status=task["status"], sensitive=sensitive)
@@ -471,6 +479,22 @@ def integrate_task(repo: Path, task_id: str) -> dict:
                 )
             if porcelain(Path(task["worktree"])):
                 raise OrchestratorError("el worktree sigue sucio", "blocked")
+            worktree = Path(task["worktree"])
+            reviewed_sha = task.get("reviewed_sha")
+            branch_sha = rev(worktree)
+            if not reviewed_sha:
+                raise OrchestratorError(
+                    f"{task_id} no tiene SHA revisado; vuelve a correr review",
+                    "blocked",
+                )
+            if branch_sha != reviewed_sha:
+                task["status"] = "FAILED"
+                task["block_reason"] = (
+                    f"la rama cambio despues del review ({reviewed_sha[:7]} -> {branch_sha[:7]})"
+                )
+                save_state(repo, state)
+                log_event(repo, "review_drift", task=task_id, expected=reviewed_sha, actual=branch_sha)
+                raise OrchestratorError(task["block_reason"], "blocked")
             outside = outside_owns(
                 task.get("owns") or [],
                 changed_files(repo, task["base"], task["branch"]),

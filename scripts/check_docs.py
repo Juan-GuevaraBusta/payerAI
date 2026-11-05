@@ -21,8 +21,13 @@ def repo_root() -> Path:
 
 
 def iter_markdown_files(root: Path):
+    root = root.resolve()
     for path in sorted(root.rglob("*.md")):
-        if any(part in EXCLUDED_DIRS for part in path.parts):
+        try:
+            rel_parts = path.resolve().relative_to(root).parts
+        except ValueError:
+            continue
+        if any(part in EXCLUDED_DIRS for part in rel_parts):
             continue
         yield path
 

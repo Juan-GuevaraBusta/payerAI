@@ -167,9 +167,22 @@ class OrchestratorTest(unittest.TestCase):
         with self.assertRaises(OrchestratorError) as caught:
             integrate_task(self.repo, "P2")
         self.assertEqual(caught.exception.code, "blocked")
-        self.assertIn("other/later.txt", str(caught.exception))
+        self.assertIn("despues del review", str(caught.exception))
         self.assertEqual(load_state(self.repo)["tasks"]["P2"]["status"], "FAILED")
         self.assertEqual(self.git(["rev-parse", "HEAD"]).stdout.strip(), before)
+
+    def test_integrate_rejects_commit_inside_owns_after_approval(self):
+        add_task(self.repo, "P3", "docs", ["docs"], "bajo", "main", validate_cmd="true")
+        worktree = Path(create_worktree(self.repo, "P3")["worktree"])
+        self.write_commit(worktree, "docs/ok.txt", "ok\n", "dentro")
+        reviewed = review_task(self.repo, "P3")
+        self.assertEqual(reviewed["status"], "APPROVED")
+        self.assertTrue(reviewed.get("reviewed_sha"))
+        self.write_commit(worktree, "docs/extra.txt", "mas\n", "despues en owns")
+        with self.assertRaises(OrchestratorError) as caught:
+            integrate_task(self.repo, "P3")
+        self.assertEqual(caught.exception.code, "blocked")
+        self.assertIn("despues del review", str(caught.exception))
 
     def test_high_risk_and_sensitive_path_need_human(self):
         add_task(self.repo, "H", "politica", ["docs"], "alto", "main", validate_cmd="true")
@@ -476,6 +489,11 @@ class OrchestratorTest(unittest.TestCase):
         self.assertEqual(caught.exception.code, "blocked")
         (self.repo / MASTER_NAME).write_text("fuente\n")
         product_guard(self.repo)
+        (self.repo / MASTER_NAME).write_text("   \n")
+        with self.assertRaises(OrchestratorError) as empty:
+            product_guard(self.repo)
+        self.assertEqual(empty.exception.code, "blocked")
+        self.assertIn("vacio", str(empty.exception).lower())
         self.assertEqual(main(["--repo", str(self.repo), "doctor"]), 0)
 
 
