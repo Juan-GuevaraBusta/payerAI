@@ -15,7 +15,7 @@ Especificación conceptual de la tarea 07. Define qué puede proponer un modelo,
 
 **Alcance:** autoridad, autonomía, uso de IA, evaluación de JEV y trazabilidad en Accounts Payable. El MVP administra el ciclo y registra estados. No custodia fondos ni mueve dinero.
 
-No existe `MASTER_PROMPT_FINANCIAL_OPERATIONS.md`. Este documento no lo sustituye, no improvisa producto y no cierra ningún punto de [asuntos abiertos](../decisiones/abiertas.md).
+Contexto: [master prompt](../../MASTER_PROMPT_FINANCIAL_OPERATIONS.md). Este documento desarrolla un aspecto concreto, no improvisa producto y no cierra ningún punto de [asuntos abiertos](../decisiones/abiertas.md).
 
 ## Cómo leer este documento
 

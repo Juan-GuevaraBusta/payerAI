@@ -14,7 +14,7 @@ Especificación conceptual de la tarea 05. Define el ciclo configurable de aprob
 
 **Alcance:** el ciclo de coordinación de decisiones del módulo A. El workflow no interpreta documentos, no concede autoridad, no ejecuta dinero y no confirma pagos.
 
-No existe `MASTER_PROMPT_FINANCIAL_OPERATIONS.md`. Este documento no lo sustituye, no improvisa producto y no cierra ningún punto de [asuntos abiertos](../decisiones/abiertas.md).
+Contexto: [master prompt](../../MASTER_PROMPT_FINANCIAL_OPERATIONS.md). Este documento desarrolla un aspecto concreto, no improvisa producto y no cierra ningún punto de [asuntos abiertos](../decisiones/abiertas.md).
 
 ## Cómo leer este documento
 

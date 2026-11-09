@@ -16,11 +16,12 @@ No inventar estadísticas, entrevistas, clientes, integraciones ni endorsements.
 
 ## Orden de lectura
 
-1. [Documento maestro](documento-maestro.md)
-2. [Decisiones adoptadas](decisiones/adoptadas.md)
-3. [Asuntos abiertos](decisiones/abiertas.md)
-4. [Glosario](glosario.md)
-5. Tareas de discovery, en el orden de abajo
+1. [Master prompt](../MASTER_PROMPT_FINANCIAL_OPERATIONS.md)
+2. [Documento maestro](documento-maestro.md)
+3. [Decisiones adoptadas](decisiones/adoptadas.md)
+4. [Asuntos abiertos](decisiones/abiertas.md)
+5. [Glosario](glosario.md)
+6. Tareas de discovery, en el orden de abajo
 
 ## Tareas
 
@@ -52,7 +53,7 @@ Infraestructura de trabajo en paralelo, separada del producto:
 - [Inventario de esta sesión](orchestrator/inventario-sesion.md)
 - [Binarios y skills](orchestrator/inventario-entorno.md)
 
-`python3 -m orchestrator product-guard` bloquea cambios de producto o código hasta que exista `MASTER_PROMPT_FINANCIAL_OPERATIONS.md` en la raíz. No bloquea el trabajo de discovery ni la documentación, que se apoyan en `documento-maestro.md` y en el registro de decisiones.
+`python3 -m orchestrator product-guard` exige `MASTER_PROMPT_FINANCIAL_OPERATIONS.md` en la raíz y falla si falta o está vacío. El master consolida el contexto de producto para agentes; no sustituye el detalle de `documento-maestro.md` ni el registro de decisiones.
 
 ## Forma de trabajo
 

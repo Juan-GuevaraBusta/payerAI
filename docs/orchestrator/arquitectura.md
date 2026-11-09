@@ -4,7 +4,7 @@ Estado: implementado y probado en repositorios temporales. No construye el produ
 
 ## Bloqueo de producto
 
-`MASTER_PROMPT_FINANCIAL_OPERATIONS.md` no está en la raíz. `python3 -m orchestrator product-guard` sale con código 3 y no autoriza cambios de producto. `docs/documento-maestro.md` existe y no reemplaza ese nombre. `ORCHESTRATOR.md` y `docs/orchestrator/01` a `05` sí se leyeron enteros.
+`python3 -m orchestrator product-guard` exige `MASTER_PROMPT_FINANCIAL_OPERATIONS.md` en la raíz y sale con código 3 si falta o está vacío. Este master consolida el contexto de producto y no reemplaza el detalle de `docs/documento-maestro.md`. `ORCHESTRATOR.md` y `docs/orchestrator/01` a `05` se leyeron enteros.
 
 ## Patrón elegido
 

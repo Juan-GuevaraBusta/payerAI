@@ -17,7 +17,7 @@ Si un chat, issue o instrucción contradice una decisión del documento maestro,
 
 Índice de producto: [`docs/README.md`](docs/README.md).
 
-El orquestador de ingeniería está en [`docs/orchestrator/uso.md`](docs/orchestrator/uso.md). No sustituye al documento de producto y no autoriza a construir el dominio financiero mientras falte `MASTER_PROMPT_FINANCIAL_OPERATIONS.md`.
+El orquestador de ingeniería está en [`docs/orchestrator/uso.md`](docs/orchestrator/uso.md). No sustituye al documento de producto. El contexto operativo para agentes está en [`MASTER_PROMPT_FINANCIAL_OPERATIONS.md`](MASTER_PROMPT_FINANCIAL_OPERATIONS.md).
 
 ## CI
 

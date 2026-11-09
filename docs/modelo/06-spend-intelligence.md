@@ -10,7 +10,7 @@ Especificación conceptual de la tarea 06. Define qué recomendaciones puede emi
 - [Tarea 06](../tareas/06-spend-intelligence.md).
 - [Decisiones adoptadas](../decisiones/adoptadas.md) y [asuntos abiertos](../decisiones/abiertas.md).
 
-No existe `MASTER_PROMPT_FINANCIAL_OPERATIONS.md`. Este documento no lo sustituye, no improvisa producto y no cierra ningún asunto de [abiertas.md](../decisiones/abiertas.md).
+Contexto: [master prompt](../../MASTER_PROMPT_FINANCIAL_OPERATIONS.md). Este documento desarrolla un aspecto concreto, no improvisa producto y no cierra ningún asunto de [abiertas.md](../decisiones/abiertas.md).
 
 **Depende de:** las facturas y documentos ya modelados en las tareas 01 y 04. No depende de bancos, identity providers ni sistemas de uso.
 

@@ -9,7 +9,7 @@ Modelo conceptual de la tarea 01. No es un esquema de base de datos, ni una máq
 - [Decisión de la tarea 01](../tareas/01-modelo-de-dominio-y-estados.md).
 - [Decisiones adoptadas](../decisiones/adoptadas.md) y [asuntos abiertos](../decisiones/abiertas.md).
 
-No existe `MASTER_PROMPT_FINANCIAL_OPERATIONS.md`. Este documento no lo sustituye, no improvisa producto y no cierra ningún asunto de [abiertas.md](../decisiones/abiertas.md).
+Contexto: [master prompt](../../MASTER_PROMPT_FINANCIAL_OPERATIONS.md). Este documento desarrolla un aspecto concreto, no improvisa producto y no cierra ningún asunto de [abiertas.md](../decisiones/abiertas.md).
 
 **Alcance:** obligaciones y pagos salientes (Accounts Payable). Accounts Receivable no forma parte de este modelo y no debe aparecer en sus datos. El MVP registra el ciclo de la operación y no custodia fondos ni mueve dinero.
 
