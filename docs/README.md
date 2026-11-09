@@ -41,6 +41,7 @@ Cada tarea dice qué debe quedar definido, qué ya está decidido y qué no hay 
 | 10 | [Seguridad, multi-tenancy y auditoría](tareas/10-seguridad-multitenancy-y-auditoria.md) | Controles, también en demo |
 | 11 | [Edge cases y pruebas](tareas/11-edge-cases-y-pruebas.md) | Casos que el diseño debe cubrir |
 | 12 | [Catálogo de estados y transiciones](tareas/12-estados-transiciones.md) | Contrato de comportamiento; propuesta |
+| 13 | [Identidad, roles y aprobaciones](tareas/13-identidad-aprobaciones.md) | Membresía, permisos, delegación y quorum; propuesta |
 
 ## Orquestador
 
