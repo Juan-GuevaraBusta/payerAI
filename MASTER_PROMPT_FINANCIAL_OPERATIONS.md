@@ -215,7 +215,7 @@ No trates estos puntos como resueltos ni elijas proveedor por conveniencia:
 - Fuentes y nivel de detalle de contratos y presupuestos.
 - Modelo exacto de aprobaciones, delegación y quorum.
 - Reglas de riesgo y umbrales; la escala existe, la calibración no.
-- Catálogo cerrado de estados y transiciones; el requisito es definirlo, el enum no está adoptado.
+- Enum de implementación, identificadores técnicos y persistencia de los estados; el catálogo conceptual está adoptado en [docs/modelo/12-estados-transiciones.md](docs/modelo/12-estados-transiciones.md).
 - Retención, borrado y jurisdicción de datos.
 - Integraciones futuras con ERP, CRM, bancos, contabilidad, HRIS o sistemas de uso.
 

@@ -1,8 +1,8 @@
 # Catálogo de estados y transiciones
 
-Propuesta de la tarea 12. Convierte las situaciones que la tarea 01 exige distinguir en un catálogo cerrado de estados, transiciones, guardas e invariantes. No es un esquema de base de datos, ni un enum de implementación, ni una elección de motor de workflows.
+Catálogo adoptado de la tarea 12. Convierte las situaciones que la tarea 01 exige distinguir en un catálogo cerrado de estados, transiciones, guardas e invariantes. No es un esquema de base de datos, ni un enum de implementación, ni una elección de motor de workflows.
 
-Este documento **propone** el cierre del catálogo. Mientras no se adopte, las situaciones de [01-dominio.md](01-dominio.md) siguen siendo el requisito y este catálogo es una propuesta revisable.
+Este documento **adopta** el cierre conceptual del catálogo. Los nombres son conceptuales. El enum de implementación, los identificadores técnicos y el esquema de persistencia siguen sin adoptarse.
 
 ## Fuentes y alcance
 
@@ -236,7 +236,7 @@ Reglas adicionales:
 - `APROBADO_PARA_PASO_POSTERIOR` no es pago. `INSTRUCCION_ENVIADA` no es pago hecho. `EN_PROCESAMIENTO` no es confirmación.
 - `CONFIRMADO` solo se alcanza por la fuente de verdad externa. Ni el envío ni el timeout ni la aprobación lo producen.
 - `TIMEOUT_DESCONOCIDO` no es "fallido" ni autoriza reintento. Antes de actuar se verifica el estado.
-- `AUTORIZACION_REVOCADA` es una adición de esta propuesta, necesaria para representar un cambio material después de aprobar. No aparece en la lista de la tarea 01 y requiere adopción.
+- `AUTORIZACION_REVOCADA` es una adición adoptada, necesaria para representar un cambio material después de aprobar. No aparece en la lista original de la tarea 01.
 - Un pago parcial no marca la factura como pagada: el saldo sigue distinto de cero. La representación exacta del saldo y de los pagos parciales está abierta.
 - Un webhook duplicado no crea un segundo pago ni una segunda confirmación.
 
@@ -340,8 +340,9 @@ En el MVP, los estados reservados de pago no se simulan como si hubieran ocurrid
 - Idempotencia y registro de intentos concurrentes son requisitos.
 - La obligación no se declara sin decidir el momento.
 
-### Propuesto
+### Adoptado
 
+- El catálogo conceptual de esta tarea.
 - Dimensiones ortogonales en lugar de un enum único de operación.
 - `DELEGADA` y `ESCALADA` como atributos de asignación, no como estados del workflow.
 - `NO_PROCESABLE` con motivo como atributo.
@@ -363,7 +364,7 @@ En el MVP, los estados reservados de pago no se simulan como si hubieran ocurrid
 - Mecanismo concreto de concurrencia e idempotencia.
 - Representación de pagos parciales y saldo.
 - Retención, borrado y jurisdicción.
-- Adopción formal de este catálogo.
+- Nombres técnicos, enum de implementación y persistencia.
 
 ### Hipótesis
 

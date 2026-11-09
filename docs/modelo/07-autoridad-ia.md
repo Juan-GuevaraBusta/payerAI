@@ -445,7 +445,7 @@ Nota de dependencia: la cabecera de la tarea 07 conserva una referencia a workfl
 - Plazos de escalamiento y caducidad de solicitudes.
 - Retención, borrado y jurisdicción.
 - Si los dos modos de L3 se implementan y con qué integración.
-- Catálogo cerrado de estados y transiciones.
+- Nombres técnicos, enum y persistencia de los estados; el catálogo conceptual está adoptado en [12-estados-transiciones.md](12-estados-transiciones.md).
 - Grado de asistencia de un modelo en clasificación y extracción.
 
 ### No se puede cerrar en esta tarea

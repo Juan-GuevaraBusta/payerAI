@@ -81,7 +81,7 @@ La comprobación se registra. Una transición sin evidencia de autorización no 
 
 ## 3. Situaciones y salidas
 
-Las situaciones describen lo que debe poder distinguirse. No son un enum cerrado, no fijan nombres definitivos y no forman por sí solas una secuencia autorizada.
+Las situaciones describen lo que debe poder distinguirse. El catálogo conceptual que las cierra está adoptado en [12-estados-transiciones.md](12-estados-transiciones.md); los nombres técnicos y el enum de implementación no.
 
 ### 3.1 Situaciones del workflow
 
@@ -105,7 +105,7 @@ La liberación de un bloqueo exige que la condición que lo motivó desaparezca 
 
 ## 4. Ciclo de vida conceptual
 
-El siguiente relato describe situaciones que deben poder distinguirse. No es una secuencia autorizada ni un catálogo cerrado de transiciones.
+El siguiente relato describe situaciones que deben poder distinguirse. La secuencia autorizada y el catálogo cerrado están en [12-estados-transiciones.md](12-estados-transiciones.md).
 
 1. La operación llega al workflow después de la validación, con evidencia y hallazgos.
 2. Se identifica la política aplicable y su versión.
@@ -321,7 +321,7 @@ La factura cambia después de una aprobación. La aprobación anterior no cubre 
 - Umbrales inclusivos o exclusivos.
 - Qué pasa con un aprobador ausente: delegado, revocado o sin permiso.
 - Tiempos de espera y caducidad de una solicitud de información.
-- Catálogo cerrado de situaciones y transiciones.
+- Nombres técnicos, enum y persistencia de las situaciones; el catálogo conceptual está adoptado en [12-estados-transiciones.md](12-estados-transiciones.md).
 - Si se congela la versión de política al iniciar el workflow.
 - Si el presupuesto se reserva al iniciar el workflow.
 - Qué cambios son materiales después de una aprobación.

@@ -48,6 +48,16 @@ Estado del producto: discovery. Estas decisiones no cierran la arquitectura conc
 - Datos de demo: sintéticos y marcados. Nunca datos reales de clientes.
 - Secretos fuera del repositorio y fuera de los logs.
 
+## Estados y transiciones
+
+Adoptado el 2026-11-09.
+
+- Catálogo conceptual de estados y transiciones adoptado en [modelo 12](../modelo/12-estados-transiciones.md). Separa mensaje, documento, factura, workflow, pago y obligación.
+- Toda transición no listada se rechaza. Cada transición comprueba tenant, autoridad, evidencia y versión.
+- `AUTORIZACION_REVOCADA` se adopta en el ciclo de pago para cambios materiales antes de enviar.
+- La obligación no se declara reconocida; su momento sigue abierto.
+- El enum de implementación, los identificadores técnicos y la persistencia no están adoptados.
+
 ## Integridad que ya es requisito
 
 Aunque la arquitectura siga abierta, estos requisitos valen también para una demo:

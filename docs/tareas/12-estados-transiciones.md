@@ -1,6 +1,6 @@
 # Tarea 12 — Catálogo de estados y transiciones
 
-**Estado:** discovery. Propuesta para decisión; no implementar.
+**Estado:** discovery. Catálogo conceptual adoptado; no implementar.
 **Orquestador:** `.cursor/agents/dominio-estados.md`. Skill: `architect`.
 **Fuente:** documento maestro, secciones 5.2, 9 y 13; tareas 01, 05, 07 y 11.
 **Depende de:** el modelo de dominio, los workflows de aprobación, la autoridad y los edge cases. No depende de base de datos, proveedor de correo ni frontend.
@@ -9,7 +9,7 @@
 
 Convertir las situaciones que el modelo de dominio ya exige distinguir en un catálogo cerrado de estados, transiciones permitidas, guardas e invariantes. El resultado es un contrato de comportamiento conceptual. No es un esquema de base de datos, ni un enum de implementación, ni una elección de motor de workflows.
 
-La tarea 01 dejó abierto el catálogo cerrado. Esta tarea propone ese cierre. Mientras el catálogo no se adopte, las situaciones de la tarea 01 siguen siendo el requisito y este documento es una propuesta.
+La tarea 01 dejó abierto el catálogo cerrado. Esta tarea lo cierra como contrato conceptual adoptado. Los nombres técnicos, el enum de implementación y el esquema de persistencia siguen abiertos.
 
 ## Decidido
 
@@ -21,6 +21,7 @@ La tarea 01 dejó abierto el catálogo cerrado. Esta tarea propone ese cierre. M
 - La IA no ejecuta transiciones por sí sola.
 - Cada transición deja evidencia reconstruible.
 - Un evento duplicado no crea una segunda decisión ni una segunda operación.
+- El catálogo conceptual de estados y transiciones está adoptado; sus nombres son conceptuales.
 
 ## Abierto
 
