@@ -17,5 +17,7 @@ No existe una skill de Cloudflare. No asigné skills de Vercel, Render, AWS, Mon
 | 09 Infra y costo | `.cursor/agents/infraestructura-costo.md` | `figure-it-out` | No hay playbook del vendor correcto. El entregable es la comparación. |
 | 10 Seguridad y tenants | `.cursor/agents/seguridad-tenancy.md` | `review-security` | Lanza `security-review` cuando hay diff. Sin diff, no simula el review. |
 | 11 Edge cases | `.cursor/agents/edge-cases-pruebas.md` | `interrogate` | Ataca el diseño. No convierte un resumen en prueba. |
+| 12 Estados y transiciones | `.cursor/agents/dominio-estados.md` | `architect` | Fija el contrato antes de que exista código. Reutiliza el orquestador de dominio. |
+| 13 Identidad y aprobaciones | `.cursor/agents/seguridad-tenancy.md` | `review-security` | Autorización, segregación y quorum son control de seguridad. Sin diff, no simula el review; reutiliza el orquestador de la tarea 10. |
 
 Estos orquestadores no están en el `Task` tool hasta que Cursor cargue `.cursor/agents/`. El archivo los define. No los ejecuté: ejecutarlos empezaría el diseño de producto y varias skills piden modelos de pago.

@@ -81,7 +81,7 @@ Niveles conceptuales:
 
 Cada empresa configura el nivel permitido según tipo de operación, monto, moneda, proveedor, departamento, presupuesto, riesgo y permisos.
 
-La autoridad sale de políticas configuradas, permisos verificables, segregación de funciones y controles técnicos independientes. Nunca de un modelo de IA.
+La autoridad sale de políticas configuradas, permisos verificables, segregación de funciones y controles técnicos independientes. Nunca de un modelo de IA. El modelo conceptual de identidad, permisos, delegación y quorum está adoptado en [docs/modelo/13-identidad-aprobaciones.md](docs/modelo/13-identidad-aprobaciones.md).
 
 ## 7. Arquitectura conceptual
 
@@ -135,6 +135,7 @@ Identidad y autorización:
 - Delegaciones con vigencia y alcance; quorum o múltiples aprobadores cuando la política lo exija.
 - Precedencia de políticas y resolución explícita de conflictos.
 - Overrides humanos con actor, motivo, fecha y evidencia.
+- Identidad global con membresía por tenant; permisos explícitos por acción y alcance; delegación con vigencia; quorum con actores distintos; la IA no vota. Detalle en [docs/modelo/13-identidad-aprobaciones.md](docs/modelo/13-identidad-aprobaciones.md).
 
 Secretos fuera del repositorio y fuera de los logs. Datos de demo sintéticos y marcados; nunca datos reales de clientes.
 
@@ -211,9 +212,11 @@ No trates estos puntos como resueltos ni elijas proveedor por conveniencia:
 - OCR y extracción de PDF escaneado.
 - Implementación, interfaz, licencia, costo y utilidad real de JEV.
 - Modelos de IA y política de escalamiento entre modelo ligero, modelo capaz y humano.
-- Esquema de identidad, roles y onboarding de empresas.
+- Identidad y onboarding: proveedor, protocolo, MFA, recuperación, SSO/SCIM, autoservicio frente a invitación y verificación de dominio. El modelo conceptual está adoptado en [docs/modelo/13-identidad-aprobaciones.md](docs/modelo/13-identidad-aprobaciones.md).
+- Catálogo definitivo de roles, nombres finales y roles personalizados. Los arquetipos de referencia están en [docs/modelo/13-identidad-aprobaciones.md](docs/modelo/13-identidad-aprobaciones.md).
 - Fuentes y nivel de detalle de contratos y presupuestos.
-- Modelo exacto de aprobaciones, delegación y quorum.
+- Aprobaciones: números de quorum, abstenciones, empates, pesos y suplencias; re-delegación; prioridad exacta de políticas; aprobación automática L2; aprobación por procesos de servicio. El modelo conceptual está adoptado en [docs/modelo/13-identidad-aprobaciones.md](docs/modelo/13-identidad-aprobaciones.md).
+- Acceso de soporte a datos de un tenant. El modelo conceptual está adoptado en [docs/modelo/13-identidad-aprobaciones.md](docs/modelo/13-identidad-aprobaciones.md).
 - Reglas de riesgo y umbrales; la escala existe, la calibración no.
 - Enum de implementación, identificadores técnicos y persistencia de los estados; el catálogo conceptual está adoptado en [docs/modelo/12-estados-transiciones.md](docs/modelo/12-estados-transiciones.md).
 - Retención, borrado y jurisdicción de datos.

@@ -58,6 +58,21 @@ Adoptado el 2026-11-09.
 - La obligación no se declara reconocida; su momento sigue abierto.
 - El enum de implementación, los identificadores técnicos y la persistencia no están adoptados.
 
+## Identidad, roles y aprobaciones
+
+Adoptado el 2026-11-09.
+
+- Identidad global con membresía por tenant: una misma identidad humana puede pertenecer a varios tenants con roles distintos. Una cuenta por tenant queda descartada para el MVP.
+- Permisos explícitos por acción y alcance; aprobar y rechazar son permisos separados; sin roles implícitos; denegar por defecto.
+- Onboarding del MVP por invitación con administrador inicial verificado. El autoservicio queda abierto.
+- Delegación como subconjunto del delegante, con alcance, vigencia y motivo; no se re-delega por defecto.
+- Maker-checker y quorum con actores distintos; el mismo actor no cuenta dos veces; la IA no vota ni forma quorum.
+- Precedencia determinista: la denegación explícita prevalece; un conflicto de igual prioridad se declara y se escala; no gana la última política evaluada.
+- Procesos de servicio con permisos acotados y sin aprobación financiera por defecto.
+- La evaluación de autorización produce `PERMITIDO`, `DENEGADO` o `REQUIERE_HUMANO`, con tenant, actor, recurso, política y versión, y deja registro.
+- Detalle en [modelo 13](../modelo/13-identidad-aprobaciones.md) y [tarea 13](../tareas/13-identidad-aprobaciones.md).
+- Quedan abiertos: proveedor y protocolo de identidad, MFA, SSO/SCIM, autoservicio, catálogo definitivo de roles, números de quorum, reglas de re-delegación, prioridad exacta de políticas, aprobación automática L2, aprobación por procesos de servicio, acceso de soporte y retención.
+
 ## Integridad que ya es requisito
 
 Aunque la arquitectura siga abierta, estos requisitos valen también para una demo:

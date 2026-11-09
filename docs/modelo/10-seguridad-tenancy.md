@@ -1,6 +1,6 @@
 # Seguridad, multi-tenancy y auditoría
 
-**Estado:** discovery. Los controles son requisitos de demo. El esquema de identidad, el catálogo de roles y el proveedor de identidad siguen abiertos.
+**Estado:** discovery. Los controles son requisitos de demo. El modelo conceptual de identidad, roles y aprobaciones está adoptado en [13-identidad-aprobaciones.md](13-identidad-aprobaciones.md); el proveedor de identidad, el catálogo definitivo y el esquema técnico siguen abiertos.
 **Tarea:** 10.
 **Depende de:** las tareas 01 a 09.
 **Orquestador:** `.cursor/agents/seguridad-tenancy.md`.
@@ -9,7 +9,7 @@
 
 ## Fuentes y alcance
 
-Este documento fija los controles que no se pueden posponer: aislamiento entre empresas, autorización distinta de autenticación, trazabilidad reconstruible, manejo de secretos, idempotencia y concurrencia. No elige proveedor de identidad, no define tablas, no cierra el esquema de roles y no implementa código.
+Este documento fija los controles que no se pueden posponer: aislamiento entre empresas, autorización distinta de autenticación, trazabilidad reconstruible, manejo de secretos, idempotencia y concurrencia. No elige proveedor de identidad, no define tablas, no cierra el catálogo definitivo de roles ni el esquema técnico y no implementa código. El modelo conceptual está adoptado en [13-identidad-aprobaciones.md](13-identidad-aprobaciones.md).
 
 Los controles valen para la demo y para el primer piloto. La demo usa datos sintéticos y marcados; un piloto con datos reales exige revisar jurisdicción, retención, residencia, borrado y acceso antes de reutilizar estos mismos controles.
 
@@ -112,16 +112,16 @@ Estos no se pueden cerrar en la demo. Se nombran para que nadie los dé por resu
 
 | Tema | Qué falta decidir | Por qué no se cierra aquí |
 | --- | --- | --- |
-| Identidad | Proveedor, protocolo, MFA, recuperación, onboarding y baja | Es un esquema de producto, no un control de demo |
-| Catálogo de roles | Nombres, permisos, herencia y mínimo privilegio | La tarea 10 exige roles explícitos, no una tabla elegida |
-| Quorum | Número de aprobadores, pesos, suplencias y empate | Depende de política y riesgo |
-| Delegación | Límites, renovación, revocación y auditoría | Depende del esquema de identidad |
-| Precedencia de políticas | Orden, excepciones y conflicto | Depende del catálogo de políticas |
+| Identidad | Proveedor, protocolo, MFA, recuperación, SSO/SCIM y autoservicio. El modelo conceptual está en [13](13-identidad-aprobaciones.md). | El proveedor y el esquema técnico no son un control de demo |
+| Catálogo de roles | Nombres finales, roles personalizados y catálogo cerrado. Los permisos y arquetipos están en [13](13-identidad-aprobaciones.md). | El catálogo definitivo depende del producto; la tarea 10 exige roles explícitos |
+| Quorum | Número de aprobadores, pesos, suplencias y empate. Las reglas de conteo están en [13](13-identidad-aprobaciones.md). | Depende de política y riesgo |
+| Delegación | Límites, renovación y re-delegación. El alcance y la vigencia están en [13](13-identidad-aprobaciones.md). | Depende de la política del tenant |
+| Precedencia de políticas | Orden exacto, prioridad y excepciones. La regla de conflicto está en [13](13-identidad-aprobaciones.md). | Depende del catálogo de políticas |
+| Acceso de soporte | Quién puede ver datos de un tenant y con qué registro. El modelo conceptual está en [13](13-identidad-aprobaciones.md). | Depende de la organización |
 | Jurisdicción | Residencia, transferencia internacional y encargados | Puede cambiar dónde se guarda y procesa |
 | Retención y borrado | Plazos, legal hold y derecho al olvido | Depende de jurisdicción y contrato |
 | Auditoría | Append-only por almacenamiento o por control de aplicación | Depende de la base y del proveedor |
 | Cifrado | Claves, rotación y custodia | Depende de la plataforma y del contrato |
-| Acceso de soporte | Quién puede ver datos de un tenant y con qué registro | Depende de la organización |
 | Correo real | Proveedor, protocolo, autenticación y reputación | Sigue abierto |
 | Integraciones | ERP, banco, CRM y contabilidad | Fuera del MVP |
 
