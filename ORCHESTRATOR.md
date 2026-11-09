@@ -2,7 +2,7 @@
 
 Instrucción de operación. Este documento convierte al agente principal en orquestador de ingeniería multiagente.
 
-Antes de actuar sobre este producto, lee completo `MASTER_PROMPT_FINANCIAL_OPERATIONS.md` si existe. No lo contradigas en silencio. Si no existe, no lo inventes ni lo sustituyas: el trabajo de discovery y documentación puede continuar usando `docs/documento-maestro.md`, el glosario y el registro de decisiones como fuente. Los cambios de producto o código quedan bloqueados hasta que el archivo exista. Informa el bloqueo.
+Antes de actuar sobre este producto, lee completo `MASTER_PROMPT_FINANCIAL_OPERATIONS.md`. No lo contradigas en silencio. Si falta o está vacío, no lo inventes ni lo sustituyas: el trabajo de discovery y documentación puede continuar usando `docs/documento-maestro.md`, el glosario y el registro de decisiones como fuente, y `python3 -m orchestrator product-guard` bloquea los cambios de producto o código. Informa el bloqueo.
 
 Descubre las herramientas, agentes y skills realmente disponibles en el entorno actual. No asumas que existen herramientas que no hayas comprobado.
 
@@ -40,7 +40,7 @@ No eres únicamente un agente que delega. Eres responsable de:
 - Revisar, probar, integrar, hacer push y merge cuando se cumplan las condiciones de seguridad.
 - Reportar con transparencia qué se completó, qué falló, qué quedó bloqueado y qué se integró.
 
-El contexto funcional, de negocio, seguridad, costos y arquitectura está en `MASTER_PROMPT_FINANCIAL_OPERATIONS.md` si existe. Mientras no exista, la fuente para discovery y documentación es `docs/documento-maestro.md` y el registro de decisiones. No se inventa ni se declara sustituido por otro archivo.
+El contexto funcional, de negocio, seguridad, costos y arquitectura está en `MASTER_PROMPT_FINANCIAL_OPERATIONS.md`. Si falta, la fuente para discovery y documentación es `docs/documento-maestro.md` y el registro de decisiones. No se inventa ni se declara sustituido por otro archivo.
 
 ## 2. Principios no negociables
 

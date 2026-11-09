@@ -6,15 +6,16 @@ Punto de entrada para cualquier agente que trabaje en este repositorio. El contr
 
 Antes de proponer o cambiar algo, leer en este orden:
 
-1. [Documento maestro](docs/documento-maestro.md)
-2. [Decisiones adoptadas](docs/decisiones/adoptadas.md)
-3. [Asuntos abiertos](docs/decisiones/abiertas.md)
-4. [Glosario](docs/glosario.md)
-5. La tarea correspondiente en [docs/tareas/](docs/tareas/) y su orquestador en `.cursor/agents/`.
+1. [Master prompt](MASTER_PROMPT_FINANCIAL_OPERATIONS.md)
+2. [Documento maestro](docs/documento-maestro.md)
+3. [Decisiones adoptadas](docs/decisiones/adoptadas.md)
+4. [Asuntos abiertos](docs/decisiones/abiertas.md)
+5. [Glosario](docs/glosario.md)
+6. La tarea correspondiente en [docs/tareas/](docs/tareas/) y su orquestador en `.cursor/agents/`.
 
 `docs/decisiones/abiertas.md` manda: lo que figura allí no se cierra sin una decisión explícita.
 
-No existe `MASTER_PROMPT_FINANCIAL_OPERATIONS.md`. No inventarlo. `docs/documento-maestro.md` no lo sustituye. Su ausencia bloquea cambios de producto o código, no el discovery ni la documentación.
+`MASTER_PROMPT_FINANCIAL_OPERATIONS.md` consolida el contexto de producto y hace operativas las decisiones registradas. No sustituye el detalle de `docs/documento-maestro.md` ni el registro de decisiones; si hay contradicción, señálala y detén el cambio que dependa de ella. No se inventa producto ni se cierran asuntos abiertos.
 
 ## Reglas no negociables
 
