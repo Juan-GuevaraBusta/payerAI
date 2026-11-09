@@ -1,6 +1,6 @@
 # Tarea 13 — Identidad, roles y aprobaciones
 
-**Estado:** discovery. Propuesta para decisión; no implementar.
+**Estado:** discovery. Modelo adoptado el 2026-11-09; no implementar.
 **Orquestador:** `.cursor/agents/seguridad-tenancy.md`. Skill: `review-security` (leer por ruta si no está registrada).
 **Fuente:** documento maestro, secciones 7, 9, 13 y 15; tareas 05, 07, 10 y 12.
 **Depende de:** el modelo de dominio, la autoridad, el catálogo de estados y los controles de seguridad. No depende de un proveedor de identidad ni de una base de datos.
@@ -23,12 +23,13 @@ Definir el modelo conceptual de identidad, membresía por tenant, roles, permiso
 - Override humano con actor, motivo, fecha y evidencia.
 - La IA no concede autoridad, no aprueba, no autoriza, no delega y no forma parte de un quorum.
 - Ningún cambio material queda cubierto en silencio por una autorización anterior.
+- Una misma identidad humana puede pertenecer a varios tenants con roles distintos. La identidad es global; la membresía y los roles son por tenant. Adoptado el 2026-11-09.
+- Onboarding del MVP por invitación con administrador inicial verificado; el autoservicio queda abierto. Adoptado el 2026-11-09.
 
 ## Hipótesis
 
-- Un usuario puede pertenecer a más de un tenant con roles distintos. Es una hipótesis de producto, no una decisión validada.
-- Para el MVP basta un onboarding por invitación con un administrador inicial verificado; el autoservicio queda abierto.
 - Un conjunto pequeño de arquetipos de rol cubre la demo; el catálogo definitivo y los roles personalizados están abiertos.
+- La aprobación automática L2 no es necesaria para la demo.
 
 ## Abierto
 
@@ -42,7 +43,6 @@ Definir el modelo conceptual de identidad, membresía por tenant, roles, permiso
 - Si el MVP permite aprobación automática L2 dentro de límites.
 - Acceso de soporte a datos de un tenant.
 - Jurisdicción, retención y borrado de identidades y auditoría.
-- Adopción formal de este modelo.
 
 ## Fuera de esta tarea
 
@@ -65,7 +65,7 @@ Definir el modelo conceptual de identidad, membresía por tenant, roles, permiso
 - algoritmo conceptual de precedencia de políticas y evaluación de autorización;
 - límites de autonomía L0–L3;
 - aislamiento multi-tenant y auditoría;
-- preguntas abiertas y una pregunta crítica para adoptar.
+- preguntas abiertas y la decisión de identidad adoptada.
 
 ## Criterios de aceptación
 

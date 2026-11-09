@@ -9,6 +9,7 @@ Especificación conceptual de la tarea 07. Define qué puede proponer un modelo,
 - [Glosario](../glosario.md).
 - [Tarea 07](../tareas/07-autoridad-autonomia-e-ia.md).
 - [Modelo de dominio](01-dominio.md), [proveedores](03-proveedores.md) y [validación](04-validacion.md).
+- [Identidad, roles y aprobaciones](13-identidad-aprobaciones.md).
 - [Informe de validación de specs](../orchestrator/reports/06-validacion-specs.md).
 
 **Depende de:** el modelo de dominio, la validación y la distinción entre reconocer un proveedor y autorizarlo a cobrar. No depende de la tarea 06 ni de su rama. La autoridad se define antes que el workflow de la tarea 05; ese workflow consumirá este documento.
@@ -41,7 +42,7 @@ La autoridad no es una propiedad general de una persona, de un sistema ni de un 
 La autoridad sale de fuentes verificables y separadas:
 
 - **Política de la empresa.** Reglas, límites y condiciones configuradas, con versión identificable.
-- **Permisos verificados.** El actor o proceso tiene el permiso necesario para esa acción, en ese tenant, en ese momento. El esquema de roles está abierto; la necesidad de verificarlo no.
+- **Permisos verificados.** El actor o proceso tiene el permiso necesario para esa acción, en ese tenant, en ese momento. El modelo de permisos y roles está adoptado en [13-identidad-aprobaciones.md](13-identidad-aprobaciones.md); el catálogo definitivo y el proveedor siguen abiertos.
 - **Segregación de funciones.** Maker-checker, quorum o múltiples aprobadores cuando la política lo exija.
 - **Controles técnicos independientes.** Un componente de autorización comprueba la acción antes de que ocurra. No lo decide el componente que interpreta el documento ni el que propone una decisión.
 - **Delegación con alcance y vigencia.** Una delegación vencida, revocada o fuera de alcance no concede autoridad.

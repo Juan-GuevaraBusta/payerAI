@@ -8,7 +8,7 @@ Especificación conceptual de la tarea 05. Define el ciclo configurable de aprob
 - [Decisiones adoptadas](../decisiones/adoptadas.md) y [asuntos abiertos](../decisiones/abiertas.md).
 - [Glosario](../glosario.md).
 - [Tarea 05](../tareas/05-workflows-de-aprobacion.md).
-- [Modelo de dominio](01-dominio.md), [validación](04-validacion.md) y [autoridad, autonomía e IA](07-autoridad-ia.md).
+- [Modelo de dominio](01-dominio.md), [validación](04-validacion.md), [autoridad, autonomía e IA](07-autoridad-ia.md) e [identidad, roles y aprobaciones](13-identidad-aprobaciones.md).
 
 **Depende de:** la validación, que aporta evidencia, y la autoridad, que define qué puede hacer cada actor. La autoridad se definió antes que este workflow.
 
@@ -183,7 +183,7 @@ No se elige aquí la tecnología de persistencia ni el mecanismo concreto de blo
 
 ### 7.1 Quorum
 
-Puede hacer falta más de un aprobador cuando la política lo exija. El algoritmo concreto, el número de aprobadores, la mayoría requerida y el tratamiento de abstenciones están abiertos. No se inventan números en este documento.
+Puede hacer falta más de un aprobador cuando la política lo exija. El modelo conceptual de quorum está adoptado en [13-identidad-aprobaciones.md](13-identidad-aprobaciones.md); el número de aprobadores, la mayoría requerida y el tratamiento de abstenciones siguen abiertos. No se inventan números en este documento.
 
 El quorum no se simula. Si no se alcanza, la operación no se considera aprobada. Un modelo de IA no cuenta como aprobador ni como miembro del quorum.
 
@@ -191,7 +191,7 @@ El quorum no se simula. Si no se alcanza, la operación no se considera aprobada
 
 Una delegación tiene alcance y vigencia. Puede limitarse a un tenant, una operación, un tipo de acción o un periodo. Una delegación vencida, revocada o fuera de alcance no concede autoridad.
 
-La delegación no transfiere la propiedad de la operación ni permite que el delegado delegue a su vez sin una regla explícita. Esa regla está abierta.
+La delegación no transfiere la propiedad de la operación ni permite que el delegado delegue a su vez sin una regla explícita. El modelo conceptual está adoptado en [13-identidad-aprobaciones.md](13-identidad-aprobaciones.md); la regla de re-delegación sigue abierta.
 
 ### 7.3 Override humano
 

@@ -40,8 +40,8 @@ Cada tarea dice qué debe quedar definido, qué ya está decidido y qué no hay 
 | 09 | [Infraestructura, costo y despliegue](tareas/09-infraestructura-costo-y-despliegue.md) | Preferencia Cloudflare, sin cierre |
 | 10 | [Seguridad, multi-tenancy y auditoría](tareas/10-seguridad-multitenancy-y-auditoria.md) | Controles, también en demo |
 | 11 | [Edge cases y pruebas](tareas/11-edge-cases-y-pruebas.md) | Casos que el diseño debe cubrir |
-| 12 | [Catálogo de estados y transiciones](tareas/12-estados-transiciones.md) | Contrato de comportamiento; propuesta |
-| 13 | [Identidad, roles y aprobaciones](tareas/13-identidad-aprobaciones.md) | Membresía, permisos, delegación y quorum; propuesta |
+| 12 | [Catálogo de estados y transiciones](tareas/12-estados-transiciones.md) | Modelo adoptado; contrato de comportamiento |
+| 13 | [Identidad, roles y aprobaciones](tareas/13-identidad-aprobaciones.md) | Modelo adoptado; membresía, permisos, delegación y quorum |
 
 ## Orquestador
 

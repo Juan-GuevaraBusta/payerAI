@@ -1,8 +1,13 @@
 # Identidad, roles y aprobaciones
 
-Propuesta de la tarea 13. Define el modelo conceptual de identidad, membresía por tenant, permisos, onboarding, delegación, segregación, quorum y precedencia de políticas. No es un esquema de base de datos, ni una elección de proveedor de identidad, ni un catálogo cerrado de roles.
+**Estado:** adoptado el 2026-11-09. Discovery; no implementar.
+**Tarea:** 13.
+**Orquestador:** `.cursor/agents/seguridad-tenancy.md`.
+**Skill:** `review-security` (leer por ruta si no está registrada).
 
-Este documento **propone** un modelo. Mientras no se adopte, los requisitos de las tareas 05, 07 y 10 siguen siendo la fuente y este documento es una propuesta revisable.
+Modelo conceptual de identidad, membresía por tenant, permisos, onboarding, delegación, segregación, quorum y precedencia de políticas. No es un esquema de base de datos, ni una elección de proveedor de identidad, ni un catálogo cerrado de roles.
+
+Este documento registra el modelo adoptado. Lo que sigue marcado como hipótesis o abierto no está decidido.
 
 ## Fuentes y alcance
 
@@ -57,14 +62,14 @@ Este documento **propone** un modelo. Mientras no se adopte, los requisitos de l
 
 ### Identidad global y membresía por tenant
 
-La propuesta separa la identidad de la pertenencia:
+El modelo adoptado separa la identidad de la pertenencia:
 
 - Una **identidad** puede existir una vez y autenticarse con un proveedor externo.
 - Una **membresía** la vincula a un tenant con estado, roles y alcance.
 - La misma identidad puede tener membresías distintas en tenants distintos, con permisos distintos.
 - Ninguna consulta mezcla membresías de tenants distintos.
 
-Si el producto exige una cuenta por empresa, la identidad deja de ser global y el modelo cambia. Es la pregunta crítica de la sección 15.
+La identidad global con membresía por tenant está adoptada. Una cuenta por tenant queda descartada para el MVP; cambiarla exige reabrir la decisión de la sección 15.
 
 ## 3. Modelo conceptual
 
@@ -111,9 +116,9 @@ Una delegación vencida o revocada no concede autoridad aunque la membresía sig
 
 El permiso se nombra por acción, no por pantalla. No existe un permiso genérico de "escribir" ni de "administrar todo".
 
-Catálogo propuesto, mínimo y ampliable:
+Catálogo adoptado, mínimo y ampliable:
 
-| Grupo | Permisos propuestos |
+| Grupo | Permisos adoptados |
 | --- | --- |
 | Identidad y acceso | `iam.member.invite`, `iam.member.remove`, `iam.role.manage`, `iam.delegation.manage`, `iam.policy.manage` |
 | Tenant | `tenant.settings.read`, `tenant.settings.update` |
@@ -145,7 +150,7 @@ Cada asignación lleva alcance:
 
 ## 5. Arquetipos de rol
 
-No es un catálogo cerrado. Son arquetipos de referencia para la demo; el catálogo definitivo y los roles personalizados están abiertos.
+Los arquetipos son la referencia adoptada. El catálogo definitivo, los nombres finales y los roles personalizados siguen abiertos.
 
 | Arquetipo | Permisos principales | Límite |
 | --- | --- | --- |
@@ -169,7 +174,7 @@ Reglas:
 
 ### 6.1 Alta del tenant
 
-Propuesta para el MVP:
+Adoptado para el MVP:
 
 1. Un operador autorizado crea el tenant con datos sintéticos o del piloto.
 2. Se registra el tenant, su estado y la política inicial mínima.
@@ -213,7 +218,7 @@ El autoservicio, la verificación de dominio y el alta sin operador quedan abier
 
 ## 7. Delegación
 
-Reglas propuestas:
+Reglas adoptadas:
 
 - El delegante debe tener el permiso que delega y estar `ACTIVA`.
 - El delegado debe pertenecer al mismo tenant y estar `ACTIVA`.
@@ -221,7 +226,7 @@ Reglas propuestas:
 - No puede exceder el alcance del delegante.
 - Tiene motivo, fecha de inicio, fecha de fin y estado.
 - Es revocable por el delegante o por `iam.delegation.manage`.
-- Por defecto no se re-delega; una regla explícita puede permitirlo.
+- Por defecto no se re-delega; permitirlo exige una regla explícita y está abierto para el MVP.
 - No transfiere la propiedad de la operación ni crea un rol.
 - La segregación de funciones sigue aplicando: el delegado no puede ser maker y checker a la vez.
 - Una delegación vencida o revocada no concede autoridad y la transición se deniega.
@@ -248,7 +253,7 @@ La política define:
 - tratamiento de abstenciones, empates y suplencias;
 - vigencia de cada aprobación.
 
-Reglas propuestas:
+Reglas adoptadas:
 
 - Solo cuentan aprobaciones de actores `ACTIVOS`, con permiso vigente y sin conflicto de segregación.
 - La IA y los procesos de servicio no cuentan por defecto.
@@ -260,7 +265,7 @@ Reglas propuestas:
 
 ## 9. Precedencia de políticas
 
-Propuesta de evaluación determinista:
+Evaluación determinista adoptada:
 
 1. Se reúnen las políticas aplicables al tenant, la operación, el actor, el departamento, el proveedor y el tipo de operación.
 2. Se descartan las políticas vencidas o de otro tenant.
@@ -355,6 +360,8 @@ El registro es append-only o equivalente, no guarda secretos ni datos personales
 
 ### Decidido
 
+#### Ya decidido antes de esta tarea
+
 - Autenticación no es autorización.
 - Denegar por defecto y mínimo privilegio.
 - Roles y permisos explícitos; no hay roles implícitos.
@@ -365,9 +372,9 @@ El registro es append-only o equivalente, no guarda secretos ni datos personales
 - Un cambio material obliga a reevaluar la autorización.
 - Cada decisión de autorización deja evidencia.
 
-### Propuesto
+#### Adoptado el 2026-11-09
 
-- Identidad global con membresía por tenant.
+- Identidad global con membresía por tenant: una misma identidad humana puede pertenecer a varios tenants con roles distintos.
 - Permisos nombrados por acción y alcance; aprobar y rechazar separados.
 - Arquetipos de rol de referencia, no catálogo cerrado.
 - Onboarding por invitación con administrador inicial verificado.
@@ -375,20 +382,19 @@ El registro es append-only o equivalente, no guarda secretos ni datos personales
 - Denegación explícita prevalece y conflicto de igual prioridad se escala.
 - Procesos de servicio sin aprobación financiera por defecto.
 - `AuthorizationDecision` como registro separado de la transición.
+- Las reglas de las secciones 7, 8, 9 y 10.
 
 ### Hipótesis
 
-- Un usuario puede pertenecer a varios tenants con roles distintos.
 - Un conjunto pequeño de arquetipos cubre la demo.
 - El MVP no necesita roles personalizados; el catálogo abierto puede esperar.
 - La aprobación automática L2 no es necesaria para la demo.
 
 ### Abierto
 
-- Identidad global frente a una cuenta por tenant.
 - Proveedor de identidad, protocolo, MFA, recuperación, SSO y SCIM.
 - Autoservicio frente a invitación y verificación de dominio.
-- Catálogo definitivo de roles y roles personalizados.
+- Catálogo definitivo de roles, nombres finales y roles personalizados.
 - Números de quorum, abstenciones, empates, pesos y suplencias.
 - Re-delegación y límites de duración.
 - Regla exacta de prioridad de políticas e interfaz de configuración.
@@ -396,18 +402,15 @@ El registro es append-only o equivalente, no guarda secretos ni datos personales
 - Procesos de servicio aprobando operaciones financieras.
 - Acceso de soporte.
 - Jurisdicción, retención y borrado.
-- Adopción formal de este modelo.
 
-## 15. Pregunta crítica para adoptar
+## 15. Decisión de identidad adoptada
 
-Antes de fijar el modelo hay una decisión que cambia la identidad y el aislamiento:
+Adoptado el 2026-11-09: **el MVP permite que una misma identidad humana pertenezca a varios tenants**. La identidad es global; la pertenencia y los roles son por tenant.
 
-**¿El MVP debe permitir que una misma identidad humana pertenezca a varios tenants, o cada empresa tiene cuentas separadas?**
-
-- Si la respuesta es **sí**, se adopta la identidad global con membresía por tenant y la misma persona puede tener roles distintos en empresas distintas.
-- Si la respuesta es **no**, la identidad se crea por tenant, no hay membresía cruzada y el onboarding es más simple, pero un usuario con dos empresas necesita dos cuentas.
-
-El resto de la propuesta funciona en ambos casos; esta decisión cambia el modelo de identidad, no los permisos ni el quorum.
+- Un usuario puede tener roles distintos en empresas distintas.
+- Ninguna solicitud mezcla membresías de tenants distintos.
+- Una identidad sin membresía en el tenant no accede al recurso.
+- Una cuenta por tenant queda descartada para el MVP. Reabrirla exige una decisión explícita.
 
 ## 16. Casos de aceptación
 
