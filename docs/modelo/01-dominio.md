@@ -21,7 +21,7 @@ Hay tres registros y no se mezclan:
 - **Hipótesis.** Supuesto reversible que aún requiere validación. No es requisito.
 - **Abierto.** Falta una decisión. No se presenta como regla, no se implementa y no se usa para cerrar otra discusión.
 
-Toda transición que no esté marcada como decidida queda **abierta**. El relato del ciclo describe situaciones que deben poder distinguirse, no una secuencia autorizada.
+Toda transición que no figure en el [catálogo adoptado](12-estados-transiciones.md) se rechaza. Este documento describe situaciones que deben poder distinguirse, no la máquina completa.
 
 ## Conceptos
 
@@ -185,7 +185,7 @@ Cada concepto conserva una distinción. Ninguno de estos conceptos autoriza por 
 
 ## Situaciones que no se pueden fusionar
 
-Estas listas no son un catálogo cerrado, no son un enum y no fijan orden ni nombres definitivos. El catálogo de estados y las transiciones permitidas están abiertos. Lo que se conserva es la necesidad de distinguir cada situación.
+Estas listas conservan la necesidad de distinguir cada situación. El catálogo conceptual y las transiciones permitidas están adoptados en [12-estados-transiciones.md](12-estados-transiciones.md); los nombres técnicos y el enum de implementación no.
 
 ### Documento
 
@@ -303,7 +303,7 @@ Todo dato de negocio del modelo pertenece a un tenant. El modelo no contiene dat
 
 ## Abierto
 
-- El catálogo cerrado de estados y de transiciones permitidas para documento, factura, pago y workflow.
+- Los nombres técnicos, el enum de implementación y la persistencia de los estados; el catálogo conceptual está adoptado en [12-estados-transiciones.md](12-estados-transiciones.md).
 - Cuándo una factura pasa a ser obligación.
 - Si el pago del MVP es solo un registro de estado o también una intención lista para un sistema externo. La ejecución real está fuera.
 - Fuentes y nivel de detalle de contratos y presupuestos.

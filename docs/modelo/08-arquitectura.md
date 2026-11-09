@@ -231,7 +231,7 @@ Cada uno tiene un hueco posible, no una justificación actual. Si no se puede me
 - Implementación, interfaz, licencia, costo y utilidad real de JEV.
 - Esquema de identidad, roles y onboarding de empresas.
 - Modelo exacto de aprobaciones, delegación y quorum.
-- Catálogo cerrado de estados y transiciones.
+- Nombres técnicos, enum y persistencia de los estados; el catálogo conceptual está adoptado en [12-estados-transiciones.md](12-estados-transiciones.md).
 - Reglas de riesgo, umbrales y calibración de severidad.
 - Integraciones futuras con ERP, CRM, bancos, contabilidad, HRIS o sistemas de uso.
 - Modos futuros de L3 y su verificación externa.

@@ -20,7 +20,7 @@ La hipótesis de cliente (empresas medianas y grandes, con proveedores, monedas,
 - Fuentes y nivel de detalle de contratos y presupuestos.
 - Modelo exacto de aprobaciones, delegación y quorum.
 - Reglas de riesgo y umbrales. La escala de severidad existe; la calibración no.
-- Catálogo cerrado de estados y transiciones. El requisito es definirlos; el enum no está adoptado.
+- Enum de implementación, identificadores técnicos y persistencia de los estados. El catálogo conceptual está adoptado en [modelo 12](../modelo/12-estados-transiciones.md).
 
 ## Tecnología sin cierre
 
