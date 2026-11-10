@@ -42,7 +42,7 @@ Cada tarea dice qué debe quedar definido, qué ya está decidido y qué no hay 
 | 11 | [Edge cases y pruebas](tareas/11-edge-cases-y-pruebas.md) | Casos que el diseño debe cubrir |
 | 12 | [Catálogo de estados y transiciones](tareas/12-estados-transiciones.md) | Modelo adoptado; contrato de comportamiento |
 | 13 | [Identidad, roles y aprobaciones](tareas/13-identidad-aprobaciones.md) | Modelo adoptado; membresía, permisos, delegación y quorum |
-| 14 | [Riesgo, severidad y umbrales](tareas/14-riesgo-severidad-umbrales.md) | Señales, severidad y límites de autonomía; propuesta |
+| 14 | [Riesgo, severidad y umbrales](tareas/14-riesgo-severidad-umbrales.md) | Modelo adoptado; señales, severidad y límites de autonomía |
 
 ## Orquestador
 

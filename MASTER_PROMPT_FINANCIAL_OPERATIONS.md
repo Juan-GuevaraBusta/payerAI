@@ -161,7 +161,7 @@ Escala conceptual sin calibrar:
 - Alta: posible duplicado, proveedor nuevo no validado o cambio sensible.
 - Crítica: señales de fraude, manipulación de datos o intento de saltarse controles.
 
-Acciones posibles: corregir datos no críticos, solicitar información, escalar, bloquear temporalmente o suspender para revisión especializada. Un modelo no reduce por sí solo la severidad.
+Acciones posibles: corregir datos no críticos, solicitar información, escalar, bloquear temporalmente o suspender para revisión especializada. Un modelo no reduce por sí solo la severidad. El modelo operativo de señales, severidad y umbrales está adoptado en [docs/modelo/14-riesgo-severidad-umbrales.md](docs/modelo/14-riesgo-severidad-umbrales.md); los valores numéricos y la calibración siguen abiertos.
 
 ## 12. Edge cases mínimos
 
@@ -217,7 +217,7 @@ No trates estos puntos como resueltos ni elijas proveedor por conveniencia:
 - Fuentes y nivel de detalle de contratos y presupuestos.
 - Aprobaciones: números de quorum, abstenciones, empates, pesos y suplencias; re-delegación; prioridad exacta de políticas; aprobación automática L2; aprobación por procesos de servicio. El modelo conceptual está adoptado en [docs/modelo/13-identidad-aprobaciones.md](docs/modelo/13-identidad-aprobaciones.md).
 - Acceso de soporte a datos de un tenant. El modelo conceptual está adoptado en [docs/modelo/13-identidad-aprobaciones.md](docs/modelo/13-identidad-aprobaciones.md).
-- Reglas de riesgo y umbrales; la escala existe, la calibración no.
+- Valores numéricos y calibración de riesgo y severidad; la estructura está adoptada en [docs/modelo/14-riesgo-severidad-umbrales.md](docs/modelo/14-riesgo-severidad-umbrales.md), los valores no.
 - Enum de implementación, identificadores técnicos y persistencia de los estados; el catálogo conceptual está adoptado en [docs/modelo/12-estados-transiciones.md](docs/modelo/12-estados-transiciones.md).
 - Retención, borrado y jurisdicción de datos.
 - Integraciones futuras con ERP, CRM, bancos, contabilidad, HRIS o sistemas de uso.

@@ -1,6 +1,6 @@
 # Seguridad, multi-tenancy y auditoría
 
-**Estado:** discovery. Los controles son requisitos de demo. El modelo conceptual de identidad, roles y aprobaciones está adoptado en [13-identidad-aprobaciones.md](13-identidad-aprobaciones.md); el proveedor de identidad, el catálogo definitivo y el esquema técnico siguen abiertos.
+**Estado:** discovery. Los controles son requisitos de demo. El modelo conceptual de identidad, roles y aprobaciones está adoptado en [13-identidad-aprobaciones.md](13-identidad-aprobaciones.md); la estructura de riesgo, severidad y umbrales está adoptada en [14-riesgo-severidad-umbrales.md](14-riesgo-severidad-umbrales.md). El proveedor de identidad, el catálogo definitivo, los valores de umbral y el esquema técnico siguen abiertos.
 **Tarea:** 10.
 **Depende de:** las tareas 01 a 09.
 **Orquestador:** `.cursor/agents/seguridad-tenancy.md`.
@@ -117,6 +117,7 @@ Estos no se pueden cerrar en la demo. Se nombran para que nadie los dé por resu
 | Quorum | Número de aprobadores, pesos, suplencias y empate. Las reglas de conteo están en [13](13-identidad-aprobaciones.md). | Depende de política y riesgo |
 | Delegación | Límites, renovación y re-delegación. El alcance y la vigencia están en [13](13-identidad-aprobaciones.md). | Depende de la política del tenant |
 | Precedencia de políticas | Orden exacto, prioridad y excepciones. La regla de conflicto está en [13](13-identidad-aprobaciones.md). | Depende del catálogo de políticas |
+| Umbrales de riesgo | Valores numéricos y calibración. La estructura está en [14](14-riesgo-severidad-umbrales.md). | Sin datos de piloto no se inventan números |
 | Acceso de soporte | Quién puede ver datos de un tenant y con qué registro. El modelo conceptual está en [13](13-identidad-aprobaciones.md). | Depende de la organización |
 | Jurisdicción | Residencia, transferencia internacional y encargados | Puede cambiar dónde se guarda y procesa |
 | Retención y borrado | Plazos, legal hold y derecho al olvido | Depende de jurisdicción y contrato |

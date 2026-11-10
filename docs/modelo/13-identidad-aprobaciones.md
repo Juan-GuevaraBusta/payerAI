@@ -439,6 +439,7 @@ Adoptado el 2026-11-09: **el MVP permite que una misma identidad humana pertenez
 | 07 Autoridad e IA | Define la autoridad y las prohibiciones que este modelo hace operativas. |
 | 10 Seguridad y tenancy | Fija los controles de aislamiento y auditoría que este modelo detalla. |
 | 12 Estados | Cada transición consume una decisión de autorización de este modelo. |
+| 14 Riesgo y umbrales | La severidad limita la autonomía; la precedencia de políticas se reutiliza. |
 
 ## 18. Fuera de alcance
 

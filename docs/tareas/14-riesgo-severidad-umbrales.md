@@ -1,6 +1,6 @@
 # Tarea 14 — Riesgo, severidad y umbrales
 
-**Estado:** discovery. Propuesta para decisión; no implementar.
+**Estado:** discovery. Modelo adoptado el 2026-11-09; no implementar.
 **Orquestador:** `.cursor/agents/autoridad-ia.md`. Skill: `karpathy-guidelines`.
 **Fuente:** documento maestro, secciones 8, 9, 11 y 15; tareas 04, 05, 07, 10, 11, 12 y 13.
 **Depende de:** validación, autoridad, workflow, seguridad, edge cases, estados e identidad. No depende de un proveedor de base de datos, OCR, correo ni modelo de IA.
@@ -23,17 +23,16 @@ Definir cómo se detecta una señal, cómo se convierte en hallazgo, cómo se as
 - Los cálculos, comparaciones y umbrales son deterministas; un modelo no los sustituye.
 - No se declara fraude ni legitimidad de forma automática.
 - Ningún cambio material queda cubierto por una evaluación anterior.
+- La plataforma ofrece una tabla base de señales, severidades y umbrales que cada tenant ajusta. El tenant endurece por defecto; aflojar exige una decisión explícita y registro. Adoptado el 2026-11-09.
 
 ## Hipótesis
 
-- La plataforma ofrece una tabla base de señales y severidades, y cada tenant la ajusta. Es una hipótesis de producto, no una decisión validada.
 - La demo se resuelve con pocas señales y casos sintéticos; no hay datos reales para calibrar números.
 - Un puntaje compuesto de riesgo no es necesario para el MVP; la severidad operativa y las reglas explícitas bastan.
 
 ## Abierto
 
 - Los valores numéricos de cada umbral.
-- Si la tabla base es de plataforma con override por tenant o si cada tenant define todo desde cero.
 - Qué señales entran en el MVP y cuáles quedan para después.
 - Si existe un puntaje compuesto de riesgo y, si existe, con qué fórmula versionada.
 - La fuente de datos para calibrar y el momento de hacerlo.
@@ -42,7 +41,6 @@ Definir cómo se detecta una señal, cómo se convierte en hallazgo, cómo se as
 - Quién puede cambiar umbrales y con qué aprobación.
 - Qué evidencia permite bajar una severidad.
 - Si la calibración es por tenant o común, y cómo se evita mezclar datos.
-- Adopción formal de este modelo.
 
 ## Fuera de esta tarea
 
@@ -67,7 +65,7 @@ Definir cómo se detecta una señal, cómo se convierte en hallazgo, cómo se as
 - override humano y límites absolutos;
 - protocolo de calibración y métricas, sin números inventados;
 - ejemplos sintéticos marcados;
-- pregunta crítica para adoptar.
+- decisión de tabla base y override adoptada.
 
 ## Criterios de aceptación
 

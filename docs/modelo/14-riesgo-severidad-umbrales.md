@@ -1,13 +1,13 @@
 # Riesgo, severidad y umbrales
 
-**Estado:** propuesta de la tarea 14. No implementar.
+**Estado:** adoptado el 2026-11-09. Discovery; no implementar.
 **Tarea:** 14.
 **Orquestador:** `.cursor/agents/autoridad-ia.md`.
 **Skill:** `karpathy-guidelines`.
 
 Modelo conceptual de señales, hallazgos, severidad y umbrales. Define cómo una señal se convierte en un hallazgo tratable y cómo la política limita la autonomía. No es un esquema, ni una API, ni una tabla de números calibrados, ni una elección de proveedor.
 
-Este documento **propone** un modelo. Mientras no se adopte, las tareas 04, 05, 07, 10 y 13 siguen siendo la fuente y este documento es revisable.
+Este documento registra el modelo adoptado. Lo que sigue marcado como hipótesis o abierto no está decidido.
 
 ## Fuentes y alcance
 
@@ -74,7 +74,7 @@ Un hallazgo puede tener más de un tipo de riesgo. No se combinan en un puntaje 
 
 ## 4. Catálogo de señales
 
-Las severidades de la tabla son **puntos de partida propuestos, no calibrados**. La política puede elevarlas. Ninguna señal declara fraude ni legitimidad.
+Las severidades de la tabla son **puntos de partida, no calibrados**. La política puede elevarlas. Ninguna señal declara fraude ni legitimidad.
 
 | ID | Señal | Tipo de riesgo | Severidad inicial propuesta | Nota |
 | --- | --- | --- | --- | --- |
@@ -108,7 +108,7 @@ Reglas del catálogo:
 
 ## 5. Evaluación
 
-Orden propuesto:
+Orden adoptado:
 
 1. **Contexto.** Resolver tenant, operación, actor, versión de evidencia y versión de política. Si falta contexto, denegar o marcar `NO_EVALUABLE`.
 2. **Evidencia suficiente.** Si falta evidencia crítica para evaluar una señal, producir `NO_EVALUABLE` con la lista de lo que falta. No asignar severidad baja.
@@ -193,7 +193,7 @@ Reglas:
 
 ### 7.2 Base y override
 
-Hipótesis: una tabla base de plataforma con override por tenant. El tenant puede endurecer un umbral sin permiso especial; aflojarlo exige una decisión explícita y registro. Los valores base no se inventan en este documento.
+Adoptado el 2026-11-09: una tabla base de plataforma con override por tenant. El tenant puede endurecer un umbral sin permiso especial; aflojarlo exige una decisión explícita y registro. Los valores base no se inventan en este documento y quedan marcados como no calibrados hasta el piloto.
 
 ## 8. Precedencia y conflicto
 
@@ -341,7 +341,7 @@ Marcados como sintéticos. No son umbrales de producto.
 - Se registran ambas reglas y versiones.
 - No gana la última ni la más permisiva.
 
-## 14. Decidido, propuesto, hipótesis y abierto
+## 14. Decidido, hipótesis y abierto
 
 ### Decidido antes de esta tarea
 
@@ -355,7 +355,7 @@ Marcados como sintéticos. No son umbrales de producto.
 - El override humano exige actor, motivo, fecha y evidencia.
 - El aislamiento entre tenants no se negocia.
 
-### Propuesto
+### Adoptado el 2026-11-09
 
 - Distinguir señal, hallazgo, tipo de riesgo, confianza, severidad, umbral y decisión.
 - Catálogo de señales y tipos de riesgo de las secciones 3 y 4.
@@ -365,11 +365,11 @@ Marcados como sintéticos. No son umbrales de producto.
 - Elevación prevalece; reducción exige evidencia y autoridad.
 - Conflicto de igual prioridad se declara y escala.
 - Tope de autonomía por severidad.
+- Tabla base de plataforma con override por tenant. El tenant endurece por defecto; aflojar exige una decisión explícita y registro.
 - Calibración en fases, sin afirmar precisión sin datos.
 
 ### Hipótesis
 
-- Tabla base de plataforma con override por tenant.
 - La demo se resuelve con pocas señales y casos sintéticos.
 - Un puntaje compuesto de riesgo no es necesario para el MVP.
 - La calibración real espera a un piloto con datos etiquetados.
@@ -377,7 +377,6 @@ Marcados como sintéticos. No son umbrales de producto.
 ### Abierto
 
 - Valores numéricos de todos los umbrales.
-- Tabla base frente a configuración solo por tenant.
 - Señales incluidas en el MVP.
 - Existencia y fórmula de un puntaje compuesto.
 - Fuente y momento de la calibración.
@@ -386,16 +385,15 @@ Marcados como sintéticos. No son umbrales de producto.
 - Quién puede cambiar umbrales y con qué aprobación.
 - Evidencia que permite bajar una severidad.
 - Calibración por tenant o común, y agregación permitida.
-- Adopción formal de este modelo.
 
-## 15. Pregunta crítica para adoptar
+## 15. Decisión de umbrales adoptada
 
-**¿La plataforma debe ofrecer una tabla base de señales, severidades y umbrales que cada tenant ajusta, o cada tenant debe definir todo desde cero?**
+Adoptado el 2026-11-09: **la plataforma ofrece una tabla base de señales, severidades y umbrales que cada tenant ajusta**, con los valores base marcados como no calibrados hasta el piloto.
 
-- **Tabla base con override:** onboarding más rápido y criterio común; el tenant endurece por defecto y aflojar exige decisión registrada.
-- **Solo por tenant:** máxima flexibilidad y menor riesgo de heredar un valor inadecuado; más carga de configuración y más variación entre clientes.
-
-Recomendación: **tabla base con override**, con los valores base marcados como no calibrados hasta el piloto. El resto del modelo funciona en ambos casos; esta decisión cambia el onboarding y la gobernanza de umbrales, no la evaluación.
+- El tenant puede endurecer un umbral sin permiso especial.
+- Aflojar un umbral exige una decisión explícita y registro.
+- Una configuración solo por tenant queda descartada para el MVP; reabrirla exige una decisión explícita.
+- La tabla base no inventa números: define la estructura y deja los valores pendientes de calibración.
 
 ## 16. Casos de aceptación
 
