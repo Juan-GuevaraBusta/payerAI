@@ -73,6 +73,22 @@ Adoptado el 2026-11-09.
 - Detalle en [modelo 13](../modelo/13-identidad-aprobaciones.md) y [tarea 13](../tareas/13-identidad-aprobaciones.md).
 - Quedan abiertos: proveedor y protocolo de identidad, MFA, SSO/SCIM, autoservicio, catálogo definitivo de roles, números de quorum, reglas de re-delegación, prioridad exacta de políticas, aprobación automática L2, aprobación por procesos de servicio, acceso de soporte y retención.
 
+## Riesgo, severidad y umbrales
+
+Adoptado el 2026-11-09.
+
+- Se distingue señal, hallazgo, tipo de riesgo, confianza, severidad, umbral, evaluación y decisión. Una señal no declara fraude, legitimidad ni aprobación.
+- `NO_EVALUABLE` es un resultado separado, no una severidad. Un dato faltante no se trata como "por debajo del umbral" ni como severidad baja.
+- La IA puede añadir un hallazgo o recomendar revisión; no baja, cierra ni convierte en seguro un hallazgo.
+- Todo umbral declara cantidad, unidad, moneda, alcance, operador, límite inclusivo o exclusivo, vigencia y versión. Sin valor declarado no se evalúa.
+- Una tabla base de plataforma con override por tenant: endurecer no requiere permiso especial; aflojar exige decisión explícita y registro. Los valores base quedan marcados como no calibrados hasta el piloto.
+- Una elevación prevalece; una reducción exige evidencia y autoridad. Un conflicto de igual prioridad se declara y escala.
+- La severidad limita la autonomía: alta y crítica no admiten aprobación automática; crítica exige revisión especializada.
+- Un override conserva el hallazgo original y registra actor, motivo, evidencia, alcance, vigencia y versión.
+- La calibración es un proceso en fases con datos etiquetados; no se afirma precisión sin datos.
+- Detalle en [modelo 14](../modelo/14-riesgo-severidad-umbrales.md) y [tarea 14](../tareas/14-riesgo-severidad-umbrales.md).
+- Quedan abiertos: valores numéricos, señales incluidas en el MVP, puntaje compuesto, datos y momento de calibración, monedas y tasas, plazos de revisión, gobernanza de cambios, evidencia para bajar severidad y calibración por tenant o común.
+
 ## Integridad que ya es requisito
 
 Aunque la arquitectura siga abierta, estos requisitos valen también para una demo:

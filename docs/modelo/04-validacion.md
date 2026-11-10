@@ -7,6 +7,7 @@ Especificación conceptual de la tarea 04. Define cómo una solicitud de pago se
 - [Documento maestro](../documento-maestro.md), secciones 5.2 (módulo A), 8 y 13.
 - [Glosario](../glosario.md).
 - [Modelo de dominio](01-dominio.md), [ingesta](02-ingesta.md) y [proveedores](03-proveedores.md).
+- [Riesgo, severidad y umbrales](14-riesgo-severidad-umbrales.md).
 - [Tarea 04](../tareas/04-validacion-de-facturas.md).
 
 **Depende de:** dominio, ingesta y proveedores.
@@ -141,7 +142,7 @@ Resultado: discrepancia abierta con pedido de evidencia. No es fraude, no es un 
 
 ## Abierto
 
-- Umbrales de duplicado probable, de exceso sobre contrato y de severidad.
+- Valores de los umbrales de duplicado probable, de exceso sobre contrato y de severidad. La estructura está adoptada en [riesgo, severidad y umbrales](14-riesgo-severidad-umbrales.md); los valores no.
 - De dónde salen contratos y presupuestos, y con qué detalle.
 - Tasas y fechas de conversión entre monedas. El caso existe; la fuente de la tasa no.
 - Qué versión de política se congela al empezar una validación.

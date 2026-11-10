@@ -417,9 +417,9 @@ No hay suite implementada. Esta matriz indica qué tipo de prueba necesitará ca
 ## Lo que este documento no cierra
 
 - La clave exacta de idempotencia.
-- El umbral de duplicado probable.
+- El valor del umbral de duplicado probable; la estructura está en [riesgo, severidad y umbrales](14-riesgo-severidad-umbrales.md).
 - La materialidad de un cambio de factura.
-- La precedencia de políticas y el carácter inclusivo o exclusivo de los umbrales.
+- La precedencia exacta de políticas y los valores de los umbrales; el carácter inclusivo o exclusivo debe declararse, según [riesgo, severidad y umbrales](14-riesgo-severidad-umbrales.md).
 - El mecanismo de concurrencia y la base de datos.
 - El proveedor de correo y webhooks.
 - Si Queue o Workflow se adoptan.

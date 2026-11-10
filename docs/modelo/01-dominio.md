@@ -308,7 +308,7 @@ Todo dato de negocio del modelo pertenece a un tenant. El modelo no contiene dat
 - Si el pago del MVP es solo un registro de estado o también una intención lista para un sistema externo. La ejecución real está fuera.
 - Fuentes y nivel de detalle de contratos y presupuestos.
 - Identidad, roles, onboarding, delegación y quorum: el modelo conceptual está adoptado en [13-identidad-aprobaciones.md](13-identidad-aprobaciones.md); el esquema técnico, el catálogo definitivo y los proveedores siguen abiertos.
-- Calibración de la severidad y reglas de riesgo.
+- Valores y calibración de la severidad y de las reglas de riesgo; la estructura está adoptada en [14-riesgo-severidad-umbrales.md](14-riesgo-severidad-umbrales.md).
 - Si una factura modificada después de aprobar exige invalidación o nueva aprobación, y con qué regla.
 - El mecanismo concreto de idempotencia y de vinculación entre mensajes, documentos y operaciones.
 

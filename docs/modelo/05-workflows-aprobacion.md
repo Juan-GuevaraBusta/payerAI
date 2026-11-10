@@ -8,7 +8,7 @@ Especificación conceptual de la tarea 05. Define el ciclo configurable de aprob
 - [Decisiones adoptadas](../decisiones/adoptadas.md) y [asuntos abiertos](../decisiones/abiertas.md).
 - [Glosario](../glosario.md).
 - [Tarea 05](../tareas/05-workflows-de-aprobacion.md).
-- [Modelo de dominio](01-dominio.md), [validación](04-validacion.md), [autoridad, autonomía e IA](07-autoridad-ia.md) e [identidad, roles y aprobaciones](13-identidad-aprobaciones.md).
+- [Modelo de dominio](01-dominio.md), [validación](04-validacion.md), [autoridad, autonomía e IA](07-autoridad-ia.md), [identidad, roles y aprobaciones](13-identidad-aprobaciones.md) y [riesgo, severidad y umbrales](14-riesgo-severidad-umbrales.md).
 
 **Depende de:** la validación, que aporta evidencia, y la autoridad, que define qué puede hacer cada actor. La autoridad se definió antes que este workflow.
 

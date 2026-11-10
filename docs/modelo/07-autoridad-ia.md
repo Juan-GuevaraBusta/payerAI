@@ -9,7 +9,7 @@ Especificación conceptual de la tarea 07. Define qué puede proponer un modelo,
 - [Glosario](../glosario.md).
 - [Tarea 07](../tareas/07-autoridad-autonomia-e-ia.md).
 - [Modelo de dominio](01-dominio.md), [proveedores](03-proveedores.md) y [validación](04-validacion.md).
-- [Identidad, roles y aprobaciones](13-identidad-aprobaciones.md).
+- [Identidad, roles y aprobaciones](13-identidad-aprobaciones.md) y [riesgo, severidad y umbrales](14-riesgo-severidad-umbrales.md).
 - [Informe de validación de specs](../orchestrator/reports/06-validacion-specs.md).
 
 **Depende de:** el modelo de dominio, la validación y la distinción entre reconocer un proveedor y autorizarlo a cobrar. No depende de la tarea 06 ni de su rama. La autoridad se define antes que el workflow de la tarea 05; ese workflow consumirá este documento.
@@ -338,7 +338,7 @@ Reglas de relación:
 - La severidad no concede autoridad por sí sola.
 - Un modelo no puede bajar ni cerrar una severidad.
 - Un override humano lleva actor, motivo, fecha y evidencia.
-- La calibración exacta y los umbrales quedan abiertos.
+- La estructura de severidad y umbrales está adoptada en [riesgo, severidad y umbrales](14-riesgo-severidad-umbrales.md); los valores y la calibración quedan abiertos.
 
 ## 11. Escalamiento humano, override y segregación
 
@@ -439,7 +439,7 @@ Nota de dependencia: la cabecera de la tarea 07 conserva una referencia a workfl
 
 - Qué modelo, si alguno, y la política de escalamiento entre modelo ligero, modelo capaz y humano.
 - Qué es JEV, qué interfaz tiene, qué licencia, qué costo y si aporta.
-- Umbrales de riesgo y calibración de severidad.
+- Valores de riesgo y calibración de severidad; la estructura está adoptada en [riesgo, severidad y umbrales](14-riesgo-severidad-umbrales.md).
 - Qué combinación de atributos sube o baja el nivel de autonomía.
 - Esquema de identidad, roles, onboarding, delegación y quorum.
 - Precedencia exacta entre políticas en conflicto.

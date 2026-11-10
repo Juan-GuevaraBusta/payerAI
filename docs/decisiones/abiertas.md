@@ -21,7 +21,7 @@ La hipótesis de cliente (empresas medianas y grandes, con proveedores, monedas,
 - Fuentes y nivel de detalle de contratos y presupuestos.
 - Aprobaciones: números de quorum, abstenciones, empates, pesos y suplencias; re-delegación y límites de duración; prioridad exacta de políticas; aprobación automática L2; aprobación por procesos de servicio. El modelo conceptual está adoptado en [modelo 13](../modelo/13-identidad-aprobaciones.md).
 - Acceso de soporte a datos de un tenant. El modelo conceptual está adoptado en [modelo 13](../modelo/13-identidad-aprobaciones.md).
-- Reglas de riesgo y umbrales. La escala de severidad existe; la calibración no.
+- Valores numéricos y calibración de riesgo y severidad: señales del MVP, puntaje compuesto, datos y momento de calibración, monedas y tasas, plazos de revisión, gobernanza de cambios y evidencia para bajar severidad. La estructura está adoptada en [modelo 14](../modelo/14-riesgo-severidad-umbrales.md); los valores no.
 - Enum de implementación, identificadores técnicos y persistencia de los estados. El catálogo conceptual está adoptado en [modelo 12](../modelo/12-estados-transiciones.md).
 
 ## Tecnología sin cierre
