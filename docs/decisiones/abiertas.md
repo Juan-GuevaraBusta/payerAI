@@ -27,7 +27,7 @@ La hipótesis de cliente (empresas medianas y grandes, con proveedores, monedas,
 ## Tecnología sin cierre
 
 - Migración de D1 a PostgreSQL serverless para piloto o producción, y criterios de disparo. D1 es default de demo; el marco de despliegue y los guardrails de costo están adoptados en [modelo 09](../modelo/09-infraestructura-costo.md).
-- Proveedor y protocolo de correo. Comparar costo, seguridad y viabilidad antes de una dependencia difícil de revertir.
+- Proveedor y protocolo de correo real. Comparar costo, seguridad y viabilidad antes de una dependencia difícil de revertir. La demo con carga manual y eventos sintéticos está adoptada en [modelo 02](../modelo/02-ingesta.md).
 - OCR y extracción de PDF para documentos escaneados.
 - Implementación, interfaz, licencia, costo y utilidad real de JEV. No inventar primitivas ni precios.
 - Modelos, proveedores, versiones y precios de IA; umbrales de confianza por tarea; topes de costo y latencia; papel de T2 y evaluación de JEV; configurabilidad del tenant; retención y residencia. La política de escalamiento está adoptada en [modelo 16](../modelo/16-escalamiento-ia.md).

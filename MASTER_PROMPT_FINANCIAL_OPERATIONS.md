@@ -48,6 +48,8 @@ No todo correo es una factura nueva. Puede ser una factura nueva, una respuesta 
 
 La ingesta debe ser idempotente frente a reenvíos, documentos duplicados, webhooks duplicados o fuera de orden, eventos y reintentos.
 
+La demo del MVP usa carga manual de PDF y eventos de correo sintéticos claramente marcados; no se presenta como integración real de buzón. La identidad del documento se basa en tenant y contenido estable, no en el nombre del archivo. El proveedor real y el OCR siguen abiertos. Detalle en [docs/modelo/02-ingesta.md](docs/modelo/02-ingesta.md).
+
 ## 4. Proveedores
 
 Modelo híbrido:
@@ -214,7 +216,7 @@ No trates estos puntos como resueltos ni elijas proveedor por conveniencia:
 - Requisitos regulatorios y jurisdicciones del mercado objetivo.
 - Arquitectura concreta y stack de frontend.
 - Migración de D1 a PostgreSQL serverless para piloto o producción; D1 es default de demo.
-- Proveedor y protocolo de correo.
+- Proveedor y protocolo de correo real; la demo con carga manual y eventos sintéticos está adoptada en [docs/modelo/02-ingesta.md](docs/modelo/02-ingesta.md).
 - OCR y extracción de PDF escaneado.
 - Implementación, interfaz, licencia, costo y utilidad real de JEV.
 - Modelos, proveedores, versiones y precios de IA; umbrales de confianza por tarea; topes de costo y latencia; papel de T2 y evaluación de JEV; configurabilidad del tenant; retención y residencia. La política de escalamiento está adoptada en [docs/modelo/16-escalamiento-ia.md](docs/modelo/16-escalamiento-ia.md).
