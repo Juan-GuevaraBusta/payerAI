@@ -43,6 +43,7 @@ Cada tarea dice qué debe quedar definido, qué ya está decidido y qué no hay 
 | 12 | [Catálogo de estados y transiciones](tareas/12-estados-transiciones.md) | Modelo adoptado; contrato de comportamiento |
 | 13 | [Identidad, roles y aprobaciones](tareas/13-identidad-aprobaciones.md) | Modelo adoptado; membresía, permisos, delegación y quorum |
 | 14 | [Riesgo, severidad y umbrales](tareas/14-riesgo-severidad-umbrales.md) | Modelo adoptado; señales, severidad y límites de autonomía |
+| 15 | [Contratos y presupuestos como evidencia](tareas/15-contratos-presupuestos-evidencia.md) | Propuesta; fuentes, vigencia, vínculo y comparación |
 
 ## Orquestador
 
