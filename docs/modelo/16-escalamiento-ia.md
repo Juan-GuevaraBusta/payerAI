@@ -1,13 +1,13 @@
 # Política de escalamiento de IA
 
-**Estado:** propuesta de la tarea 16. No implementar.
+**Estado:** adoptado el 2026-11-09. No implementar.
 **Tarea:** 16.
 **Orquestador:** `.cursor/agents/autoridad-ia.md`.
 **Skill:** `karpathy-guidelines`.
 
 Política conceptual para decidir qué componente resuelve una tarea y cuándo se sube de escalón. No elige modelo, proveedor, JEV, OCR, base de datos ni infraestructura. No concede autoridad.
 
-Este documento **propone** una política. Mientras no se adopte, el orden de preferencia del master prompt y el [modelo 07](07-autoridad-ia.md) siguen siendo la fuente.
+Este documento fija la postura y la ruta base. Los modelos concretos, umbrales, precios y topes siguen abiertos.
 
 ## Fuentes y alcance
 
@@ -19,6 +19,19 @@ Este documento **propone** una política. Mientras no se adopte, el orden de pre
 - [Validación](04-validacion.md), [edge cases](11-edge-cases.md), [riesgo, severidad y umbrales](14-riesgo-severidad-umbrales.md) y [contratos y presupuestos](15-contratos-presupuestos-evidencia.md).
 
 **Alcance:** enrutamiento de cómputo, subida, detención, fallback, costo, calidad y registro. **No es** la escala de autonomía L0–L3, ni una autorización, ni una decisión de producto sobre qué modelo contratar.
+
+## Decisión adoptada (2026-11-09)
+
+- **Postura por defecto:** costo primero con escalamiento explícito.
+- Se empieza en T0 si hay regla; en T1 si hace falta extracción o clasificación. Se sube solo con un disparador declarado.
+- La evidencia ausente, parcial o conflictiva va a T4. No se sube a T3 para "completar" la ausencia.
+- La severidad alta o crítica va a T4. T3 puede resumir para el humano, pero no decide ni baja la severidad.
+- T2 es opcional y solo existe si está verificado. JEV no está aprobado.
+- Un fallo o un tope de costo termina en T0 o T4; nunca en aprobación.
+- La confianza se calibra por tarea y no es autoridad.
+- El tenant puede endurecer; no puede permitir lo prohibido.
+- La ruta y la intervención humana se registran.
+- Quedan abiertos: modelos, proveedores, precios, umbrales de confianza, topes de costo y latencia, papel de T2/JEV, configurabilidad del tenant, retención y residencia.
 
 ## 1. Dos escalas que no se mezclan
 
@@ -327,8 +340,9 @@ Marcados como sintéticos. No fijan umbrales ni precios.
 - El MVP no ejecuta L3.
 - No se comparten datos entre tenants.
 
-### Propuesto
+### Adoptado con este modelo
 
+- Postura por defecto: costo primero con escalamiento explícito.
 - Separar escalones de cómputo T0–T4 de niveles de autonomía L0–L3.
 - Empezar en el escalón más bajo suficiente y subir solo con disparador.
 - Tabla de ruta y disparadores de las secciones 4 y 5.
@@ -351,7 +365,6 @@ Marcados como sintéticos. No fijan umbrales ni precios.
 
 ### Abierto
 
-- Política por defecto: costo primero, calidad primero o humano primero.
 - Modelos, proveedores, versiones y precios.
 - Umbrales de confianza por tarea y calibración.
 - Topes de costo y latencia.
@@ -360,17 +373,16 @@ Marcados como sintéticos. No fijan umbrales ni precios.
 - Retención, residencia y tratamiento externo.
 - Idiomas, formatos y tipos de documento.
 - Estrategia de prompts, caché y evaluación.
-- Adopción formal de este modelo.
 
-## 16. Pregunta crítica para adoptar
+## 16. Decisión adoptada sobre la postura
 
-**¿Cuál es la postura por defecto del MVP?**
+Adoptado el 2026-11-09: **costo primero con escalamiento explícito**.
 
 - **Costo primero con escalamiento explícito:** empezar en T0 o T1, subir solo con disparador y derivar a T4 cuando falte evidencia o el riesgo sea alto. Menor costo y suficiente para el MVP.
-- **Calidad primero:** usar T3 antes en casos ambiguos. Más costo, sin más autoridad ni más evidencia.
-- **Humano primero:** derivar a T4 toda excepción. Más lento y más caro por caso, pero maximiza control en el MVP.
+- **Calidad primero:** se descartó como postura por defecto; usa T3 antes en casos ambiguos, con más costo y sin más autoridad ni más evidencia.
+- **Humano primero:** se descartó como postura por defecto; deriva toda excepción a T4, con más lentitud y costo por caso.
 
-Recomendación: **costo primero con escalamiento explícito**. La calidad se protege con reglas, evidencia y revisión humana, no con un modelo más caro por defecto.
+La calidad se protege con reglas, evidencia y revisión humana, no con un modelo más caro por defecto.
 
 ## 17. Criterios de aceptación
 

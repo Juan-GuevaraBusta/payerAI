@@ -140,6 +140,8 @@ Lo que una regla determinista no hace:
 
 La regla y su versión deben quedar registradas. Con la misma entrada, la misma política y la misma versión, el resultado determinista debe ser reproducible.
 
+La ruta de cómputo que elige entre regla, modelo ligero, evaluador estructurado, modelo capaz y humano está adoptada en [escalamiento de IA](16-escalamiento-ia.md). Esa ruta no cambia las prohibiciones ni la autoridad de este documento.
+
 ## 4. Separación de interpretación, decisión, autorización y ejecución
 
 | Capa | Pregunta que responde | Quién la ejerce | Entrada | Salida | No puede |
@@ -437,7 +439,7 @@ Nota de dependencia: la cabecera de la tarea 07 conserva una referencia a workfl
 
 ### Abierto
 
-- Qué modelo, si alguno, y la política de escalamiento entre modelo ligero, modelo capaz y humano.
+- Qué modelo, proveedor, versión y precio, si alguno; umbrales de confianza y topes de costo. La postura y la ruta están adoptadas en [escalamiento de IA](16-escalamiento-ia.md).
 - Qué es JEV, qué interfaz tiene, qué licencia, qué costo y si aporta.
 - Valores de riesgo y calibración de severidad; la estructura está adoptada en [riesgo, severidad y umbrales](14-riesgo-severidad-umbrales.md).
 - Qué combinación de atributos sube o baja el nivel de autonomía.

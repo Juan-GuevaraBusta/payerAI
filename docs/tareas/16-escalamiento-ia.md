@@ -1,6 +1,6 @@
 # Tarea 16 — Política de escalamiento de IA
 
-**Estado:** discovery. Propuesta para decisión; no implementar.
+**Estado:** adoptado el 2026-11-09. No implementar.
 **Orquestador:** `.cursor/agents/autoridad-ia.md`. Skill: `karpathy-guidelines`.
 **Fuente:** master prompt, secciones 7, 8, 10 y 11; tareas 07, 11, 14 y 15.
 **Depende de:** autoridad e IA, validación, riesgo/severidad, contratos y presupuestos. No depende de un proveedor de modelos, JEV, OCR, base de datos ni infraestructura.
@@ -8,6 +8,15 @@
 ## Objetivo
 
 Convertir el orden de preferencia —código determinista, modelo ligero, evaluador estructurado, modelo capaz, humano— en una política operable: cuándo se empieza en cada escalón, qué dispara una subida, cuándo se detiene, cuánto puede costar y qué se registra. No elige modelo ni proveedor.
+
+## Decisión adoptada (2026-11-09)
+
+- Postura por defecto: costo primero con escalamiento explícito.
+- Se empieza en T0 si hay regla; en T1 si hace falta extracción o clasificación. Se sube solo con disparador.
+- Evidencia ausente, parcial o conflictiva y severidad alta o crítica van a T4.
+- Un fallo o un tope de costo termina en T0 o T4; nunca en aprobación.
+- T2 es opcional y solo si está verificado; JEV no está aprobado.
+- Quedan abiertos: modelos, proveedores, precios, umbrales de confianza, topes de costo y latencia, papel de T2/JEV, configurabilidad del tenant, retención y residencia.
 
 ## Decidido
 
@@ -32,7 +41,6 @@ Convertir el orden de preferencia —código determinista, modelo ligero, evalua
 
 ## Abierto
 
-- Política por defecto: costo primero, calidad primero o humano primero.
 - Modelos concretos, proveedores, versiones y precios.
 - Umbrales de confianza por tarea y su calibración.
 - Topes de costo por caso, por tenant y por periodo.
@@ -42,7 +50,6 @@ Convertir el orden de preferencia —código determinista, modelo ligero, evalua
 - Retención, residencia y tratamiento por proveedor externo.
 - Idioma, formatos y tipos de documento cubiertos.
 - Estrategia de prompts, caché y evaluación.
-- Adopción formal de este modelo.
 
 ## Fuera de esta tarea
 
@@ -70,7 +77,7 @@ Convertir el orden de preferencia —código determinista, modelo ligero, evalua
 - observabilidad y registro;
 - modos de fallo y fallback;
 - ejemplos sintéticos;
-- pregunta crítica para adoptar.
+- decisión adoptada sobre la postura.
 
 ## Criterios de aceptación
 

@@ -105,6 +105,22 @@ Adoptado el 2026-11-09.
 - Detalle en [modelo 15](../modelo/15-contratos-presupuestos-evidencia.md) y [tarea 15](../tareas/15-contratos-presupuestos-evidencia.md).
 - Quedan abiertos: detalle contractual, determinación de vigencia y precedencia entre anexos, bloqueo por contrato vencido, granularidad y fuente de consumido/comprometido, quién confirma excepciones, tasas y redondeo, canal y plazo de confirmación, extracción automática, retención y posible orden de compra.
 
+## Escalamiento de IA
+
+Adoptado el 2026-11-09.
+
+- Postura por defecto: costo primero con escalamiento explícito. Empezar en T0 si hay regla y en T1 si hace falta extracción o clasificación; subir solo con un disparador declarado.
+- Los escalones de cómputo T0–T4 se separan de los niveles de autonomía L0–L3. Subir de escalón no concede autoridad ni cambia la decisión.
+- Evidencia ausente, parcial o conflictiva va a T4; no se sube a T3 para "completar" la ausencia.
+- Severidad alta o crítica va a T4. T3 puede resumir para el humano, pero no decide ni baja la severidad.
+- T2 es opcional y solo existe si está verificado. JEV sigue sin aprobación.
+- Un fallo, timeout, salida inválida o tope de costo termina en T0 o T4; nunca en aprobación.
+- La confianza se calibra por tarea y no es autoridad. Un puntaje alto no aprueba; uno bajo no rechaza solo.
+- El tenant puede endurecer la ruta o exigir humano; no puede permitir una acción prohibida ni compartir datos.
+- Cada ruta registra disparador, escalón, componente y versión, costo si se midió, resultado e intervención humana.
+- Detalle en [modelo 16](../modelo/16-escalamiento-ia.md) y [tarea 16](../tareas/16-escalamiento-ia.md).
+- Quedan abiertos: modelos, proveedores, versiones y precios; umbrales de confianza por tarea; topes de costo y latencia; papel de T2 y evaluación de JEV; configurabilidad del tenant; retención y residencia; idiomas y formatos; prompts, caché y evaluación.
+
 ## Integridad que ya es requisito
 
 Aunque la arquitectura siga abierta, estos requisitos valen también para una demo:

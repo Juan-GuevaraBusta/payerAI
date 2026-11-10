@@ -30,7 +30,7 @@ La hipótesis de cliente (empresas medianas y grandes, con proveedores, monedas,
 - Proveedor y protocolo de correo. Comparar costo, seguridad y viabilidad antes de una dependencia difícil de revertir.
 - OCR y extracción de PDF para documentos escaneados.
 - Implementación, interfaz, licencia, costo y utilidad real de JEV. No inventar primitivas ni precios.
-- Modelos de IA y política de escalamiento entre modelo ligero, modelo capaz y humano.
+- Modelos, proveedores, versiones y precios de IA; umbrales de confianza por tarea; topes de costo y latencia; papel de T2 y evaluación de JEV; configurabilidad del tenant; retención y residencia. La política de escalamiento está adoptada en [modelo 16](../modelo/16-escalamiento-ia.md).
 - Integraciones futuras con ERP, CRM, bancos, contabilidad, HRIS o sistemas de uso. No son alcance del MVP.
 
 ## Evidencia que el documento no trae
