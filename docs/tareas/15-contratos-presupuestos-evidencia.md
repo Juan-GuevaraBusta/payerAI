@@ -1,6 +1,6 @@
 # Tarea 15 — Contratos y presupuestos como evidencia
 
-**Estado:** discovery. Propuesta para decisión; no implementar.
+**Estado:** adoptado el 2026-11-09. No implementar.
 **Orquestador:** `.cursor/agents/validacion-facturas.md`. Skill: `principle-explain-the-number`.
 **Fuente:** documento maestro, secciones 5.2, 8 y 15; tareas 04, 07, 11 y 14.
 **Depende de:** dominio, proveedores, validación, riesgo/severidad y edge cases. No depende de un proveedor de OCR, ERP, base de datos ni correo.
@@ -8,6 +8,12 @@
 ## Objetivo
 
 Definir qué cuenta como contrato, anexo o presupuesto para validar una factura, con qué detalle, vigencia, alcance y versión; cómo se vincula con la operación; y cómo se registra su ausencia, ambigüedad o conflicto. No es un módulo contractual ni de compras.
+
+## Decisión adoptada (2026-11-09)
+
+- Fuentes del MVP: contrato o anexo, presupuesto y confirmación interna.
+- La orden de compra no es fuente obligatoria del MVP; su inclusión queda abierta.
+- El alcance de fuentes queda cerrado. El detalle de campos, la vigencia, la precedencia entre anexos, la granularidad del presupuesto y el canal de confirmación siguen abiertos.
 
 ## Decidido
 
@@ -24,14 +30,13 @@ Definir qué cuenta como contrato, anexo o presupuesto para validar una factura,
 
 ## Hipótesis
 
-- Las fuentes del MVP son contrato o anexo, presupuesto y confirmación interna. La orden de compra queda abierta.
 - La captura en demo es manual o simulada; no exige OCR ni integración con un ERP.
 - Pocas facturas sintéticas traerán contrato; el sistema debe mostrar la ausencia sin fingir una validación completa.
 - El presupuesto se expresa como límite por periodo, departamento o centro de costo; el detalle exacto está abierto.
 
 ## Abierto
 
-- Qué fuentes exactas entran al MVP y cuáles quedan para después.
+- Inclusión futura de la orden de compra como fuente.
 - Nivel de detalle contractual: cabecera, líneas, anexos, renovaciones y condiciones.
 - Cómo se determina la vigencia y qué anexo prevalece.
 - Si un contrato vencido bloquea o solo eleva la severidad.
@@ -42,7 +47,6 @@ Definir qué cuenta como contrato, anexo o presupuesto para validar una factura,
 - Canal y plazo de la confirmación interna.
 - Extracción automática de contratos y presupuestos; proveedor y alcance.
 - Retención, borrado y jurisdicción de contratos y presupuestos.
-- Adopción formal de este modelo.
 
 ## Fuera de esta tarea
 
@@ -68,7 +72,7 @@ Definir qué cuenta como contrato, anexo o presupuesto para validar una factura,
 - acoplamiento con severidad y workflow;
 - aislamiento y auditoría;
 - ejemplos sintéticos;
-- pregunta crítica para adoptar.
+- decisión adoptada sobre fuentes.
 
 ## Criterios de aceptación
 

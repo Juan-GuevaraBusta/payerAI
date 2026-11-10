@@ -89,6 +89,22 @@ Adoptado el 2026-11-09.
 - Detalle en [modelo 14](../modelo/14-riesgo-severidad-umbrales.md) y [tarea 14](../tareas/14-riesgo-severidad-umbrales.md).
 - Quedan abiertos: valores numéricos, señales incluidas en el MVP, puntaje compuesto, datos y momento de calibración, monedas y tasas, plazos de revisión, gobernanza de cambios, evidencia para bajar severidad y calibración por tenant o común.
 
+## Contratos y presupuestos como evidencia
+
+Adoptado el 2026-11-09.
+
+- Fuentes del MVP: contrato o anexo, presupuesto y confirmación interna. La orden de compra no es obligatoria y su inclusión queda abierta.
+- El contrato o anexo responde por condición comercial; el presupuesto por límite disponible; la confirmación interna por una excepción concreta. Ninguna sustituye a la otra.
+- La ausencia de contrato, presupuesto o confirmación es ausencia de evidencia: no aprueba ni rechaza por sí sola.
+- La vigencia se determina por fechas y condiciones declaradas, no por la fecha del archivo. Un contrato vencido es un hallazgo; no se usa como vigente.
+- Un anexo modifica solo lo que declara y dentro de su vigencia. Dos anexos vigentes contradictorios producen conflicto explícito; no gana el más reciente por fecha.
+- El disponible de presupuesto se calcula solo si existen importe autorizado y consumos o compromisos. Sin el dato, es `NO_EVALUABLE`. Un presupuesto agotado es un hallazgo, no un rechazo automático.
+- El vínculo entre factura y fuente se demuestra con referencia y versión. La ambigüedad pide aclaración; una referencia a otro tenant se deniega sin revelar existencia.
+- La comparación es determinista y cita fuente, versión, campo y moneda. Sin tasa, fuente y fecha, una comparación entre monedas distintas es evidencia insuficiente.
+- Una confirmación interna no es contrato, no crea presupuesto ni equivale a aprobación. El silencio no es conformidad.
+- Detalle en [modelo 15](../modelo/15-contratos-presupuestos-evidencia.md) y [tarea 15](../tareas/15-contratos-presupuestos-evidencia.md).
+- Quedan abiertos: detalle contractual, determinación de vigencia y precedencia entre anexos, bloqueo por contrato vencido, granularidad y fuente de consumido/comprometido, quién confirma excepciones, tasas y redondeo, canal y plazo de confirmación, extracción automática, retención y posible orden de compra.
+
 ## Integridad que ya es requisito
 
 Aunque la arquitectura siga abierta, estos requisitos valen también para una demo:

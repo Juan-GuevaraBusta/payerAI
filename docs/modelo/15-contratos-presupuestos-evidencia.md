@@ -1,13 +1,13 @@
 # Contratos y presupuestos como evidencia
 
-**Estado:** propuesta de la tarea 15. No implementar.
+**Estado:** adoptado el 2026-11-09. No implementar.
 **Tarea:** 15.
 **Orquestador:** `.cursor/agents/validacion-facturas.md`.
 **Skill:** `principle-explain-the-number`.
 
 Modelo conceptual de contratos, anexos, presupuestos y confirmaciones como evidencia para validar una factura. No es un módulo contractual, ni un módulo de compras, ni un esquema, ni una API, ni una elección de OCR o ERP.
 
-Este documento **propone** un modelo. Mientras no se adopte, las tareas 04, 07, 11 y 14 siguen siendo la fuente y este documento es revisable.
+Este documento fija el alcance de fuentes y el modelo conceptual. Los valores, el detalle de campos y la calibración de umbrales siguen abiertos.
 
 ## Fuentes y alcance
 
@@ -19,6 +19,15 @@ Este documento **propone** un modelo. Mientras no se adopte, las tareas 04, 07, 
 - [Dominio](01-dominio.md), [proveedores](03-proveedores.md), [validación](04-validacion.md), [autoridad e IA](07-autoridad-ia.md), [edge cases](11-edge-cases.md), [estados](12-estados-transiciones.md), [identidad](13-identidad-aprobaciones.md) y [riesgo, severidad y umbrales](14-riesgo-severidad-umbrales.md).
 
 **Alcance:** qué fuente cuenta como evidencia, con qué detalle y vigencia, cómo se vincula con una factura y cómo se registra su ausencia o conflicto. No incluye aprobar, rechazar, pagar, ni construir un sistema de contratos o compras.
+
+## Decisión adoptada (2026-11-09)
+
+- **Fuentes del MVP:** contrato o anexo, presupuesto y confirmación interna.
+- **Orden de compra:** no es fuente obligatoria del MVP; su inclusión queda abierta. Si aparece, es evidencia acotada y no convierte el MVP en un módulo de compras.
+- **Contrato o anexo:** responde por condición comercial, vigencia, moneda, periodicidad, conceptos y límites.
+- **Presupuesto:** responde por límite disponible en un alcance y periodo; no autoriza una factura.
+- **Confirmación interna:** responde por una excepción concreta; no sustituye contrato ni presupuesto.
+- El alcance de fuentes queda cerrado. El detalle de campos, la determinación de vigencia, la precedencia entre anexos, la granularidad del presupuesto y el canal de confirmación siguen abiertos.
 
 ## 1. Principios
 
@@ -268,8 +277,9 @@ Marcados como sintéticos. No son umbrales ni condiciones de producto.
 - El MVP no incluye un módulo contractual ni de compras completo.
 - Todo dato pertenece a un tenant.
 
-### Propuesto
+### Adoptado con este modelo
 
+- Fuentes del MVP: contrato o anexo, presupuesto y confirmación interna. La orden de compra queda abierta.
 - Distinguir contrato, anexo, presupuesto, orden de compra y confirmación interna.
 - Campos conceptuales y estados de evidencia de las secciones 4, 5 y 9.
 - Fuente primaria por pregunta, no una jerarquía única para todo.
@@ -282,14 +292,13 @@ Marcados como sintéticos. No son umbrales ni condiciones de producto.
 
 ### Hipótesis
 
-- Fuentes del MVP: contrato o anexo, presupuesto y confirmación interna. Orden de compra abierta.
 - Captura manual o simulada en la demo; sin OCR ni ERP.
 - Pocas facturas sintéticas traerán contrato.
 - El presupuesto se modela como límite por periodo y alcance; el detalle está abierto.
 
 ### Abierto
 
-- Fuentes exactas del MVP y alcance de la orden de compra.
+- Inclusión futura de la orden de compra como fuente.
 - Detalle contractual y campos obligatorios.
 - Determinación de vigencia y precedencia entre anexos.
 - Si un contrato vencido bloquea o solo eleva severidad.
@@ -299,17 +308,14 @@ Marcados como sintéticos. No son umbrales ni condiciones de producto.
 - Canal y plazo de la confirmación interna.
 - Extracción automática y proveedor.
 - Retención, borrado y jurisdicción.
-- Adopción formal de este modelo.
 
-## 14. Pregunta crítica para adoptar
+## 14. Decisión adoptada sobre fuentes
 
-**¿Qué fuentes entran al MVP: contrato o anexo, presupuesto y confirmación interna, o solo contrato?**
+Adoptado el 2026-11-09: **contrato o anexo + presupuesto + confirmación interna**, con la orden de compra explícitamente abierta.
 
 - **Contrato + presupuesto + confirmación interna:** cubre las tres preguntas del MVP (condición, límite y excepción) y mantiene el alcance acotado.
-- **Solo contrato:** menos configuración, pero no responde por presupuesto ni por excepciones internas.
-- **Añadir orden de compra:** más evidencia de compromiso, pero acerca el MVP a un módulo de compras.
-
-Recomendación: **contrato + presupuesto + confirmación interna**, con la orden de compra explícitamente abierta. El resto del modelo funciona con las tres fuentes.
+- **Solo contrato:** se descartó para el MVP porque no responde por presupuesto ni por excepciones internas.
+- **Añadir orden de compra:** queda abierto; más evidencia de compromiso, pero acerca el MVP a un módulo de compras.
 
 ## 15. Casos de aceptación
 

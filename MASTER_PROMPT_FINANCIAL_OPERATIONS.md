@@ -70,6 +70,8 @@ Orden base, sin saltos:
 
 Detectar duplicados exactos y posibles duplicados semánticos o parciales como hallazgos distintos. Una discrepancia no es fraude ni aprobación.
 
+El alcance de fuentes del MVP está adoptado en [docs/modelo/15-contratos-presupuestos-evidencia.md](docs/modelo/15-contratos-presupuestos-evidencia.md): contrato o anexo, presupuesto y confirmación interna. La orden de compra no es obligatoria y queda abierta. Una confirmación interna no sustituye contrato ni presupuesto.
+
 ## 6. Autoridad y autonomía
 
 Niveles conceptuales:
@@ -214,7 +216,7 @@ No trates estos puntos como resueltos ni elijas proveedor por conveniencia:
 - Modelos de IA y política de escalamiento entre modelo ligero, modelo capaz y humano.
 - Identidad y onboarding: proveedor, protocolo, MFA, recuperación, SSO/SCIM, autoservicio frente a invitación y verificación de dominio. El modelo conceptual está adoptado en [docs/modelo/13-identidad-aprobaciones.md](docs/modelo/13-identidad-aprobaciones.md).
 - Catálogo definitivo de roles, nombres finales y roles personalizados. Los arquetipos de referencia están en [docs/modelo/13-identidad-aprobaciones.md](docs/modelo/13-identidad-aprobaciones.md).
-- Fuentes y nivel de detalle de contratos y presupuestos.
+- Nivel de detalle de contratos y presupuestos; inclusión de la orden de compra; vigencia y precedencia entre anexos; granularidad y fuente de consumido/comprometido; quién confirma excepciones; tasas y redondeo; canal y plazo de confirmación. El alcance de fuentes del MVP está adoptado en [docs/modelo/15-contratos-presupuestos-evidencia.md](docs/modelo/15-contratos-presupuestos-evidencia.md).
 - Aprobaciones: números de quorum, abstenciones, empates, pesos y suplencias; re-delegación; prioridad exacta de políticas; aprobación automática L2; aprobación por procesos de servicio. El modelo conceptual está adoptado en [docs/modelo/13-identidad-aprobaciones.md](docs/modelo/13-identidad-aprobaciones.md).
 - Acceso de soporte a datos de un tenant. El modelo conceptual está adoptado en [docs/modelo/13-identidad-aprobaciones.md](docs/modelo/13-identidad-aprobaciones.md).
 - Valores numéricos y calibración de riesgo y severidad; la estructura está adoptada en [docs/modelo/14-riesgo-severidad-umbrales.md](docs/modelo/14-riesgo-severidad-umbrales.md), los valores no.
