@@ -1,6 +1,6 @@
 # Tarea 02 — Ingesta de correo y documentos
 
-**Estado:** discovery. No elegir proveedor ni escribir integración.
+**Estado:** adoptado el 2026-11-10; demo con carga manual y eventos de correo sintéticos. Proveedor real, OCR y límites abiertos. No implementar.
 **Orquestador:** `.cursor/agents/ingesta-documentos.md`. Skill: `principle-make-operations-idempotent`.
 **Fuente:** documento maestro, secciones 5.2, 6, 11, 12 y 14.
 **Depende de:** [modelo de dominio](01-modelo-de-dominio-y-estados.md) para no tratar cada archivo como una operación nueva.
@@ -8,6 +8,13 @@
 ## Objetivo
 
 Definir cómo entra la información al módulo A sin cerrar el mecanismo de correo. El dominio debe servir igual para un PDF cargado a mano, un evento de correo de prueba y una integración real posterior.
+
+## Decisión adoptada (2026-11-10)
+
+- La demo del MVP usa carga manual de PDF y eventos de correo sintéticos claramente marcados; no presenta eso como buzón real.
+- Se adopta la idempotencia por tenant y huella estable de contenido, no por nombre de archivo.
+- Se adoptan las categorías, la separación mensaje/adjunto/documento/versión/operación y la regla de no forzar vínculos.
+- El proveedor real de correo, el OCR, los límites de tamaño/tipo y el algoritmo exacto de idempotencia siguen abiertos.
 
 ## Decidido
 
@@ -29,7 +36,6 @@ Definir cómo entra la información al módulo A sin cerrar el mecanismo de corr
 - Proveedor, protocolo y mecanismo de correo. Comparar costo, seguridad, viabilidad y qué tan difícil es salir de esa elección.
 - OCR y extracción de documentos escaneados.
 - Límite de tamaño, tipos MIME aceptados y qué se hace con cifrados o corruptos. El caso está nombrado; la política no.
-- Si la demo de costo cero usa solo carga manual o también eventos simulados. Ambos están permitidos.
 
 ## Fuera de esta tarea
 
@@ -50,6 +56,8 @@ Definir cómo entra la información al módulo A sin cerrar el mecanismo de corr
 
 ## Demo de costo cero
 
+Adoptado para la demo del MVP: carga manual de PDF y eventos de correo sintéticos claramente marcados. No se presenta como integración real de buzón.
+
 Permitido:
 
 - Carga manual de PDF.
@@ -63,7 +71,7 @@ No permitido:
 
 ## Entregable
 
-Una nota de diseño de ingesta con: categorías de mensaje, clave de idempotencia propuesta como hipótesis, datos mínimos del documento y criterios para aplazar la elección del proveedor de correo.
+Una nota de diseño de ingesta con: categorías de mensaje, principio de idempotencia adoptado e implementación abierta, datos mínimos del documento y criterios para aplazar la elección del proveedor de correo.
 
 ## Criterios de aceptación
 

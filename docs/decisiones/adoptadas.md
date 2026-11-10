@@ -104,6 +104,17 @@ Adoptado el 2026-11-09.
 - Detalle en [modelo 14](../modelo/14-riesgo-severidad-umbrales.md) y [tarea 14](../tareas/14-riesgo-severidad-umbrales.md).
 - Quedan abiertos: valores numéricos, señales incluidas en el MVP, puntaje compuesto, datos y momento de calibración, monedas y tasas, plazos de revisión, gobernanza de cambios, evidencia para bajar severidad y calibración por tenant o común.
 
+## Ingesta de correo y documentos
+
+Adoptado el 2026-11-10.
+
+- La demo del MVP usa carga manual de PDF y eventos de correo sintéticos claramente marcados. No se presenta como integración real de buzón.
+- La identidad del documento se basa en el tenant y una huella estable del contenido, no en el nombre del archivo. El algoritmo exacto sigue abierto.
+- Un mensaje no es una factura. Se distinguen mensaje, adjunto, documento, versión y operación; la extracción no crea una obligación.
+- Se adoptan las categorías de mensaje, la regla de no forzar vínculos cuando falta evidencia y el tratamiento del cuerpo y los adjuntos como datos no confiables.
+- El proveedor, protocolo y mecanismo de correo real, el OCR, los límites de tamaño y tipo y los umbrales de duplicado siguen abiertos.
+- Detalle en [modelo 02](../modelo/02-ingesta.md) y [tarea 02](../tareas/02-ingesta-correo-y-documentos.md).
+
 ## Contratos y presupuestos como evidencia
 
 Adoptado el 2026-11-09.

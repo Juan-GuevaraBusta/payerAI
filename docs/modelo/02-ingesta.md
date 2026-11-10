@@ -1,6 +1,18 @@
 # Ingesta de correo y documentos
 
+**Estado:** adoptado el 2026-11-10; demo con carga manual y eventos de correo sintéticos. Proveedor real, OCR y límites siguen abiertos. No implementar.
+
 Nota de diseño de la tarea 02. Define cómo entra la información al módulo A sin cerrar el mecanismo de correo. No es una integración, ni un esquema, ni una elección de proveedor.
+
+## Decisión adoptada (2026-11-10)
+
+- La demo del MVP usa **carga manual de PDF y eventos de correo sintéticos claramente marcados**. No se presenta como una integración real de buzón.
+- Se adopta el principio de idempotencia: la identidad del documento se basa en el tenant y una huella estable del contenido, no en el nombre del archivo.
+- Se adopta la distinción entre mensaje, adjunto, documento, versión y operación. Un mensaje no es una factura y una extracción no crea una obligación.
+- Se adoptan las categorías de mensaje y la regla de no forzar vínculos cuando falta evidencia.
+- El cuerpo y los adjuntos son datos no confiables; nunca son instrucciones del sistema.
+- El proveedor, protocolo y mecanismo de correo real, el OCR y los límites de tamaño y tipo siguen abiertos.
+- El algoritmo exacto de la clave de idempotencia y los umbrales de duplicado siguen abiertos.
 
 ## Fuentes y alcance
 
@@ -8,6 +20,7 @@ Nota de diseño de la tarea 02. Define cómo entra la información al módulo A 
 - [Glosario](../glosario.md).
 - [Modelo de dominio](01-dominio.md).
 - [Tarea 02](../tareas/02-ingesta-correo-y-documentos.md).
+- [Infraestructura, costo y despliegue](09-infraestructura-costo.md), [contratos y presupuestos](15-contratos-presupuestos-evidencia.md) y [escalamiento de IA](16-escalamiento-ia.md).
 
 **Depende de:** el modelo de dominio, para no tratar cada archivo como una operación nueva.
 
@@ -51,7 +64,7 @@ El registro no afirma que el contenido sea válido, legible ni pagable.
 
 ## Clave de idempotencia
 
-**Hipótesis, no decisión.** Una clave posible sería la combinación de tenant, una huella estable del contenido del documento y las señales de identidad disponibles del mensaje y del adjunto. La forma concreta, el algoritmo y los campos exactos están abiertos.
+**Principio adoptado; implementación abierta.** La identidad del documento se basa en el tenant y una huella estable del contenido, no en el nombre del archivo. La forma concreta de la clave, el algoritmo y los campos exactos están abiertos.
 
 Restricciones que la hipótesis debe respetar:
 
@@ -139,6 +152,8 @@ Ninguna opción se adopta en este documento. La elección requiere volumen, tipo
 
 ## Demo de costo cero
 
+Adoptado para la demo del MVP: carga manual de PDF y eventos de correo sintéticos claramente marcados. No se presenta como integración real de buzón.
+
 Permitido:
 
 - Carga manual de PDF.
@@ -155,6 +170,8 @@ La tensión entre el límite de CPU de una invocación gratuita y la extracción
 ## Decidido
 
 - El correo es el canal deseado al inicio.
+- **La demo del MVP usa carga manual de PDF y eventos de correo sintéticos.** El buzón real queda para después.
+- La identidad del documento se basa en tenant y contenido estable, no en el nombre del archivo.
 - La carga manual y los eventos de prueba están permitidos para demo y desarrollo.
 - Esos atajos no cambian el modelo de dominio.
 - Hay que conservar el vínculo entre mensaje, adjunto, documento, proveedor y operación.
@@ -166,14 +183,13 @@ La tensión entre el límite de CPU de una invocación gratuita y la extracción
 
 - En las empresas objetivo el correo es el canal real de recepción. Sale de la hipótesis de problema, no de una medición.
 - Una bandeja por tenant, o un alias por empresa, bastará para la primera integración. Es reversible y no está decidida.
-- La clave de idempotencia propuesta arriba es suficiente como punto de partida, sin haber sido probada con documentos reales.
+- La huella estable de contenido basta para deduplicar documentos idénticos; falta probar variantes, versiones y reenvíos con documentos sintéticos.
 
 ## Abierto
 
 - Proveedor, protocolo y mecanismo de correo. Comparar costo, seguridad, viabilidad y costo de salida.
 - OCR y extracción de documentos escaneados.
 - Límite de tamaño, tipos aceptados y política para archivos cifrados, corruptos o no soportados.
-- Si la demo de costo cero usa solo carga manual o también eventos simulados.
 - Algoritmo y campos exactos de la clave de idempotencia.
 - Umbrales y reglas de duplicado exacto y de duplicado probable.
 - Condición exacta de suficiencia para vincular un mensaje a una operación existente.
