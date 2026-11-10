@@ -1,19 +1,20 @@
 # Tarea 09 — Infraestructura, costo y despliegue
 
-**Estado:** criterios de despliegue adoptados el 2026-11-10; persistencia, correo, IA y frontend abiertos. No implementar.
+**Estado:** criterios de despliegue adoptados el 2026-11-10; D1 default de demo; correo, IA y frontend abiertos. No implementar.
 **Orquestador:** `.cursor/agents/infraestructura-costo.md`. Skill: `figure-it-out`.
 **Fuente:** documento maestro, sección 12. Límites citados el 2026-11-01. Volver a leer las páginas oficiales antes de cualquier implementación.
 
 ## Objetivo
 
-Dejar criterios para un despliegue de demo en internet, serverless, sin máquinas encendidas siempre, y sin activar nada facturable a ciegas. No elegir todavía la base de datos ni el correo.
+Dejar criterios para un despliegue de demo en internet, serverless, sin máquinas encendidas siempre, y sin activar nada facturable a ciegas. No elegir todavía el proveedor de correo.
 
 ## Decisión adoptada (2026-11-10)
 
 - Se adoptan los criterios de despliegue y los guardrails de costo del [modelo 09](../modelo/09-infraestructura-costo.md).
 - Demo local primero, luego tramo gratuito. Un recurso de pago exige costo posible escrito, volumen medido y responsable.
 - Cloudflare-first es preferencia, no decisión irrevocable.
-- D1 frente a PostgreSQL serverless sigue abierto hasta medir escrituras de auditoría, CPU de extracción, concurrencia y costo de salida.
+- D1 es la persistencia por defecto de la demo. PostgreSQL serverless queda como salida para piloto o producción.
+- La migración a PostgreSQL sigue abierta y exige medir escrituras de auditoría, CPU de extracción, concurrencia y costo de salida.
 - Correo, inferencia, Queues/Workflows, frontend, dominio, identidad y retención siguen abiertos.
 
 ## Decidido
@@ -34,7 +35,7 @@ Dejar criterios para un despliegue de demo en internet, serverless, sin máquina
 
 ## Abierto
 
-- D1 o PostgreSQL serverless. Comparar transacciones, integridad, consultas, concurrencia, experiencia de desarrollo, costo y migración. No decidir en este archivo.
+- Migración de D1 a PostgreSQL serverless para piloto o producción, y criterios de disparo. D1 es default de demo.
 - Proveedor y protocolo de email.
 - Workers AI u otro proveedor de inferencia, según costo, límites y calidad.
 - Si Queues o Workflows aportan algo que una petición no puede hacer. Ver la tarea de arquitectura.
@@ -68,7 +69,7 @@ Fuentes:
 - https://developers.cloudflare.com/workers-ai/platform/pricing/
 - https://developers.cloudflare.com/pages/functions/pricing/
 
-## Comparación que hay que hacer antes de cerrar la persistencia
+## Comparación que sostiene la salida de D1
 
 Misma lista para D1 y para PostgreSQL serverless, con cifras sacadas de documentación vigente, no de esta tabla:
 
@@ -79,7 +80,7 @@ Misma lista para D1 y para PostgreSQL serverless, con cifras sacadas de document
 - Costo en demo y en un uso bajo, no solo el precio de lista del tramo más grande.
 - Cómo se saldría de esa base si la elección falla.
 
-Hasta completar esa comparación, las dos siguen abiertas.
+D1 es default de demo. La comparación queda como criterio de salida a PostgreSQL para piloto o producción; no se declara superioridad general.
 
 ## Entregable
 

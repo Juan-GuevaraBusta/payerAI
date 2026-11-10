@@ -37,7 +37,7 @@ Cada tarea dice qué debe quedar definido, qué ya está decidido y qué no hay 
 | 06 | [Spend intelligence](tareas/06-spend-intelligence.md) | Módulo B |
 | 07 | [Autoridad, autonomía e IA](tareas/07-autoridad-autonomia-e-ia.md) | L0–L3 y límite de los modelos |
 | 08 | [Arquitectura y separación](tareas/08-arquitectura-y-separacion.md) | Módulos conceptuales |
-| 09 | [Infraestructura, costo y despliegue](tareas/09-infraestructura-costo-y-despliegue.md) | Criterios adoptados; persistencia, correo e IA abiertos |
+| 09 | [Infraestructura, costo y despliegue](tareas/09-infraestructura-costo-y-despliegue.md) | Criterios adoptados; D1 default de demo; migración, correo e IA abiertos |
 | 10 | [Seguridad, multi-tenancy y auditoría](tareas/10-seguridad-multitenancy-y-auditoria.md) | Controles, también en demo |
 | 11 | [Edge cases y pruebas](tareas/11-edge-cases-y-pruebas.md) | Casos que el diseño debe cubrir |
 | 12 | [Catálogo de estados y transiciones](tareas/12-estados-transiciones.md) | Modelo adoptado; contrato de comportamiento |

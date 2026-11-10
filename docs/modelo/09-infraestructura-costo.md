@@ -1,6 +1,6 @@
 # Infraestructura, costo y despliegue
 
-**Estado:** criterios adoptados el 2026-11-10. No hay base de datos, correo, cola, workflow durable, modelo de IA ni stack de frontend elegidos. No implementar.
+**Estado:** criterios adoptados el 2026-11-10; D1 es default de demo. Correo, cola, workflow durable, modelo de IA y stack de frontend siguen abiertos. No implementar.
 **Tarea:** 09.
 **Depende de:** las tareas 01 a 08.
 **Orquestador:** `.cursor/agents/infraestructura-costo.md`.
@@ -21,7 +21,8 @@ La tabla de límites es una foto con fecha. El precio de lista no es la factura:
 - La demo se prepara primero en local y luego en el tramo gratuito. Un recurso de pago no se enciende sin costo posible escrito, volumen medido y responsable.
 - Se evitan Redis, contenedores, VM y bases siempre encendidas mientras no exista un requisito medido.
 - Cloudflare-first sigue siendo preferencia, no decisión irrevocable. Si un requisito de integridad falla, se documenta la salida.
-- D1 frente a PostgreSQL serverless sigue abierto. La decisión exige medir escrituras de auditoría, CPU de extracción, concurrencia de aprobadores y costo de salida.
+- **D1 es la persistencia por defecto de la demo.** La decisión aplica a la demo con datos sintéticos, no a producción ni a un piloto con datos reales.
+- PostgreSQL serverless sigue abierto como salida para piloto o producción. El disparo de migración exige medir escrituras de auditoría, CPU de extracción, concurrencia de aprobadores y costo de salida.
 - Correo, inferencia, Queues/Workflows, frontend, dominio, identidad y retención siguen abiertos.
 - La foto de límites y precios es del 2026-11-03; se vuelve a leer la página oficial antes de encender cada recurso.
 
@@ -44,7 +45,7 @@ La tabla de límites es una foto con fecha. El precio de lista no es la factura:
 
 ### Abierto
 
-- D1 o PostgreSQL serverless. La comparación de la sección siguiente deja criterios, no un ganador.
+- Migración de D1 a PostgreSQL serverless para piloto o producción, y criterios de disparo.
 - Proveedor y protocolo de correo.
 - Workers AI u otro proveedor de inferencia, según costo, límites y calidad.
 - Si Queues o Workflows aportan algo que una petición no puede hacer.
@@ -59,7 +60,7 @@ La tabla de límites es una foto con fecha. El precio de lista no es la factura:
 | Frontend estático | Pages o Workers Static Assets | Build reproducible, assets y rutas | Candidato |
 | API y lógica de backend | Workers o Pages Functions | CPU por invocación, subrequests y límites de tiempo | Candidato |
 | Documentos y adjuntos | R2 | Tamaño, operaciones y retención | Candidato |
-| Persistencia relacional | D1 o PostgreSQL serverless | Transacciones, integridad, concurrencia, costo y salida | Abierto |
+| Persistencia relacional | D1 para demo; PostgreSQL serverless como salida | Transacciones, integridad, concurrencia, costo y salida | D1 default de demo; migración abierta |
 | Procesamiento asíncrono | Queues | Si existe trabajo que no cabe en la petición | Solo con requisito medido |
 | Esperas y reintentos | Workflows | Pasos, almacenamiento y semántica de reintento | Solo con requisito medido |
 | Inferencia | Workers AI u otro | Modelo, calidad, costo por uso y límites | Abierto |
@@ -113,8 +114,9 @@ La comparación usa la misma lista que pide la tarea 09. Ninguna fila cierra la 
 
 - D1 es más simple de encender dentro de Cloudflare y tiene un tramo gratuito suficiente para una demo pequeña. Su límite de escritura diaria y su base máxima son los primeros topes que hay que medir.
 - PostgreSQL serverless da transacciones y consultas más ricas, pero añade un proveedor, un pooler, una región y un costo de compute que puede dejar de ser cero. Neon puede escalar a cero; Supabase Free se pausa por inactividad.
-- La decisión no se puede tomar solo por precio de lista. Depende de cuántas escrituras de auditoría genere una operación, de si la extracción de PDF cabe en 10 ms de CPU y de si el equipo necesita transacciones interactivas.
-- Si la demo se queda en D1, hay que probar el `batch()` con la secuencia real de una aprobación y medir las escrituras del audit log. Si se queda en PostgreSQL, hay que probar el pooler en modo transacción con la misma secuencia.
+- D1 se adopta para la demo por simplicidad de despliegue y tramo gratuito. La decisión no se extiende a producción ni a un piloto con datos reales.
+- La demo en D1 debe probar el `batch()` con la secuencia real de una aprobación y medir las escrituras del audit log. Si el tramo gratuito no alcanza, se optimiza, se pasa a Workers/D1 Paid o se evalúa la salida a PostgreSQL; no se asume que D1 sigue siendo gratis.
+- PostgreSQL serverless queda como salida para piloto o producción. Si se migra, hay que probar el pooler en modo transacción con la misma secuencia.
 - La salida de D1 hacia PostgreSQL es más costosa que la salida entre PostgreSQL. Esa asimetría cuenta si la demo se convierte en piloto.
 
 ## Criterios para encender la demo
@@ -187,7 +189,7 @@ Antes de activar un recurso de pago se escribe: recurso, plan, límite gratuito,
 
 ## Lo que este documento no decide
 
-- La base de datos.
+- La base de datos de piloto o producción; D1 es default de demo. La migración a PostgreSQL sigue abierta.
 - El proveedor de correo.
 - El modelo de IA.
 - El stack de frontend.
@@ -202,8 +204,8 @@ Antes de activar un recurso de pago se escribe: recurso, plan, límite gratuito,
 - Está prohibido activar un recurso de pago sin anotar el costo posible.
 - La hoja no contiene secretos ni identificadores de cuenta.
 - El correo sigue sin proveedor.
-- D1 y PostgreSQL serverless quedan comparados en transacciones, integridad, consultas, concurrencia, experiencia de desarrollo, costo y migración.
-- La comparación no declara un ganador.
+- D1 es default de demo; PostgreSQL serverless queda comparado como salida para piloto o producción.
+- La comparación no declara superioridad general para producción.
 - La demo con datos sintéticos se distingue de un piloto con datos reales.
 - `bash scripts/ci.sh` pasa.
 

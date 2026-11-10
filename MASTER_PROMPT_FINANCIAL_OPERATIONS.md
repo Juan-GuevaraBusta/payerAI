@@ -125,7 +125,7 @@ Objetivo de costo: cercano a cero en desarrollo y demo, sin servidores permanent
 
 Preferencia de despliegue: Cloudflare-first, serverless, scale-to-zero, demo accesible sin máquinas ni contenedores encendidos. Es preferencia, no dogma ni decisión irrevocable de cada componente. Verificar costos y límites en documentación oficial vigente antes de implementar.
 
-Los criterios de demo y los guardrails de costo están adoptados en [docs/modelo/09-infraestructura-costo.md](docs/modelo/09-infraestructura-costo.md): local primero, luego tramo gratuito, sin recurso de pago sin costo posible escrito y sin cerrar D1 frente a PostgreSQL serverless. Correo, inferencia, Queues/Workflows, frontend, dominio, identidad y retención siguen abiertos.
+Los criterios de demo y los guardrails de costo están adoptados en [docs/modelo/09-infraestructura-costo.md](docs/modelo/09-infraestructura-costo.md): local primero, luego tramo gratuito, sin recurso de pago sin costo posible escrito. D1 es la persistencia por defecto de la demo; PostgreSQL serverless queda como salida para piloto o producción. Correo, inferencia, Queues/Workflows, frontend, dominio, identidad y retención siguen abiertos.
 
 Multi-tenancy desde el diseño:
 
@@ -213,7 +213,7 @@ No trates estos puntos como resueltos ni elijas proveedor por conveniencia:
 - Industria prioritaria, tamaño de cliente, volumen mínimo de facturas, comprador económico y jurisdicciones.
 - Requisitos regulatorios y jurisdicciones del mercado objetivo.
 - Arquitectura concreta y stack de frontend.
-- D1 frente a PostgreSQL serverless.
+- Migración de D1 a PostgreSQL serverless para piloto o producción; D1 es default de demo.
 - Proveedor y protocolo de correo.
 - OCR y extracción de PDF escaneado.
 - Implementación, interfaz, licencia, costo y utilidad real de JEV.
