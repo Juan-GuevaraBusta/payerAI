@@ -21,5 +21,6 @@ No existe una skill de Cloudflare. No asigné skills de Vercel, Render, AWS, Mon
 | 13 Identidad y aprobaciones | `.cursor/agents/seguridad-tenancy.md` | `review-security` | Autorización, segregación y quorum son control de seguridad. Sin diff, no simula el review; reutiliza el orquestador de la tarea 10. |
 | 14 Riesgo y umbrales | `.cursor/agents/autoridad-ia.md` | `karpathy-guidelines` | La severidad condiciona autoridad y autonomía. Obliga a declarar supuestos y no inventar números. Reutiliza el orquestador de la tarea 07. |
 | 15 Contratos y presupuestos | `.cursor/agents/validacion-facturas.md` | `principle-explain-the-number` | Una diferencia sin fuente, versión ni moneda no se informa. Reutiliza el orquestador de la tarea 04. |
+| 16 Escalamiento de IA | `.cursor/agents/autoridad-ia.md` | `karpathy-guidelines` | La ruta entre modelo y humano condiciona costo y autonomía. Obliga a declarar supuestos y no inventar umbrales. Reutiliza el orquestador de la tarea 07. |
 
 Estos orquestadores no están en el `Task` tool hasta que Cursor cargue `.cursor/agents/`. El archivo los define. No los ejecuté: ejecutarlos empezaría el diseño de producto y varias skills piden modelos de pago.

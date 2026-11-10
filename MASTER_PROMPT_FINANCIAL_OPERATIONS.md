@@ -115,6 +115,8 @@ Orden de preferencia para resolver una tarea:
 
 JEV es una opción a evaluar, no una dependencia aprobada. No inventar primitivas, métodos, capacidades ni precios.
 
+La postura y la ruta de escalamiento están adoptadas en [docs/modelo/16-escalamiento-ia.md](docs/modelo/16-escalamiento-ia.md): costo primero con escalamiento explícito, T0–T4 separados de L0–L3, evidencia faltante y severidad alta a humano, fallback a T0 o T4 y nunca a aprobación. Los modelos, precios y umbrales siguen abiertos.
+
 No enviar todas las facturas a un LLM si una regla resuelve el caso. Cuando se use IA, registrar modelo, versión, entradas relevantes permitidas, salida estructurada, evidencias y política aplicada.
 
 Objetivo de costo: cercano a cero en desarrollo y demo, sin servidores permanentes. Los free tiers no se asumen gratuitos para siempre. No activar servicios de pago, créditos, APIs externas ni recursos facturables sin dejar claro el posible costo.
@@ -213,7 +215,7 @@ No trates estos puntos como resueltos ni elijas proveedor por conveniencia:
 - Proveedor y protocolo de correo.
 - OCR y extracción de PDF escaneado.
 - Implementación, interfaz, licencia, costo y utilidad real de JEV.
-- Modelos de IA y política de escalamiento entre modelo ligero, modelo capaz y humano.
+- Modelos, proveedores, versiones y precios de IA; umbrales de confianza por tarea; topes de costo y latencia; papel de T2 y evaluación de JEV; configurabilidad del tenant; retención y residencia. La política de escalamiento está adoptada en [docs/modelo/16-escalamiento-ia.md](docs/modelo/16-escalamiento-ia.md).
 - Identidad y onboarding: proveedor, protocolo, MFA, recuperación, SSO/SCIM, autoservicio frente a invitación y verificación de dominio. El modelo conceptual está adoptado en [docs/modelo/13-identidad-aprobaciones.md](docs/modelo/13-identidad-aprobaciones.md).
 - Catálogo definitivo de roles, nombres finales y roles personalizados. Los arquetipos de referencia están en [docs/modelo/13-identidad-aprobaciones.md](docs/modelo/13-identidad-aprobaciones.md).
 - Nivel de detalle de contratos y presupuestos; inclusión de la orden de compra; vigencia y precedencia entre anexos; granularidad y fuente de consumido/comprometido; quién confirma excepciones; tasas y redondeo; canal y plazo de confirmación. El alcance de fuentes del MVP está adoptado en [docs/modelo/15-contratos-presupuestos-evidencia.md](docs/modelo/15-contratos-presupuestos-evidencia.md).

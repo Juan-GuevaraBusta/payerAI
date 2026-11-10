@@ -44,6 +44,7 @@ Cada tarea dice qué debe quedar definido, qué ya está decidido y qué no hay 
 | 13 | [Identidad, roles y aprobaciones](tareas/13-identidad-aprobaciones.md) | Modelo adoptado; membresía, permisos, delegación y quorum |
 | 14 | [Riesgo, severidad y umbrales](tareas/14-riesgo-severidad-umbrales.md) | Modelo adoptado; señales, severidad y límites de autonomía |
 | 15 | [Contratos y presupuestos como evidencia](tareas/15-contratos-presupuestos-evidencia.md) | Modelo adoptado; fuentes, vigencia, vínculo y comparación |
+| 16 | [Política de escalamiento de IA](tareas/16-escalamiento-ia.md) | Modelo adoptado; ruta T0–T4, costo, fallback y revisión humana |
 
 ## Orquestador
 
