@@ -48,6 +48,20 @@ Estado del producto: discovery. Estas decisiones no cierran la arquitectura conc
 - Datos de demo: sintéticos y marcados. Nunca datos reales de clientes.
 - Secretos fuera del repositorio y fuera de los logs.
 
+## Infraestructura y costo
+
+Adoptado el 2026-11-10.
+
+- Se adoptan los criterios de despliegue y los guardrails de costo del [modelo 09](../modelo/09-infraestructura-costo.md).
+- Demo local primero y luego tramo gratuito. Un recurso de pago exige costo posible escrito, volumen medido y responsable; si falta, no se enciende.
+- Cloudflare-first sigue siendo preferencia, no decisión irrevocable. Una salida por requisito de integridad se documenta.
+- Se evitan Redis, contenedores, VM y bases siempre encendidas mientras no exista un requisito medido.
+- D1 frente a PostgreSQL serverless sigue abierto. La decisión exige medir escrituras de auditoría, CPU de extracción de PDF, concurrencia de aprobadores y costo de salida.
+- Correo, inferencia, Queues/Workflows, frontend, dominio, identidad y retención siguen abiertos.
+- La foto de límites y precios es del 2026-11-03; se vuelve a leer la página oficial antes de encender cada recurso.
+- Detalle en [modelo 09](../modelo/09-infraestructura-costo.md) y [tarea 09](../tareas/09-infraestructura-costo-y-despliegue.md).
+- Quedan abiertos: base de datos, correo, modelo de IA, Queues/Workflows, frontend, dominio, identidad y retención.
+
 ## Estados y transiciones
 
 Adoptado el 2026-11-09.

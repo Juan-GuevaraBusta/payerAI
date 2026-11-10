@@ -1,12 +1,20 @@
 # Tarea 09 — Infraestructura, costo y despliegue
 
-**Estado:** discovery. Hay preferencia de plataforma. No hay selección cerrada de cada servicio.
+**Estado:** criterios de despliegue adoptados el 2026-11-10; persistencia, correo, IA y frontend abiertos. No implementar.
 **Orquestador:** `.cursor/agents/infraestructura-costo.md`. Skill: `figure-it-out`.
 **Fuente:** documento maestro, sección 12. Límites citados el 2026-11-01. Volver a leer las páginas oficiales antes de cualquier implementación.
 
 ## Objetivo
 
 Dejar criterios para un despliegue de demo en internet, serverless, sin máquinas encendidas siempre, y sin activar nada facturable a ciegas. No elegir todavía la base de datos ni el correo.
+
+## Decisión adoptada (2026-11-10)
+
+- Se adoptan los criterios de despliegue y los guardrails de costo del [modelo 09](../modelo/09-infraestructura-costo.md).
+- Demo local primero, luego tramo gratuito. Un recurso de pago exige costo posible escrito, volumen medido y responsable.
+- Cloudflare-first es preferencia, no decisión irrevocable.
+- D1 frente a PostgreSQL serverless sigue abierto hasta medir escrituras de auditoría, CPU de extracción, concurrencia y costo de salida.
+- Correo, inferencia, Queues/Workflows, frontend, dominio, identidad y retención siguen abiertos.
 
 ## Decidido
 

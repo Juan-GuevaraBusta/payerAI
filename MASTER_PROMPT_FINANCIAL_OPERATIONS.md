@@ -125,6 +125,8 @@ Objetivo de costo: cercano a cero en desarrollo y demo, sin servidores permanent
 
 Preferencia de despliegue: Cloudflare-first, serverless, scale-to-zero, demo accesible sin máquinas ni contenedores encendidos. Es preferencia, no dogma ni decisión irrevocable de cada componente. Verificar costos y límites en documentación oficial vigente antes de implementar.
 
+Los criterios de demo y los guardrails de costo están adoptados en [docs/modelo/09-infraestructura-costo.md](docs/modelo/09-infraestructura-costo.md): local primero, luego tramo gratuito, sin recurso de pago sin costo posible escrito y sin cerrar D1 frente a PostgreSQL serverless. Correo, inferencia, Queues/Workflows, frontend, dominio, identidad y retención siguen abiertos.
+
 Multi-tenancy desde el diseño:
 
 - Cada tenant tiene sus usuarios, proveedores, facturas, contratos, políticas, departamentos, workflows y registros.

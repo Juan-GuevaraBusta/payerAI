@@ -26,7 +26,7 @@ La hipótesis de cliente (empresas medianas y grandes, con proveedores, monedas,
 
 ## Tecnología sin cierre
 
-- D1 frente a PostgreSQL serverless. Comparar transacciones, integridad, consultas, concurrencia, experiencia de desarrollo, costo y migración.
+- D1 frente a PostgreSQL serverless. Comparar transacciones, integridad, consultas, concurrencia, experiencia de desarrollo, costo y migración. El marco de despliegue y los guardrails de costo están adoptados en [modelo 09](../modelo/09-infraestructura-costo.md); la base sigue abierta.
 - Proveedor y protocolo de correo. Comparar costo, seguridad y viabilidad antes de una dependencia difícil de revertir.
 - OCR y extracción de PDF para documentos escaneados.
 - Implementación, interfaz, licencia, costo y utilidad real de JEV. No inventar primitivas ni precios.

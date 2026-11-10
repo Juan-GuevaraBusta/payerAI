@@ -1,6 +1,6 @@
 # Infraestructura, costo y despliegue
 
-**Estado:** discovery. Hay preferencia de plataforma. No hay base de datos, correo, cola, workflow durable, modelo de IA ni stack de frontend elegidos.
+**Estado:** criterios adoptados el 2026-11-10. No hay base de datos, correo, cola, workflow durable, modelo de IA ni stack de frontend elegidos. No implementar.
 **Tarea:** 09.
 **Depende de:** las tareas 01 a 08.
 **Orquestador:** `.cursor/agents/infraestructura-costo.md`.
@@ -14,6 +14,16 @@ Este documento es una hoja de criterios para una demo en internet. No crea cuent
 La tabla de límites es una foto con fecha. El precio de lista no es la factura: impuestos, tipo de cambio, cargos de red, dominio y consumo real pueden cambiarla. Antes de encender cualquier recurso se vuelve a leer la página oficial y se anota el costo posible.
 
 ## Lo que está decidido, lo que es hipótesis y lo que sigue abierto
+
+### Adoptado el 2026-11-10
+
+- Se adoptan los criterios de despliegue y los guardrails de costo de este documento.
+- La demo se prepara primero en local y luego en el tramo gratuito. Un recurso de pago no se enciende sin costo posible escrito, volumen medido y responsable.
+- Se evitan Redis, contenedores, VM y bases siempre encendidas mientras no exista un requisito medido.
+- Cloudflare-first sigue siendo preferencia, no decisión irrevocable. Si un requisito de integridad falla, se documenta la salida.
+- D1 frente a PostgreSQL serverless sigue abierto. La decisión exige medir escrituras de auditoría, CPU de extracción, concurrencia de aprobadores y costo de salida.
+- Correo, inferencia, Queues/Workflows, frontend, dominio, identidad y retención siguen abiertos.
+- La foto de límites y precios es del 2026-11-03; se vuelve a leer la página oficial antes de encender cada recurso.
 
 ### Decidido
 
