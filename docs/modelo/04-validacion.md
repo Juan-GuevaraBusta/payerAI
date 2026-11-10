@@ -60,6 +60,8 @@ Si existe una fuente contractual o condiciones comerciales disponibles, se contr
 
 Una diferencia contra el contrato no se clasifica sola como fraude ni como cargo legítimo. Se registra como hallazgo y sigue el camino de evidencia o confirmación.
 
+El alcance de fuentes del MVP y el modelo de vigencia, vínculo y comparación están adoptados en [contratos y presupuestos como evidencia](15-contratos-presupuestos-evidencia.md): contrato o anexo, presupuesto y confirmación interna; orden de compra abierta.
+
 ### 4. Confirmación interna
 
 Si hay servicios adicionales, diferencias no explicadas o evidencia insuficiente, se pide confirmación al departamento responsable.
@@ -143,7 +145,7 @@ Resultado: discrepancia abierta con pedido de evidencia. No es fraude, no es un 
 ## Abierto
 
 - Valores de los umbrales de duplicado probable, de exceso sobre contrato y de severidad. La estructura está adoptada en [riesgo, severidad y umbrales](14-riesgo-severidad-umbrales.md); los valores no.
-- De dónde salen contratos y presupuestos, y con qué detalle.
+- Detalle de contratos y presupuestos; inclusión de la orden de compra; vigencia y precedencia entre anexos; granularidad y fuente de consumido/comprometido; quién confirma excepciones; tasas y redondeo; canal y plazo de confirmación. El alcance de fuentes está adoptado en [contratos y presupuestos como evidencia](15-contratos-presupuestos-evidencia.md).
 - Tasas y fechas de conversión entre monedas. El caso existe; la fuente de la tasa no.
 - Qué versión de política se congela al empezar una validación.
 - Canal y plazo de la confirmación interna.

@@ -18,7 +18,7 @@ La hipótesis de cliente (empresas medianas y grandes, con proveedores, monedas,
 - Arquitectura concreta y stack de frontend.
 - Identidad y onboarding: proveedor, protocolo, MFA, recuperación, SSO/SCIM, autoservicio frente a invitación y verificación de dominio. El modelo conceptual está adoptado en [modelo 13](../modelo/13-identidad-aprobaciones.md).
 - Catálogo definitivo de roles, nombres finales y roles personalizados. Los arquetipos de referencia están en [modelo 13](../modelo/13-identidad-aprobaciones.md).
-- Fuentes y nivel de detalle de contratos y presupuestos.
+- Nivel de detalle de contratos y presupuestos; inclusión de la orden de compra; vigencia y precedencia entre anexos; granularidad y fuente de consumido/comprometido; quién confirma excepciones; tasas y redondeo; canal y plazo de confirmación. El alcance de fuentes del MVP está adoptado en [modelo 15](../modelo/15-contratos-presupuestos-evidencia.md).
 - Aprobaciones: números de quorum, abstenciones, empates, pesos y suplencias; re-delegación y límites de duración; prioridad exacta de políticas; aprobación automática L2; aprobación por procesos de servicio. El modelo conceptual está adoptado en [modelo 13](../modelo/13-identidad-aprobaciones.md).
 - Acceso de soporte a datos de un tenant. El modelo conceptual está adoptado en [modelo 13](../modelo/13-identidad-aprobaciones.md).
 - Valores numéricos y calibración de riesgo y severidad: señales del MVP, puntaje compuesto, datos y momento de calibración, monedas y tasas, plazos de revisión, gobernanza de cambios y evidencia para bajar severidad. La estructura está adoptada en [modelo 14](../modelo/14-riesgo-severidad-umbrales.md); los valores no.
