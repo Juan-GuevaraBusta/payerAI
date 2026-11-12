@@ -31,7 +31,7 @@ Cada tarea dice qué debe quedar definido, qué ya está decidido y qué no hay 
 | --- | --- | --- |
 | 01 | [Modelo de dominio y estados](tareas/01-modelo-de-dominio-y-estados.md) | Obligación, factura, pago, evidencia |
 | 02 | [Ingesta de correo y documentos](tareas/02-ingesta-correo-y-documentos.md) | Modelo adoptado; demo manual + correo sintético; proveedor y OCR abiertos |
-| 03 | [Proveedores: identidad y autorización](tareas/03-proveedores-identidad-y-autorizacion.md) | Alta y reconocimiento |
+| 03 | [Proveedores: identidad y autorización](tareas/03-proveedores-identidad-y-autorizacion.md) | Modelo adoptado; maker-checker en alta y cambio bancario |
 | 04 | [Validación de facturas](tareas/04-validacion-de-facturas.md) | Módulo A, pasos 2–8 |
 | 05 | [Workflows de aprobación](tareas/05-workflows-de-aprobacion.md) | Módulo A, pasos 9–11 |
 | 06 | [Spend intelligence](tareas/06-spend-intelligence.md) | Módulo B |

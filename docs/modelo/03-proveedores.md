@@ -1,6 +1,19 @@
 # Proveedores: identidad y autorización
 
+**Estado:** adoptado el 2026-11-10; maker-checker para alta y cambio bancario. Identificadores, umbrales y roles exactos siguen abiertos. No implementar.
+
 Matriz de decisión conceptual de la tarea 03. Separa reconocimiento, alta, riesgo y autorización de pago. No es un esquema, ni un flujo cerrado, ni una elección de proveedor externo.
+
+## Decisión adoptada (2026-11-10)
+
+- **Proveedor nuevo y cuenta bancaria nueva o modificada:** maker-checker con dos actores distintos, ambos con permiso. Un actor inicia y otro autoriza; nadie autoriza su propia solicitud.
+- La habilitación registra actor, motivo, evidencia, fecha y versión. El proveedor permanece no habilitado hasta completar el control.
+- **Proveedor existente con identificadores verificados:** reconocimiento automático para seguir la validación de la factura. No autoriza el pago.
+- Una identificación por nombre comercial, homónimos o identificadores inconsistentes no habilita ni fusiona; escala.
+- La extracción automática no actualiza la cuenta bancaria registrada.
+- La revocación o suspensión deja al proveedor no habilitado y se registra; el mecanismo exacto sigue abierto.
+- La demo usa dos actores sintéticos para ejercitar maker-checker.
+- Quedan abiertos: identificadores verificados por jurisdicción, umbral de coincidencia, roles exactos que inician y autorizan, revocación y listas de riesgo.
 
 ## Fuentes y alcance
 
@@ -79,7 +92,7 @@ Relato de situaciones, no de transiciones autorizadas.
 4. Si solo coincide el nombre, o hay homónimos o identificadores inconsistentes, se escala. **(Decidido: no se fusiona.)**
 5. Si no hay proveedor previo, queda no habilitado y se piden identidad, riesgo y autorización. **(Decidido.)**
 6. Si la cuenta bancaria es nueva o cambió, se aplica control reforzado y no se actualiza por extracción. **(Decidido.)**
-7. La habilitación se resuelve con la autoridad configurada. **(Abierto: quién habilita y si hace falta más de una persona.)**
+7. La habilitación de proveedor nuevo o cambio bancario exige maker-checker con dos actores distintos. **(Decidido; roles exactos abiertos.)**
 8. La factura sigue su propio camino de validación y autoridad. **(Decidido: el reconocimiento no aprueba el pago.)**
 
 ## Decidido
@@ -93,19 +106,20 @@ Relato de situaciones, no de transiciones autorizadas.
 - Cuenta bancaria nueva o modificada: control reforzado. Una factura o un correo no bastan para aceptarla.
 - Un proveedor detectado puede no estar habilitado.
 - El proveedor nuevo tiene un estado visible de no habilitado hasta la autorización.
+- El alta de proveedor nuevo y el cambio de cuenta bancaria exigen maker-checker con dos actores distintos.
 
 ## Hipótesis
 
 - Los identificadores fiscales o de registro serán la señal principal de coincidencia, y el nombre será solo apoyo. Es razonable y reversible. No está medido con documentos reales.
-- El departamento de procurement o finanzas será quien habilite proveedores nuevos. El rol exacto está abierto.
+- Procurement o finanzas serán quienes inicien y autoricen el alta; los roles exactos y si ambos departamentos participan están abiertos.
 
 ## Abierto
 
 - Qué identificadores cuentan como verificados, por jurisdicción. Depende del mercado, también abierto.
 - Umbral numérico de coincidencia. No se inventa un score.
 - Condición exacta de suficiencia para el reconocimiento automático.
-- Quién puede habilitar y si hace falta más de una persona.
-- Cómo se revoca o suspende una autorización ya dada.
+- Roles exactos que inician y autorizan el alta y el cambio bancario; si procurement, finanzas o ambos.
+- Cómo se revoca o suspende una autorización ya dada y qué efecto tiene sobre operaciones en curso.
 - Integración con listas de riesgo o bancos. Fuera del MVP si implica servicios de pago o datos no disponibles.
 - Tratamiento de proveedores con nombre comercial distinto de la razón social cuando los identificadores no son concluyentes.
 
