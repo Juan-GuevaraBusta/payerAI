@@ -104,6 +104,20 @@ Adoptado el 2026-11-09.
 - Detalle en [modelo 14](../modelo/14-riesgo-severidad-umbrales.md) y [tarea 14](../tareas/14-riesgo-severidad-umbrales.md).
 - Quedan abiertos: valores numéricos, señales incluidas en el MVP, puntaje compuesto, datos y momento de calibración, monedas y tasas, plazos de revisión, gobernanza de cambios, evidencia para bajar severidad y calibración por tenant o común.
 
+## Autoridad, autonomía e IA
+
+Adoptado el 2026-11-10.
+
+- Separación entre interpretación, decisión, autorización y ejecución; ninguna capa hereda autoridad de otra.
+- La autoridad es por acción, tenant, recurso y momento; se verifica con política, permiso, alcance, vigencia y segregación, y se deniega por defecto.
+- La IA interpreta, extrae, clasifica, resume, señala y propone. No concede autoridad, no aprueba, no autoriza, no delega, no forma quorum y no reduce severidad sola.
+- El MVP opera en L0–L2 y no mueve dinero. L3 es evolución y no se simula.
+- Cada uso de IA deja registro mínimo aunque la salida se descarte.
+- Las prohibiciones absolutas de la sección 7 del modelo no admiten excepción por política.
+- JEV sigue como opción a evaluar, no como dependencia aprobada.
+- Detalle en [modelo 07](../modelo/07-autoridad-ia.md) y [tarea 07](../tareas/07-autoridad-autonomia-e-ia.md).
+- Quedan abiertos: modelo/proveedor, JEV, precios y topes, umbrales, combinación de autonomía, esquema de roles, precedencia, plazos y retención.
+
 ## Validación de facturas
 
 Adoptado el 2026-11-10.

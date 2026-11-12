@@ -91,6 +91,8 @@ Cada empresa configura el nivel permitido según tipo de operación, monto, mone
 
 La autoridad sale de políticas configuradas, permisos verificables, segregación de funciones y controles técnicos independientes. Nunca de un modelo de IA. El modelo conceptual de identidad, permisos, delegación y quorum está adoptado en [docs/modelo/13-identidad-aprobaciones.md](docs/modelo/13-identidad-aprobaciones.md).
 
+El marco de autoridad está adoptado en [docs/modelo/07-autoridad-ia.md](docs/modelo/07-autoridad-ia.md): interpretación, decisión, autorización y ejecución separadas; autoridad por acción, tenant y momento; prohibiciones absolutas para la IA; L0–L2 en el MVP y L3 como evolución. Modelos, JEV, precios y umbrales siguen abiertos.
+
 ## 7. Arquitectura conceptual
 
 Empezar por un diseño modular y separar responsabilidades. No elegir microservicios, agentes ni framework por moda. No introducir base vectorial, event bus, microservicios ni múltiples agentes sin un requisito concreto que los justifique. Modular monolith o equivalente al inicio, salvo evidencia contraria.

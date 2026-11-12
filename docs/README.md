@@ -35,7 +35,7 @@ Cada tarea dice qué debe quedar definido, qué ya está decidido y qué no hay 
 | 04 | [Validación de facturas](tareas/04-validacion-de-facturas.md) | Modelo adoptado; política congelada al iniciar y confirmación en workflow |
 | 05 | [Workflows de aprobación](tareas/05-workflows-de-aprobacion.md) | Módulo A, pasos 9–11 |
 | 06 | [Spend intelligence](tareas/06-spend-intelligence.md) | Módulo B |
-| 07 | [Autoridad, autonomía e IA](tareas/07-autoridad-autonomia-e-ia.md) | L0–L3 y límite de los modelos |
+| 07 | [Autoridad, autonomía e IA](tareas/07-autoridad-autonomia-e-ia.md) | Modelo adoptado; L0–L3, capas separadas y prohibiciones de IA |
 | 08 | [Arquitectura y separación](tareas/08-arquitectura-y-separacion.md) | Módulos conceptuales |
 | 09 | [Infraestructura, costo y despliegue](tareas/09-infraestructura-costo-y-despliegue.md) | Criterios adoptados; D1 default de demo; migración, correo e IA abiertos |
 | 10 | [Seguridad, multi-tenancy y auditoría](tareas/10-seguridad-multitenancy-y-auditoria.md) | Controles, también en demo |

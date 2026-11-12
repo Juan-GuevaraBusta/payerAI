@@ -1,6 +1,6 @@
 # Tarea 07 — Autoridad, autonomía e IA
 
-**Estado:** discovery. Los límites de autoridad están decididos. Los modelos y JEV no.
+**Estado:** adoptado el 2026-11-10. Límites de autoridad y prohibiciones de IA cerrados; modelos, JEV y umbrales abiertos. No implementar.
 **Orquestador:** `.cursor/agents/autoridad-ia.md`. Skill: `karpathy-guidelines`.
 **Fuente:** documento maestro, secciones 9 y 11.
 **Depende de:** [validación](04-validacion-de-facturas.md). **Orden acordado:** esta tarea se define antes que [workflows](05-workflows-de-aprobacion.md), que consume su marco.
@@ -8,6 +8,16 @@
 ## Objetivo
 
 Dejar escrito qué puede proponer un modelo, qué decide una regla y quién tiene autoridad. Cerrar la puerta a que la IA se autorice a sí misma.
+
+## Decisión adoptada (2026-11-10)
+
+- Se adopta la separación interpretación → decisión → autorización → ejecución, sin herencia de autoridad entre capas.
+- La autoridad se verifica por acción, tenant, recurso y momento; se deniega por defecto.
+- La IA puede interpretar y proponer; nunca concede autoridad, aprueba, autoriza, delega, forma quorum ni reduce severidad sola.
+- El MVP opera en L0–L2 sin mover dinero. L3 es evolución y no se simula.
+- Las prohibiciones absolutas de la sección 7 del modelo no admiten excepción por política.
+- Cada uso de IA deja registro mínimo, aunque la salida se descarte.
+- JEV sigue sin aprobarse; modelos, precios, umbrales y autonomía configurable siguen abiertos.
 
 ## Decidido
 
