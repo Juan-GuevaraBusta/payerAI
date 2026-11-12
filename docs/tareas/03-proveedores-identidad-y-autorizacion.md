@@ -1,6 +1,6 @@
 # Tarea 03 — Proveedores: identidad y autorización
 
-**Estado:** discovery. El modelo híbrido ya está decidido. El flujo concreto no.
+**Estado:** adoptado el 2026-11-10; maker-checker para alta y cambio bancario. Identificadores, umbrales y roles exactos abiertos. No implementar.
 **Orquestador:** `.cursor/agents/proveedores-identidad.md`. Skill: `principle-boundary-discipline`.
 **Fuente:** documento maestro, secciones 5.2, 7 y 13.
 **Depende de:** [modelo de dominio](01-modelo-de-dominio-y-estados.md).
@@ -8,6 +8,15 @@
 ## Objetivo
 
 Separar reconocimiento, alta, riesgo y autorización de pago. Un proveedor visto en una factura no queda habilitado para cobrar.
+
+## Decisión adoptada (2026-11-10)
+
+- Proveedor nuevo y cuenta bancaria nueva o modificada: maker-checker con dos actores distintos; nadie autoriza su propia solicitud.
+- El proveedor permanece no habilitado hasta completar identidad, riesgo, autorización y control.
+- Proveedor existente con identificadores verificados: reconocimiento automático para validar la factura, no para pagar.
+- La extracción no actualiza la cuenta bancaria.
+- La demo usa dos actores sintéticos para ejercitar maker-checker.
+- Quedan abiertos: identificadores por jurisdicción, umbral de coincidencia, roles exactos, revocación y listas de riesgo.
 
 ## Decidido
 
@@ -28,8 +37,8 @@ Separar reconocimiento, alta, riesgo y autorización de pago. Un proveedor visto
 
 - Qué identificadores cuentan como verificados, por jurisdicción. Depende del mercado, también abierto.
 - Umbral numérico de coincidencia. No inventar un score.
-- Quién puede habilitar, y si hace falta más de una persona.
-- Cómo se revoca una autorización ya dada.
+- Roles exactos que inician y autorizan el alta y el cambio bancario; si procurement, finanzas o ambos.
+- Cómo se revoca o suspende una autorización ya dada y qué efecto tiene sobre operaciones en curso.
 - Integración con listas de riesgo o bancos. Fuera del MVP si implica servicios de pago o datos no disponibles.
 
 ## Fuera de esta tarea

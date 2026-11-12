@@ -60,6 +60,8 @@ Modelo híbrido:
 
 No confundir coincidencia de nombre, identidad legal, validación de cuenta bancaria, alta de proveedor y autorización para recibir pagos. Son controles distintos.
 
+El alta de proveedor nuevo y el cambio de cuenta bancaria nueva o modificada exigen maker-checker con dos actores distintos; nadie autoriza su propia solicitud. Un proveedor existente con identificadores verificados se reconoce para validar la factura, no para pagar. Detalle en [docs/modelo/03-proveedores.md](docs/modelo/03-proveedores.md).
+
 ## 5. Validación de facturas
 
 Orden base, sin saltos:

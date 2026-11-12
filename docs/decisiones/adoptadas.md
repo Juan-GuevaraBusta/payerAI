@@ -104,6 +104,19 @@ Adoptado el 2026-11-09.
 - Detalle en [modelo 14](../modelo/14-riesgo-severidad-umbrales.md) y [tarea 14](../tareas/14-riesgo-severidad-umbrales.md).
 - Quedan abiertos: valores numéricos, señales incluidas en el MVP, puntaje compuesto, datos y momento de calibración, monedas y tasas, plazos de revisión, gobernanza de cambios, evidencia para bajar severidad y calibración por tenant o común.
 
+## Proveedores: identidad y autorización
+
+Adoptado el 2026-11-10.
+
+- El alta de proveedor nuevo y el cambio de cuenta bancaria nueva o modificada exigen maker-checker con dos actores distintos. Nadie autoriza su propia solicitud.
+- El proveedor permanece no habilitado hasta completar identidad, riesgo, autorización y control; el estado visible lo refleja.
+- Proveedor existente con identificadores verificados: reconocimiento automático para seguir la validación de la factura. No autoriza el pago.
+- Nombre comercial, homónimos o identificadores inconsistentes no habilitan ni fusionan; escalan.
+- La extracción automática no actualiza la cuenta bancaria registrada. Una factura o un correo no bastan para aceptar una cuenta.
+- La revocación o suspensión deja al proveedor no habilitado y se registra; el mecanismo exacto sigue abierto.
+- Detalle en [modelo 03](../modelo/03-proveedores.md) y [tarea 03](../tareas/03-proveedores-identidad-y-autorizacion.md).
+- Quedan abiertos: identificadores verificados por jurisdicción, umbral de coincidencia, roles exactos, revocación y listas de riesgo.
+
 ## Ingesta de correo y documentos
 
 Adoptado el 2026-11-10.
