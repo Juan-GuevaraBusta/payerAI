@@ -1,5 +1,7 @@
 # Workflows de aprobación
 
+**Estado:** en planificación el 2026-11-10; T07 adoptado. Política y presupuesto decididos; faltan cambios materiales, aprobador ausente, timeouts y concurrencia. No adoptada, no implementar.
+
 Especificación conceptual de la tarea 05. Define el ciclo configurable de aprobar, rechazar, pedir información, escalar y bloquear temporalmente, con autoridad verificable, concurrencia controlada y trazabilidad. No es un esquema, ni una API, ni un enum, ni una elección de motor de workflows.
 
 ## Fuentes y alcance
@@ -24,6 +26,31 @@ Contexto: [master prompt](../../MASTER_PROMPT_FINANCIAL_OPERATIONS.md). Este doc
 - **Abierto.** Falta una decisión. No se presenta como regla, no se implementa y no se usa para cerrar otra discusión.
 
 Los ejemplos son sintéticos y están marcados. No se usan datos reales de clientes.
+
+## Plan de cierre (2026-11-10)
+
+Prerrequisito cumplido: el marco de autoridad de T07 está adoptado. No adoptar T05 hasta cerrar las decisiones pendientes.
+
+### Decisiones de planificación tomadas
+
+- **Política:** el workflow reutiliza la versión de política que T04 congeló al iniciar la validación. La registra; no vuelve a congelar una versión distinta. Si la política cambia, se registra y se decide si la aprobación pendiente se reabre.
+- **Presupuesto:** no hay reserva al iniciar el workflow. La disponibilidad se consulta al decidir y se registra consumido/comprometido; un cambio de presupuesto obliga a reevaluar.
+- **Orden:** T07 antes que T05. Cumplido.
+
+### Decisiones pendientes antes de adoptar
+
+1. Lista de cambios materiales que invalidan una aprobación pendiente.
+2. Regla para aprobador ausente: delegación válida o escalamiento, sin sustituto implícito.
+3. Efecto de un timeout de solicitud de información: bloqueo o escalamiento, nunca aprobación.
+4. Mecanismo de concurrencia: una decisión vigente por operación y versión de evidencia, con rastro de intentos y sin last-write-wins.
+5. Relación con quorum y delegación de T13, sin fijar números.
+
+### Criterio de salida
+
+- Decisiones 1–5 registradas.
+- Criterios de aceptación de T05 verificados.
+- Sin contradicción con T04, T07 ni T13.
+- Nombres técnicos, enum, persistencia y vendor siguen abiertos.
 
 ## 1. Principios
 
@@ -120,7 +147,7 @@ El siguiente relato describe situaciones que deben poder distinguirse. La secuen
 11. Si se bloqueó temporalmente, se registra la condición y la condición de liberación.
 12. Toda transición deja evidencia y trazabilidad reconstruible.
 
-La versión de política que se congela al iniciar el workflow está abierta. La obligación de registrar la versión evaluada no.
+El workflow reutiliza la versión de política congelada por T04 al iniciar la validación y la registra. No vuelve a congelar una versión distinta. La obligación de registrar la versión evaluada se mantiene.
 
 ## 5. Puntos de bloqueo
 
@@ -307,6 +334,8 @@ La factura cambia después de una aprobación. La aprobación anterior no cubre 
 - El workflow no envía dinero.
 - La IA no aprueba, no autoriza, no delega y no forma quorum.
 - Cada transición deja evidencia reconstruible.
+- El workflow reutiliza la versión de política congelada por T04 al iniciar la validación.
+- El presupuesto no se reserva al iniciar; se reevalúa al decidir y se registra consumido/comprometido.
 
 ### Hipótesis
 
@@ -322,9 +351,8 @@ La factura cambia después de una aprobación. La aprobación anterior no cubre 
 - Qué pasa con un aprobador ausente: delegado, revocado o sin permiso.
 - Tiempos de espera y caducidad de una solicitud de información.
 - Nombres técnicos, enum y persistencia de las situaciones; el catálogo conceptual está adoptado en [12-estados-transiciones.md](12-estados-transiciones.md).
-- Si se congela la versión de política al iniciar el workflow.
-- Si el presupuesto se reserva al iniciar el workflow.
 - Qué cambios son materiales después de una aprobación.
+- Regla de aprobador ausente y efecto de timeout de solicitud de información.
 - Mecanismo concreto de concurrencia e idempotencia.
 - Si hace falta cola o workflow durable.
 - Esquema de identidad, roles y permisos.

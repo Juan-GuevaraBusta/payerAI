@@ -1,6 +1,6 @@
 # Tarea 05 — Workflows de aprobación
 
-**Estado:** discovery. Hay capacidades decididas y el modelo fino está abierto.
+**Estado:** planificación el 2026-11-10; T07 adoptado. Política y presupuesto decididos; faltan cambios materiales, aprobador ausente, timeouts y concurrencia. No adoptada.
 **Orquestador:** `.cursor/agents/workflows-aprobacion.md`. Skill: `principle-separate-before-serializing-shared-state`.
 **Fuente:** documento maestro, secciones 5.2 (puntos 9–11), 9 y 13.
 **Depende de:** [validación](04-validacion-de-facturas.md) y [autoridad](07-autoridad-autonomia-e-ia.md). **Orden acordado:** la autoridad (07) se define antes que este workflow.
@@ -8,6 +8,21 @@
 ## Objetivo
 
 Describir el ciclo configurable de aprobar, rechazar, pedir información o escalar, con trazabilidad. Sin fijar un organigrama único para todas las empresas.
+
+## Plan de cierre (2026-11-10)
+
+Prerrequisito cumplido: T07 adoptado. Decisiones tomadas:
+
+- El workflow reutiliza la versión de política congelada por T04 al iniciar la validación.
+- No hay reserva de presupuesto al iniciar; se reevalúa al decidir y se registra consumido/comprometido.
+
+Pendiente antes de adoptar:
+
+1. Lista de cambios materiales que invalidan una aprobación pendiente.
+2. Regla de aprobador ausente.
+3. Efecto de timeout de solicitud de información.
+4. Mecanismo de concurrencia.
+5. Relación con quorum y delegación de T13, sin números.
 
 ## Decidido
 
@@ -18,6 +33,8 @@ Describir el ciclo configurable de aprobar, rechazar, pedir información o escal
 - Las delegaciones tienen vigencia y alcance.
 - Un override humano lleva actor, motivo, fecha y evidencia.
 - Segregación de funciones cuando aplique: quien prepara no se aprueba solo si la política lo prohíbe.
+- El workflow reutiliza la versión de política congelada por T04 al iniciar la validación.
+- No hay reserva de presupuesto al iniciar; se reevalúa al decidir y se registra consumido/comprometido.
 - Si después de aprobar cambian la factura, el contrato, los datos bancarios o la política, hay que evaluar invalidar o reaprobar. La regla exacta está abierta; la obligación de evaluarlo no.
 - Dos actores o procesos no pueden cerrar la misma operación a la vez sin control de concurrencia.
 - El workflow no envía dinero.
@@ -34,6 +51,8 @@ Describir el ciclo configurable de aprobar, rechazar, pedir información o escal
 - Umbrales inclusivos o exclusivos.
 - Qué pasa con un aprobador ausente: delegado, revocado o sin permiso. El caso debe tener salida; la salida por empresa no está definida.
 - Tiempos de espera y caducidad de una solicitud de información.
+- Lista de cambios materiales que invalidan una aprobación pendiente.
+- Mecanismo de concurrencia y control de la decisión vigente por operación y versión de evidencia.
 
 ## Fuera de esta tarea
 
