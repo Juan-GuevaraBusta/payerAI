@@ -63,6 +63,31 @@ Adoptado el 2026-11-10.
 - Detalle en [modelo 09](../modelo/09-infraestructura-costo.md) y [tarea 09](../tareas/09-infraestructura-costo-y-despliegue.md).
 - Quedan abiertos: migración a PostgreSQL, correo, modelo de IA, Queues/Workflows, frontend, dominio, identidad y retención.
 
+## Seguridad, multi-tenancy y auditoría
+
+Adoptado el 2026-11-12.
+
+- Se adopta el catálogo `C-01` a `C-40` de [seguridad, multi-tenancy y auditoría](../modelo/10-seguridad-tenancy.md) como controles obligatorios de demo.
+- `C-01` a `C-24` y `C-26` a `C-40` son exigibles en la demo sintética. `C-25`, retención y borrado, se exige antes de un piloto con datos reales.
+- La adopción es del control y su evidencia, no de una implementación. No se elige base, proveedor de identidad, mecanismo de aislamiento, audit log, algoritmo de quorum ni verificación bancaria.
+- Denegar por defecto; tenant y autorización se comprueban en backend y persistencia; un recurso de otro tenant se deniega sin revelar su existencia.
+- El registro mínimo de decisión es reconstruible y no guarda secretos, tokens ni PII innecesaria.
+- Se adopta idempotencia en ingesta, eventos y acciones futuras; aprobar no es pagar y un timeout no es éxito ni fallo.
+- La demo no se conecta a correo, banco ni ERP reales; el contenido de correos y documentos no cambia autoridad ni política.
+- Quedan abiertos: proveedor y esquema de identidad, catálogo definitivo de roles, mecanismo de aislamiento en D1, audit log append-only o equivalente, retención, residencia, acceso de soporte y verificación bancaria fuera de banda.
+- Detalle en [modelo 10](../modelo/10-seguridad-tenancy.md) y [tarea 10](../tareas/10-seguridad-multitenancy-y-auditoria.md).
+
+## Edge cases y pruebas
+
+Adoptado el 2026-11-12.
+
+- Se adopta el catálogo de 23 casos de [edge cases](../modelo/11-edge-cases.md) como requisito de diseño y base de pruebas futuras.
+- Se adoptan el `Esperado` y el `No hacer` de cada caso. Los puntos en `Abierto` no se cierran.
+- Los casos críticos de dinero, identidad y aislamiento no se recortan si la demo muestra esa función; las funciones inexistentes no se simulan.
+- Los casos se alinean con T02–T05, T08, T10, T13 y T15: sin reserva de presupuesto al iniciar, política congelada, cambios materiales listados, sin `Execution` en el MVP y datos sintéticos.
+- Quedan abiertos: clave exacta de idempotencia, umbral de duplicado probable, efecto exacto de un cambio material, precedencia exacta, mecanismo de concurrencia, proveedor de webhooks, cola o workflow durable, OCR y límites de archivo.
+- Detalle en [modelo 11](../modelo/11-edge-cases.md) y [tarea 11](../tareas/11-edge-cases-y-pruebas.md).
+
 ## Estados y transiciones
 
 Adoptado el 2026-11-09.

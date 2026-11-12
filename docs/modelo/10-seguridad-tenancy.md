@@ -1,6 +1,6 @@
 # Seguridad, multi-tenancy y auditoría
 
-**Estado:** discovery. Los controles son requisitos de demo. El modelo conceptual de identidad, roles y aprobaciones está adoptado en [13-identidad-aprobaciones.md](13-identidad-aprobaciones.md); la estructura de riesgo, severidad y umbrales está adoptada en [14-riesgo-severidad-umbrales.md](14-riesgo-severidad-umbrales.md). El proveedor de identidad, el catálogo definitivo, los valores de umbral y el esquema técnico siguen abiertos.
+**Estado:** criterios adoptados el 2026-11-12; controles obligatorios de demo. El modelo conceptual de identidad, roles y aprobaciones está adoptado en [13-identidad-aprobaciones.md](13-identidad-aprobaciones.md); la estructura de riesgo, severidad y umbrales está adoptada en [14-riesgo-severidad-umbrales.md](14-riesgo-severidad-umbrales.md). El proveedor de identidad, el catálogo definitivo, los valores de umbral, los mecanismos técnicos, la auditoría y la retención siguen abiertos. No implementar.
 **Tarea:** 10.
 **Depende de:** las tareas 01 a 09.
 **Orquestador:** `.cursor/agents/seguridad-tenancy.md`.
@@ -12,6 +12,14 @@
 Este documento fija los controles que no se pueden posponer: aislamiento entre empresas, autorización distinta de autenticación, trazabilidad reconstruible, manejo de secretos, idempotencia y concurrencia. No elige proveedor de identidad, no define tablas, no cierra el catálogo definitivo de roles ni el esquema técnico y no implementa código. El modelo conceptual está adoptado en [13-identidad-aprobaciones.md](13-identidad-aprobaciones.md).
 
 Los controles valen para la demo y para el primer piloto. La demo usa datos sintéticos y marcados; un piloto con datos reales exige revisar jurisdicción, retención, residencia, borrado y acceso antes de reutilizar estos mismos controles.
+
+## Decisión adoptada (2026-11-12)
+
+- Se adopta el catálogo `C-01` a `C-40` como controles obligatorios de demo.
+- `C-01` a `C-24` y `C-26` a `C-40` son exigibles en la demo con datos sintéticos. `C-25` se exige antes de un piloto con datos reales y no bloquea la demo.
+- La adopción es del **control y su evidencia**, no de una implementación. Un control adoptado no acredita que una base, un proveedor o una pantalla ya lo cumplan.
+- Se adopta la separación entre controles de demo y controles que esperan jurisdicción, catálogo de roles, mecanismo de auditoría o esquema técnico.
+- No se elige aquí proveedor de identidad, base de datos, mecanismo de aislamiento, algoritmo de quorum, forma de verificación bancaria ni tecnología de audit log.
 
 ## Principios que no se negocian
 
@@ -54,6 +62,8 @@ Cada control nombra la amenaza que corta y la evidencia que lo demuestra. “Imp
 | C-07 | Logs, trazas y métricas no mezclan cuerpos de documentos ni datos personales de varios tenants en un mismo registro | Fuga por observabilidad | Revisión de un log de prueba: solo IDs, tenant, correlación y resultado |
 | C-08 | Los datos de demo son sintéticos, marcados y no reversibles a una persona o empresa real | Uso de datos reales en un entorno de prueba | Inventario de datos de demo con etiqueta y origen |
 
+`C-02` exige que la persistencia imponga el aislamiento; no elige el mecanismo. D1 es el default de demo, pero esta decisión no acredita que D1 tenga políticas de fila. La demo debe demostrar el control con dos tenants y una prueba directa contra la capa de datos, sin afirmar una capacidad no verificada.
+
 ### Autorización, roles y segregación
 
 | ID | Control | Amenaza que corta | Verificación en demo |
@@ -69,6 +79,8 @@ Cada control nombra la amenaza que corta y la evidencia que lo demuestra. “Imp
 | C-17 | La IA no aparece como actor con permiso de aprobar, autorizar, ejecutar, delegar ni formar quorum | Conceder autoridad a un modelo | Revisión de la matriz de permisos: la IA solo interpreta o señala |
 | C-18 | La información bancaria nueva o cambiada no se acepta solo desde el documento; exige un control adicional y fuera de banda | Cambio de cuenta por factura manipulada | Prueba de cambio de cuenta desde PDF: no se aplica sin verificación adicional |
 | C-19 | Los permisos de administración no se mezclan con los de aprobación si la política exige segregación | Administrador que también aprueba y paga | Prueba de conflicto de funciones según política |
+
+`C-18` se apoya en el maker-checker de [T03](03-proveedores.md): la extracción no actualiza la cuenta y un segundo actor con permiso autoriza el cambio. La forma exacta de verificación fuera de banda sigue abierta.
 
 ### Trazabilidad y auditoría
 
@@ -105,6 +117,8 @@ Cada control nombra la amenaza que corta y la evidencia que lo demuestra. “Imp
 | C-38 | Los estados distinguen solicitud, aprobación, instrucción enviada, procesamiento, confirmación, rechazo y conciliación | Confundir aprobación con pago | Prueba de estado: aprobar no produce “pagado” |
 | C-39 | Un timeout o una ausencia de respuesta no se convierte en éxito ni en fallo definitivo; se consulta la fuente de verdad antes de reintentar | Pago duplicado o perdido | Prueba de timeout simulado: estado “desconocido” y verificación pendiente |
 | C-40 | No se declara un pago exitoso por haber enviado una solicitud | Pago simulado | Revisión de la máquina de estados: no existe transición directa de “enviado” a “pagado” sin confirmación |
+
+`C-33`, `C-39` y `C-40` no crean un módulo de ejecución. En el MVP no hay `Execution` ni pago externo: el timeout se diseña como resultado desconocido y no se simula una confirmación. Las acciones de ejecución solo aplican cuando esa frontera exista.
 
 ## Controles que esperan jurisdicción y esquema de roles
 
@@ -237,6 +251,7 @@ Un piloto no reutiliza la demo sin revisar esta tabla. La demo no se conecta a d
 - La demo con datos sintéticos está distinguida de un piloto con datos reales.
 - Los controles que esperan jurisdicción y esquema de roles están separados.
 - Cada control obligatorio nombra la amenaza que corta y la evidencia que lo demuestra.
+- El catálogo `C-01` a `C-40` está adoptado; los mecanismos técnicos abiertos no se presentan como implementados.
 - `bash scripts/ci.sh` pasa.
 
 ## Fuentes internas

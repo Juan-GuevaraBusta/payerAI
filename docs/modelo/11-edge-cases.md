@@ -1,6 +1,6 @@
 # Edge cases y pruebas
 
-**Estado:** discovery. Esta lista es requisito de diseño. No es una suite implementada ni un catálogo cerrado de estados.
+**Estado:** catálogo adoptado el 2026-11-12; requisito de diseño. No es una suite implementada ni un catálogo cerrado de estados.
 **Tarea:** 11.
 **Depende de:** las tareas 01 a 10.
 **Orquestador:** `.cursor/agents/edge-cases-pruebas.md`.
@@ -14,6 +14,24 @@ Este documento convierte los 23 edge cases del documento maestro en comprobacion
 No implementa pruebas, no elige base de datos, no elige proveedor de correo, no adopta colas ni workflows durables y no simula un pago. Cuando exista código, cada caso que la función cubra necesita una prueba. Los casos de funciones inexistentes se quedan en “no simular el éxito”.
 
 Los datos de ejemplo son sintéticos. No se usa información de clientes reales.
+
+## Decisión adoptada (2026-11-12)
+
+- Se adopta el catálogo de 23 casos como requisito de diseño y base de pruebas futuras.
+- Se adopta el `Esperado` y el `No hacer` de cada caso; los puntos en `Abierto` siguen abiertos.
+- La adopción no crea una suite, no implementa código y no autoriza a simular pagos, confirmaciones, OCR ni integraciones.
+- Los casos se alinean con las decisiones adoptadas: no hay reserva de presupuesto al iniciar, la política se congela al iniciar, los cambios materiales están listados, `Execution` no existe en el MVP y la demo usa datos sintéticos.
+- Un caso crítico de dinero, identidad o aislamiento no se recorta si la demo muestra esa función.
+
+## Invariantes que ningún caso puede contradecir
+
+- Política y presupuesto se congelan al iniciar la validación; un cambio posterior se registra y obliga a reevaluar.
+- No hay reserva de presupuesto al iniciar el workflow.
+- Los cambios materiales son importe, moneda, proveedor, cuenta bancaria, versión de factura, contrato o anexo, política, presupuesto o evidencia.
+- `Execution` no se crea en el MVP; aprobar no es pagar y enviar una instrucción no es pagar.
+- Un timeout deja resultado desconocido, no éxito ni fallo definitivo.
+- La IA no concede autoridad, no aprueba y no reduce severidad sola.
+- Los datos de demo son sintéticos; no se conecta correo, banco ni ERP reales.
 
 ## Cómo leer esta lista
 
@@ -41,7 +59,7 @@ El orden es el del documento maestro. No es una prioridad. No se recorta un caso
 | 11.09 | Monedas diferentes y conversión | Dinero | 01 Factura; 04 comparación; 07 severidad | Esperado con abierto |
 | 11.10 | Contrato vencido, modificado, ausente o con varios anexos | Dinero | 01 Contrato; 04 validación; 05 bloqueo | Esperado con abierto |
 | 11.11 | Importe superior al contrato, servicios adicionales o cargos extraordinarios | Dinero | 01 Hallazgo; 04 ejemplo; 07 severidad media; 05 salidas | Esperado |
-| 11.12 | Pago parcial, factura parcialmente pagada o pago registrado dos veces | Dinero | 01 Pago y conciliación; 08 Execution; 10 C-38, C-40 | Esperado con abierto |
+| 11.12 | Pago parcial, factura parcialmente pagada o pago registrado dos veces | Dinero | 01 Pago y conciliación; 08 frontera futura sin Execution; 10 C-38, C-40 | Esperado con abierto |
 | 11.13 | Presupuesto agotado o actualizado durante la aprobación | Dinero | 01 Política y presupuesto; 05 concurrencia; 10 C-37 | Esperado con abierto |
 | 11.14 | Factura modificada después de aprobación | Dinero | 01 Documento y versión; 05 invariantes; 10 C-37 | Esperado con abierto |
 | 11.15 | Aprobador ausente, delegado, revocado o sin permisos | Personas | 05 delegación y quorum; 07 escalamiento; 10 C-09, C-13 | Esperado con abierto |
@@ -104,7 +122,7 @@ El orden es el del documento maestro. No es una prioridad. No se recorta un caso
 
 **Esperado:** se vincula a la operación existente cuando hay señales suficientes. No abre otra obligación por defecto. Una nota crédito no se suma como factura nueva a pagar. Una factura corregida o reemplazada conserva la versión anterior y la relación entre versiones.
 
-**Abierto:** cómo se recalcula el importe neto; qué cambios son materiales; si la aprobación previa se invalida o requiere una nueva; el estado exacto de una factura parcialmente pagada.
+**Abierto:** cómo se recalcula el importe neto; si la corrección invalida o exige nueva aprobación; el estado exacto de una factura parcialmente pagada. La lista de cambios materiales está adoptada en [05](05-workflows-aprobacion.md).
 
 **No hacer:** sumar la nota crédito como una factura nueva; conservar la aprobación vieja sobre una versión nueva; borrar la versión anterior; tratar una parcial como pago total o como rechazo.
 
@@ -146,9 +164,9 @@ El orden es el del documento maestro. No es una prioridad. No se recorta un caso
 
 **Cobertura:** [03](03-proveedores.md) identidad y dato bancario; [10](10-seguridad-tenancy.md) C-18.
 
-**Esperado:** IDs distintos no se fusionan. Una cuenta nueva o cambiada no se acepta solo desde el documento. Se aplica control reforzado y autorización explícita. La factura puede seguir su camino, pero el pago no se autoriza contra la cuenta nueva sin el control.
+**Esperado:** IDs distintos no se fusionan. Una cuenta nueva o cambiada no se acepta solo desde el documento. Se aplica el maker-checker de [03](03-proveedores.md) y un control fuera de banda. La factura puede seguir su camino, pero el pago no se autoriza contra la cuenta nueva sin el control.
 
-**Abierto:** qué control reforzado se usa en la demo; quién autoriza; cómo se verifica fuera de banda; qué evidencia queda.
+**Abierto:** cómo se verifica fuera de banda; quién autoriza; qué evidencia queda; si la demo permite completar el cambio o solo lo deja pendiente.
 
 **No hacer:** actualizar la cuenta porque el PDF lo dice; aceptar un correo del proveedor como verificación; fusionar homónimos; usar la cuenta nueva sin bloqueo.
 
@@ -190,13 +208,13 @@ El orden es el del documento maestro. No es una prioridad. No se recorta un caso
 
 **Cobertura:** [01](01-dominio.md) Contrato o anexo; [04](04-validacion.md) contrato; [05](05-workflows-aprobacion.md) bloqueo por evidencia.
 
-**Esperado:** ausente significa ausencia de evidencia, no conformidad ni incumplimiento. Varios anexos no se colapsan sin saber cuál está vigente. Vencido es un hallazgo, no un rechazo automático hasta que la política lo diga. Modificado exige registrar la versión aplicable.
+**Esperado:** ausente significa ausencia de evidencia, no conformidad ni incumplimiento. La política decide si bloquea, pide evidencia o permite continuar; no hay bloqueo ni rechazo automático. Varios anexos no se colapsan sin saber cuál está vigente. Vencido es un hallazgo, no un rechazo automático hasta que la política lo diga. Modificado exige registrar la versión aplicable.
 
-**Abierto:** qué anexo prevalece; cómo se determina la vigencia; si un contrato vencido bloquea o solo eleva severidad; quién confirma la modificación.
+**Abierto:** qué anexo prevalece; cómo se determina la vigencia; qué política aplica a la ausencia; si un contrato vencido bloquea o solo eleva severidad; quién confirma la modificación.
 
 **No hacer:** fabricar un contrato marco; tomar el anexo más reciente por fecha sin verificar; rechazar por ausencia sin política; ignorar una modificación.
 
-**Comprobación de diseño:** sin contrato, la operación queda pendiente de evidencia; con dos anexos contradictorios, queda un conflicto explícito y no una aprobación.
+**Comprobación de diseño:** sin contrato, la validación registra ausencia de evidencia y aplica la política; no inventa condiciones ni rechaza sola. Con dos anexos contradictorios, queda un conflicto explícito y no una aprobación.
 
 **Datos sintéticos:** contrato A con anexo 1 y anexo 2 que fijan límites distintos.
 
@@ -216,7 +234,7 @@ El orden es el del documento maestro. No es una prioridad. No se recorta un caso
 
 ### 11.12 Pago parcial, factura parcialmente pagada o pago registrado dos veces
 
-**Cobertura:** [01](01-dominio.md) Pago, Confirmación y Conciliación; [08](08-arquitectura.md) Execution futuro; [10](10-seguridad-tenancy.md) C-38 y C-40.
+**Cobertura:** [01](01-dominio.md) Pago, Confirmación y Conciliación; [08](08-arquitectura.md) frontera futura de Execution, no módulo del MVP; [10](10-seguridad-tenancy.md) C-38 y C-40.
 
 **Esperado:** el segundo registro del mismo pago no crea otro pago. Parcial no es pago total ni rechazo. Aprobar no es pagar; enviar una instrucción no es pagar. El MVP registra el ciclo y no mueve dinero.
 
@@ -232,11 +250,11 @@ El orden es el del documento maestro. No es una prioridad. No se recorta un caso
 
 **Cobertura:** [01](01-dominio.md) Política, presupuesto y límite; [05](05-workflows-aprobacion.md) concurrencia y bloqueos; [10](10-seguridad-tenancy.md) C-37.
 
-**Esperado:** la decisión usa la política y el presupuesto disponibles y registra la versión. Un cambio durante la espera obliga a reevaluar. La aprobación anterior no cubre en silencio un presupuesto nuevo o agotado.
+**Esperado:** la decisión usa la política y el presupuesto disponibles y registra la versión. No hay reserva al iniciar; la disponibilidad se consulta al decidir. Un cambio durante la espera obliga a reevaluar. La aprobación anterior no cubre en silencio un presupuesto nuevo o agotado.
 
-**Abierto:** si el presupuesto se reserva al empezar el workflow; cómo se libera una reserva; quién puede actualizar el presupuesto durante una aprobación.
+**Abierto:** cómo se registra consumido/comprometido; quién puede actualizar el presupuesto durante una aprobación; cómo se trata un cambio que ocurre después de la decisión.
 
-**No hacer:** aprobar contra un presupuesto que ya no está vigente sin dejar constancia; reservar sin registrar; ignorar el cambio de versión.
+**No hacer:** aprobar contra un presupuesto que ya no está vigente sin dejar constancia; ignorar el cambio de versión.
 
 **Comprobación de diseño:** si el presupuesto cambia mientras la operación está en espera, la decisión registra la nueva versión o se invalida; no se reutiliza la evaluación anterior.
 
@@ -246,9 +264,9 @@ El orden es el del documento maestro. No es una prioridad. No se recorta un caso
 
 **Cobertura:** [01](01-dominio.md) Documento y versión; [05](05-workflows-aprobacion.md) invariantes; [10](10-seguridad-tenancy.md) C-37.
 
-**Esperado:** se evalúa invalidación o nueva aprobación. La aprobación vieja no cubre el documento nuevo en silencio. La versión anterior y la nueva quedan vinculadas para reconstruir qué se aprobó.
+**Esperado:** se evalúa invalidación o nueva aprobación. La aprobación vieja no cubre el documento nuevo en silencio. La versión anterior y la nueva quedan vinculadas para reconstruir qué se aprobó. La lista de cambios materiales está adoptada en [05](05-workflows-aprobacion.md).
 
-**Abierto:** qué cambios son materiales; si un cambio de formato sin impacto material invalida; quién decide la materialidad; si la nueva versión reabre el mismo workflow o crea uno nuevo.
+**Abierto:** si el cambio material invalida o exige nueva aprobación; si un cambio no material reabre el workflow; quién decide la materialidad; si la nueva versión reabre el mismo workflow o crea uno nuevo.
 
 **No hacer:** conservar la aprobación sobre otra versión; borrar la versión anterior; comparar solo el nombre del archivo; aprobar la versión nueva por arrastre.
 
@@ -276,9 +294,9 @@ El orden es el del documento maestro. No es una prioridad. No se recorta un caso
 
 **Cobertura:** [05](05-workflows-aprobacion.md) conflicto de políticas; [07](07-autoridad-ia.md) autoridad; [10](10-seguridad-tenancy.md) C-15.
 
-**Esperado:** el conflicto queda explícito. Se registra qué versión se evaluó y cuál prevaleció. Un umbral inclusivo o exclusivo no se decide por conveniencia. Un cambio de política a mitad del workflow obliga a reevaluar.
+**Esperado:** el conflicto queda explícito. Se registra qué versión se evaluó y cuál prevaleció. Un umbral inclusivo o exclusivo no se decide por conveniencia. La política se congela al iniciar la validación y el workflow reutiliza esa versión; un cambio posterior es material y obliga a decidir si se reabre, sin sustituirla en silencio.
 
-**Abierto:** la precedencia exacta; si el umbral es inclusivo; quién resuelve el conflicto; si la política se congela al iniciar o se lee en cada transición.
+**Abierto:** la precedencia exacta; si el umbral es inclusivo o exclusivo; quién resuelve el conflicto; el efecto exacto de un cambio posterior sobre una operación ya decidida.
 
 **No hacer:** quedarse con la regla que aprueba; resolver el conflicto en silencio; aplicar una política nueva a una decisión ya cerrada sin registrar; inventar un umbral.
 
@@ -312,7 +330,7 @@ El orden es el del documento maestro. No es una prioridad. No se recorta un caso
 
 **No hacer:** reintentar a ciegas; declarar pago fallido; declarar pago exitoso; borrar la instrucción; convertir el timeout en rechazo.
 
-**Comprobación de diseño:** un timeout produce un estado “resultado desconocido” y una tarea de verificación; no produce “pagado” ni “rechazado”.
+**Comprobación de diseño:** un timeout produce un estado “resultado desconocido” y un registro pendiente de verificación; no produce “pagado” ni “rechazado”.
 
 **Datos sintéticos:** instrucción sintética con timeout; sin banco real; la prueba solo verifica el estado y el registro.
 
@@ -403,9 +421,10 @@ No hay suite implementada. Esta matriz indica qué tipo de prueba necesitará ca
 
 ## Criterios de aceptación
 
-- Los 23 casos del documento maestro están presentes y numerados.
+- Los 23 casos del documento maestro están presentes, numerados y el catálogo está adoptado.
 - Cada caso tiene esperado y, si aplica, abierto y prohibido.
 - Cada caso cita al menos un concepto, estado o control de las tareas 01 a 10.
+- Ningún caso contradice T02, T03, T04, T05, T08, T10, T13 o T15.
 - El ejemplo de USD 10.000 contra USD 8.000 no termina en fraude ni en aprobación.
 - El timeout no termina en pago fallido ni en pago exitoso.
 - La inyección de instrucciones no termina en un cambio de autoridad.
@@ -418,7 +437,7 @@ No hay suite implementada. Esta matriz indica qué tipo de prueba necesitará ca
 
 - La clave exacta de idempotencia.
 - El valor del umbral de duplicado probable; la estructura está en [riesgo, severidad y umbrales](14-riesgo-severidad-umbrales.md).
-- La materialidad de un cambio de factura.
+- El efecto exacto de un cambio material: si invalida o exige nueva aprobación. La lista de cambios materiales está adoptada en [workflows](05-workflows-aprobacion.md).
 - La precedencia exacta de políticas y los valores de los umbrales; el carácter inclusivo o exclusivo debe declararse, según [riesgo, severidad y umbrales](14-riesgo-severidad-umbrales.md).
 - El mecanismo de concurrencia y la base de datos.
 - El proveedor de correo y webhooks.

@@ -148,6 +148,8 @@ Multi-tenancy desde el diseño:
 - Cada consulta y mutación comprueba tenant y autorización del actor.
 - No se comparten datos, documentos, embeddings, caches ni resultados entre tenants.
 
+Los controles `C-01` a `C-40` están adoptados en [docs/modelo/10-seguridad-tenancy.md](docs/modelo/10-seguridad-tenancy.md) como requisitos de demo. La adopción es del control y su evidencia, no de una implementación: identidad, roles, mecanismo de aislamiento en D1, auditoría y retención siguen abiertos.
+
 Identidad y autorización:
 
 - Roles y permisos explícitos; autenticación no equivale a autorización.
@@ -187,7 +189,7 @@ Acciones posibles: corregir datos no críticos, solicitar información, escalar,
 
 El diseño y las pruebas deben cubrir, como mínimo: mismo documento con otro nombre; mismo proveedor, número e importe en documentos distintos; duplicado exacto y probable; factura corregida, reemplazada, parcial o nota crédito; reenvío y conversación con varios adjuntos; razón social y nombre comercial distintos; proveedores con nombres parecidos, IDs distintos o cambios de cuenta bancaria; factura de proveedor nuevo; monedas y conversiones; contrato vencido, modificado, ausente o con anexos; importe superior al contrato, servicios adicionales y cargos extraordinarios; pago parcial o registrado dos veces; presupuesto agotado o actualizado durante una aprobación; factura modificada después de aprobación; aprobador ausente, delegado, revocado o sin permisos; reglas contradictorias, umbrales inclusivos o exclusivos y política modificada a mitad de workflow; aprobaciones concurrentes; timeout con resultado externo desconocido; webhook duplicado, tardío o fuera de orden; error parcial en Queue o Workflow con reintentos; archivo corrupto, escaneado, cifrado, demasiado grande o no soportado; prompt injection en emails o documentos; y aislamiento multi-tenant en IDs, accesos directos, búsquedas, URLs, archivos y caches.
 
-El detalle vive en [docs/tareas/11-edge-cases-y-pruebas.md](docs/tareas/11-edge-cases-y-pruebas.md) y [docs/modelo/11-edge-cases.md](docs/modelo/11-edge-cases.md).
+El catálogo de 23 casos está adoptado en [docs/modelo/11-edge-cases.md](docs/modelo/11-edge-cases.md): se adoptan el esperado y el prohibido, los puntos abiertos siguen abiertos y los casos de funciones inexistentes no se simulan. El detalle vive también en [docs/tareas/11-edge-cases-y-pruebas.md](docs/tareas/11-edge-cases-y-pruebas.md).
 
 ## 13. Principios de ingeniería
 
