@@ -187,7 +187,7 @@ No se elige aquí la tecnología de persistencia ni el mecanismo concreto de blo
 | Escenario | Comportamiento esperado | Prohibido |
 | --- | --- | --- |
 | Dos aprobadores actúan a la vez | Una decisión queda vigente; ambos intentos quedan registrados. | Last-write-wins silencioso. |
-| La política cambia con el workflow abierto | Se reevalúa con la versión vigente y se registra el cambio. | Aprobar con una política que ya no aplica sin dejar constancia. |
+| La política cambia con el workflow abierto | Se registra el cambio; se decide si la aprobación pendiente se reabre y no se sustituye la versión congelada en silencio. | Aprobar con una política que ya no aplica sin dejar constancia. |
 | El presupuesto se agota o se actualiza | Se reevalúa; la decisión anterior puede invalidarse. | Aprobar contra un presupuesto que ya no está vigente. |
 | La factura se modifica después de aprobar | Se evalúa invalidación o nueva aprobación. | Conservar la aprobación sobre otra versión. |
 | La delegación vence o se revoca | La transición no se completa con esa delegación. | Aceptar una delegación vencida o revocada. |

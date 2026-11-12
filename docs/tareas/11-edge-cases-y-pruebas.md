@@ -1,6 +1,6 @@
 # Tarea 11 — Edge cases y pruebas
 
-**Estado:** discovery. Esta lista es requisito de diseño. No es una suite implementada.
+**Estado:** catálogo adoptado el 2026-11-12; requisito de diseño. No es una suite implementada.
 **Orquestador:** `.cursor/agents/edge-cases-pruebas.md`. Skill: `interrogate`.
 **Fuente:** documento maestro, sección 14.
 **Depende de:** tareas 01 a 10. Cada caso debe citar qué concepto, control o estado lo cubre.
@@ -8,6 +8,15 @@
 ## Objetivo
 
 Convertir los edge cases del documento maestro en comprobaciones de diseño. Cuando exista código, estos casos pasan a ser pruebas. Hasta entonces, cada caso necesita un resultado esperado y los huecos que siguen abiertos.
+
+## Decisión adoptada (2026-11-12)
+
+- Se adopta el catálogo completo de 23 casos del [modelo 11](../modelo/11-edge-cases.md) como requisito de diseño y base de las pruebas futuras.
+- Se adoptan el `Esperado` y el `No hacer` de cada caso. Los puntos en `Abierto` no se cierran por esta adopción.
+- Los casos críticos de dinero, identidad y aislamiento no se recortan si la demo muestra esa función. Si la función no existe, el caso se mantiene como no simulado.
+- La adopción no crea una suite, no implementa código y no autoriza a simular pagos, confirmaciones ni integraciones.
+- Se alinean los casos con las decisiones de T02, T03, T04, T05, T08, T10, T13 y T15: no hay reserva de presupuesto al iniciar, la política se congela al iniciar, la lista de cambios materiales está adoptada, `Execution` no existe en el MVP y los datos son sintéticos.
+- Quedan abiertos: clave exacta de idempotencia, umbral de duplicado probable, efecto exacto de un cambio material, precedencia de políticas, mecanismo de concurrencia, proveedor de webhooks, cola o workflow durable, OCR y límites de archivo.
 
 ## Decidido
 
@@ -48,7 +57,7 @@ No hay prioridad numérica inventada. Los casos críticos de dinero, identidad y
 ### Factura corregida, reemplazada, parcial o nota crédito
 
 - Esperado: se vincula a la operación existente cuando hay señales. No abre otra obligación por defecto.
-- Abierto: cómo se recalcula el importe neto y si la aprobación previa se invalida.
+- Abierto: cómo se recalcula el importe neto y si la corrección invalida o exige nueva aprobación. La obligación de reevaluar el cambio material está adoptada.
 - No hacer: sumar la nota crédito como una factura nueva a pagar.
 
 ### Reenvío y conversación con varios adjuntos
@@ -66,7 +75,8 @@ No hay prioridad numérica inventada. Los casos críticos de dinero, identidad y
 
 ### Nombres parecidos, IDs distintos o cambio de cuenta
 
-- Esperado: IDs distintos no se fusionan. La cuenta nueva no se acepta desde el documento. Control reforzado.
+- Esperado: IDs distintos no se fusionan. La cuenta nueva no se acepta desde el documento. Aplica maker-checker de T03 y control fuera de banda.
+- Abierto: la forma exacta de verificación y quién la ejecuta.
 - No hacer: actualizar la cuenta porque el PDF lo dice.
 
 ### Factura de proveedor nuevo
@@ -85,8 +95,8 @@ No hay prioridad numérica inventada. Los casos críticos de dinero, identidad y
 
 ### Contrato vencido, modificado, ausente o con varios anexos
 
-- Esperado: ausente significa sin evidencia, no conformidad ni incumplimiento. Varios anexos no se colapsan sin saber cuál vigente. Vencido es un hallazgo, no un rechazo automático hasta que la política lo diga.
-- Abierto: qué anexo prevalece.
+- Esperado: ausente significa sin evidencia, no conformidad ni incumplimiento. La política decide si bloquea, pide evidencia o permite continuar; no hay bloqueo ni rechazo automático. Varios anexos no se colapsan sin saber cuál vigente. Vencido es un hallazgo, no un rechazo automático hasta que la política lo diga.
+- Abierto: qué anexo prevalece y qué política aplica a la ausencia.
 - No hacer: fabricar un contrato marco.
 
 ### Importe superior al contrato, servicios adicionales, cargos extraordinarios
@@ -103,14 +113,14 @@ No hay prioridad numérica inventada. Los casos críticos de dinero, identidad y
 
 ### Presupuesto agotado o actualizado durante la aprobación
 
-- Esperado: la decisión usa la política y el presupuesto disponibles, y registra la versión. Un cambio durante la espera obliga a reevaluar.
-- Abierto: si el presupuesto se reserva al empezar el workflow.
+- Esperado: la decisión usa la política y el presupuesto disponibles, y registra la versión. No hay reserva al iniciar; la disponibilidad se consulta al decidir. Un cambio durante la espera obliga a reevaluar.
+- Abierto: cómo se registra consumido/comprometido y quién puede actualizar el presupuesto durante una aprobación.
 - No hacer: aprobar contra un presupuesto que ya no está vigente sin dejar constancia.
 
 ### Factura modificada después de aprobar
 
-- Esperado: evaluar invalidación o nueva aprobación. La aprobación vieja no cubre el documento nuevo en silencio.
-- Abierto: qué cambios son materiales.
+- Esperado: evaluar invalidación o nueva aprobación. La aprobación vieja no cubre el documento nuevo en silencio. La lista de cambios materiales está adoptada en T05.
+- Abierto: si el cambio material invalida o exige nueva aprobación, y si un cambio no material reabre el workflow.
 - No hacer: conservar la aprobación sobre otra versión.
 
 ## Personas y reglas
@@ -123,8 +133,8 @@ No hay prioridad numérica inventada. Los casos críticos de dinero, identidad y
 
 ### Reglas contradictorias, umbrales inclusivos o exclusivos, política cambiada a mitad de camino
 
-- Esperado: el conflicto queda explícito. Se registra qué versión se evaluó.
-- Abierto: la precedencia y si el umbral es inclusivo.
+- Esperado: el conflicto queda explícito. Se registra qué versión se evaluó. La política se congela al iniciar; un cambio posterior es material y obliga a decidir si se reabre.
+- Abierto: la precedencia exacta y si el umbral es inclusivo o exclusivo.
 - No hacer: quedarse con la regla que aprueba.
 
 ### Dos procesos concurrentes
@@ -175,12 +185,14 @@ Esta lista, mantenida cuando una decisión abierta se cierre. Al implementar, ca
 
 ## Criterios de aceptación
 
-- Los 23 casos del documento maestro están en este archivo.
+- Los 23 casos del documento maestro están en este archivo y el catálogo está adoptado.
 - Cada uno tiene esperado y, si aplica, abierto y prohibido.
+- Ningún caso contradice T02, T03, T04, T05, T08, T10, T13 o T15.
 - El ejemplo de USD 10.000 / USD 8.000 no termina en fraude ni en aprobación.
 - El timeout no termina en pago fallido ni en pago exitoso.
 - La inyección de instrucciones no termina en un cambio de autoridad.
-- Ningún caso usa datos reales de clientes.
+- El aislamiento no revela la existencia de un recurso de otro tenant.
+- Ningún caso usa datos reales de clientes ni simula un pago.
 
 ## Riesgo si se cierra mal
 

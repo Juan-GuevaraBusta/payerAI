@@ -1,6 +1,6 @@
 # Tarea 10 — Seguridad, multi-tenancy y auditoría
 
-**Estado:** discovery. Los requisitos de esta tarea valen para la demo. El esquema de identidad sigue abierto.
+**Estado:** criterios adoptados el 2026-11-12; controles obligatorios de demo. Identidad, roles, auditoría, retención y mecanismos técnicos siguen abiertos. No implementar.
 **Orquestador:** `.cursor/agents/seguridad-tenancy.md`. Skill: `review-security`.
 **Fuente:** documento maestro, secciones 7, 9, 13 y 15.
 **Relacionada con:** todas las tareas anteriores. No se aplaza hasta después de tener pantallas.
@@ -8,6 +8,15 @@
 ## Objetivo
 
 Dejar los controles que el diseño no puede posponer: aislamiento entre empresas, autorización distinta de autenticación, trazabilidad reconstruible y manejo de secretos.
+
+## Decisión adoptada (2026-11-12)
+
+- Se adopta el catálogo `C-01` a `C-40` del [modelo 10](../modelo/10-seguridad-tenancy.md) como controles obligatorios de demo.
+- Se adoptan `C-01` a `C-24` y `C-26` a `C-40` como controles exigibles en la demo. `C-25` se exige antes de un piloto con datos reales; no bloquea la demo sintética.
+- Cada control conserva la amenaza que corta y la evidencia que lo demuestra. Una lista de controles no es una implementación ni una prueba ejecutada.
+- Se separa el control exigido del mecanismo elegido: esta tarea no elige base de datos, proveedor de identidad, mecanismo de audit log, algoritmo de quorum ni forma de verificación bancaria.
+- Se adoptan como reglas de demo: denegar por defecto, comprobar tenant y autorización en backend y persistencia, no revelar la existencia de recursos de otro tenant, registrar cada decisión, no guardar secretos ni PII innecesaria, aplicar idempotencia y no declarar un pago por enviar una solicitud.
+- Quedan abiertos: proveedor y esquema de identidad, catálogo definitivo de roles, mecanismo de aislamiento en D1, audit log append-only o equivalente, retención, residencia, acceso de soporte y verificación fuera de banda del dato bancario.
 
 ## Decidido
 
@@ -37,15 +46,16 @@ Dejar los controles que el diseño no puede posponer: aislamiento entre empresas
 
 ## Hipótesis
 
-- Un identificador de tenant en cada fila, más una comprobación en cada consulta de backend, es el mínimo. Puede no bastar si el motor de base de datos permite una consulta sin ese predicado. La forma de imponerlo (restricción, política de fila u otra) depende de la base, que está abierta.
+- Un identificador de tenant en cada fila, más una comprobación en cada consulta de backend, es el mínimo. Puede no bastar si el motor de base de datos permite una consulta sin ese predicado. La forma de imponerlo (restricción, política de fila u otra) depende de la base, que está abierta. La elección de D1 como default de demo no acredita que D1 imponga políticas de fila por sí sola; la demo debe demostrar el control sin afirmar una capacidad no verificada.
 - Para la demo alcanzan pocos permisos: administrar políticas, validar proveedores, aprobar dentro de un límite, y solo leer. Es una hipótesis de demo. No es el esquema de roles.
 
 ## Abierto
 
 - Esquema de identidad, roles y onboarding de empresas.
 - Jurisdicción y requisitos regulatorios. Pueden cambiar retención, residencia de datos y qué se puede mandar a un modelo.
+- Mecanismo concreto de aislamiento en D1: capa de acceso obligatoria, restricción, política de fila o equivalente. El control `C-02` está adoptado; el mecanismo no.
 - Si el audit log es append-only por almacenamiento o por control de aplicación.
-- Retención y borrado.
+- Retención, borrado, legal hold y acceso de soporte.
 
 ## Fuera de esta tarea
 
@@ -74,10 +84,12 @@ Si hubo IA, añadir modelo, versión, entradas permitidas y salida estructurada.
 
 ## Entregable
 
-Una lista de controles obligatorios de demo, separada de los controles que esperan a la jurisdicción y al esquema de roles. Cada control dice qué amenaza corta: fuga entre tenants, autorización implícita, cambio de cuenta, log alterado, secreto filtrado o pago simulado.
+Un catálogo adoptado de 40 controles obligatorios de demo, separado de los controles que esperan a la jurisdicción y al esquema de roles. Cada control dice qué amenaza corta: fuga entre tenants, autorización implícita, cambio de cuenta, log alterado, secreto filtrado o pago simulado.
 
 ## Criterios de aceptación
 
+- El catálogo `C-01` a `C-40` está adoptado y cada control tiene amenaza y evidencia.
+- Los mecanismos técnicos abiertos no se presentan como elegidos ni implementados.
 - Ningún control de aislamiento vive solo en el frontend.
 - Hay una salida explícita para ID de otro tenant.
 - El registro de decisión no incluye el secreto ni el cuerpo completo del correo si no hace falta para reconstruir la decisión.

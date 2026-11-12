@@ -358,8 +358,8 @@ En el MVP, los estados reservados de pago no se simulan como si hubieran ocurrid
 - Roles, permisos, segregación y override por transición.
 - Quorum, delegación, plazos de espera y caducidad.
 - Precedencia de políticas y umbrales inclusivos o exclusivos.
-- Qué cambios son materiales y si invalidan o exigen nueva aprobación.
-- Si la política y el presupuesto se congelan o se leen en cada transición.
+- El efecto exacto de un cambio material: si invalida o exige nueva aprobación. La lista de cambios materiales está adoptada en T05.
+- El efecto de un cambio posterior de política o presupuesto sobre una operación ya decidida. El congelamiento al iniciar está adoptado en T04/T05.
 - Calibración de severidad y reglas de riesgo.
 - Mecanismo concreto de concurrencia e idempotencia.
 - Representación de pagos parciales y saldo.

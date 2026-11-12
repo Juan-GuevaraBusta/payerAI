@@ -38,8 +38,8 @@ Cada tarea dice qué debe quedar definido, qué ya está decidido y qué no hay 
 | 07 | [Autoridad, autonomía e IA](tareas/07-autoridad-autonomia-e-ia.md) | Modelo adoptado; L0–L3, capas separadas y prohibiciones de IA |
 | 08 | [Arquitectura y separación](tareas/08-arquitectura-y-separacion.md) | Modelo adoptado; fronteras y módulos, sin Execution en el MVP |
 | 09 | [Infraestructura, costo y despliegue](tareas/09-infraestructura-costo-y-despliegue.md) | Criterios adoptados; D1 default de demo; migración, correo e IA abiertos |
-| 10 | [Seguridad, multi-tenancy y auditoría](tareas/10-seguridad-multitenancy-y-auditoria.md) | Controles, también en demo |
-| 11 | [Edge cases y pruebas](tareas/11-edge-cases-y-pruebas.md) | Casos que el diseño debe cubrir |
+| 10 | [Seguridad, multi-tenancy y auditoría](tareas/10-seguridad-multitenancy-y-auditoria.md) | Controles de demo adoptados; mecanismos, identidad, auditoría y retención abiertos |
+| 11 | [Edge cases y pruebas](tareas/11-edge-cases-y-pruebas.md) | Catálogo de 23 casos adoptado; detalles y pruebas futuras abiertos |
 | 12 | [Catálogo de estados y transiciones](tareas/12-estados-transiciones.md) | Modelo adoptado; contrato de comportamiento |
 | 13 | [Identidad, roles y aprobaciones](tareas/13-identidad-aprobaciones.md) | Modelo adoptado; membresía, permisos, delegación y quorum |
 | 14 | [Riesgo, severidad y umbrales](tareas/14-riesgo-severidad-umbrales.md) | Modelo adoptado; señales, severidad y límites de autonomía |

@@ -29,8 +29,8 @@ La tarea 01 dejó abierto el catálogo cerrado. Esta tarea lo cierra como contra
 - Si el MVP solo registra el ciclo o también prepara una intención para un sistema externo.
 - Quién puede ejecutar cada transición: roles, permisos, segregación y override.
 - Quorum, delegación, plazos de espera y caducidad.
-- Qué cambios son materiales después de una aprobación y si invalidan o exigen nueva aprobación.
-- Si la política y el presupuesto se congelan o se leen en cada transición.
+- El efecto exacto de un cambio material después de una aprobación: si invalida o exige nueva aprobación. La lista de cambios materiales está adoptada en T05.
+- El efecto de un cambio posterior de política o presupuesto sobre una operación ya decidida. El congelamiento al iniciar está adoptado en T04/T05.
 - Calibración de severidad y umbrales.
 - Mecanismo concreto de concurrencia e idempotencia.
 - Representación de pagos parciales y del saldo.
