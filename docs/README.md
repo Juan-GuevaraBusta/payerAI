@@ -34,7 +34,7 @@ Cada tarea dice qué debe quedar definido, qué ya está decidido y qué no hay 
 | 03 | [Proveedores: identidad y autorización](tareas/03-proveedores-identidad-y-autorizacion.md) | Modelo adoptado; maker-checker en alta y cambio bancario |
 | 04 | [Validación de facturas](tareas/04-validacion-de-facturas.md) | Modelo adoptado; política congelada al iniciar y confirmación en workflow |
 | 05 | [Workflows de aprobación](tareas/05-workflows-de-aprobacion.md) | Modelo adoptado; ciclo, cambios materiales, timeout y concurrencia |
-| 06 | [Spend intelligence](tareas/06-spend-intelligence.md) | Módulo B |
+| 06 | [Spend intelligence](tareas/06-spend-intelligence.md) | Modelo adoptado; MVP solo con ahorro potencial |
 | 07 | [Autoridad, autonomía e IA](tareas/07-autoridad-autonomia-e-ia.md) | Modelo adoptado; L0–L3, capas separadas y prohibiciones de IA |
 | 08 | [Arquitectura y separación](tareas/08-arquitectura-y-separacion.md) | Módulos conceptuales |
 | 09 | [Infraestructura, costo y despliegue](tareas/09-infraestructura-costo-y-despliegue.md) | Criterios adoptados; D1 default de demo; migración, correo e IA abiertos |

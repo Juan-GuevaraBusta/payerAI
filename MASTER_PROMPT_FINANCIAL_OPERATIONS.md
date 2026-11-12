@@ -80,6 +80,8 @@ La validación congela la versión de política y presupuesto al iniciar. La con
 
 El ciclo de aprobación está adoptado en [docs/modelo/05-workflows-aprobacion.md](docs/modelo/05-workflows-aprobacion.md): reutiliza la política congelada por la validación, no reserva presupuesto al iniciar, reabre ante cambios materiales, cubre la ausencia con delegación válida o escalamiento y trata el timeout como bloqueo o escalamiento, nunca como aprobación. Números de quorum, precedencia y mecanismo concreto siguen abiertos.
 
+Spend intelligence está adoptado en [docs/modelo/06-spend-intelligence.md](docs/modelo/06-spend-intelligence.md): solo lectura, recomendaciones con evidencia mínima y solo ahorro potencial. No registra ahorro validado ni realizado, no cancela servicios y no declara licencias ociosas sin evidencia de uso.
+
 ## 6. Autoridad y autonomía
 
 Niveles conceptuales:
