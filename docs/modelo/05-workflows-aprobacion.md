@@ -1,5 +1,7 @@
 # Workflows de aprobación
 
+**Estado:** adoptado el 2026-11-10; T07 integrado. Ciclo, política, presupuesto, cambios materiales, aprobador ausente, timeout y concurrencia definidos. Números de quorum, precedencia y mecanismo concreto siguen abiertos. No implementar.
+
 Especificación conceptual de la tarea 05. Define el ciclo configurable de aprobar, rechazar, pedir información, escalar y bloquear temporalmente, con autoridad verificable, concurrencia controlada y trazabilidad. No es un esquema, ni una API, ni un enum, ni una elección de motor de workflows.
 
 ## Fuentes y alcance
@@ -24,6 +26,19 @@ Contexto: [master prompt](../../MASTER_PROMPT_FINANCIAL_OPERATIONS.md). Este doc
 - **Abierto.** Falta una decisión. No se presenta como regla, no se implementa y no se usa para cerrar otra discusión.
 
 Los ejemplos son sintéticos y están marcados. No se usan datos reales de clientes.
+
+## Decisión adoptada (2026-11-10)
+
+Prerrequisito cumplido: el marco de autoridad de T07 está adoptado.
+
+- **Política:** el workflow reutiliza la versión que T04 congeló al iniciar la validación. La registra; no vuelve a congelar una versión distinta. Si la política cambia, se registra y se decide si la aprobación pendiente se reabre.
+- **Presupuesto:** no hay reserva al iniciar el workflow. La disponibilidad se consulta al decidir y se registra consumido/comprometido; un cambio de presupuesto obliga a reevaluar.
+- **Cambios materiales:** importe, moneda, proveedor, cuenta bancaria, versión de factura, contrato o anexo, política, presupuesto o evidencia. Cualquiera invalida o reabre la aprobación pendiente; no se cubre en silencio.
+- **Aprobador ausente:** no hay sustituto implícito. Se aplica una delegación válida o el escalamiento que defina la política, y se registra.
+- **Timeout de solicitud de información:** vence a bloqueo o escalamiento, nunca a aprobación. La duración exacta sigue abierta.
+- **Concurrencia:** una sola decisión vigente por operación y versión de evidencia, con compare-and-swap conceptual y rastro de los intentos. No hay last-write-wins.
+- **Quorum y delegación:** se consumen de T13; no se fijan números aquí.
+- Quedan abiertos: números de quorum, precedencia exacta de políticas, duraciones de timeout, mecanismo concreto de concurrencia y si hace falta un proceso durable.
 
 ## 1. Principios
 
@@ -120,7 +135,7 @@ El siguiente relato describe situaciones que deben poder distinguirse. La secuen
 11. Si se bloqueó temporalmente, se registra la condición y la condición de liberación.
 12. Toda transición deja evidencia y trazabilidad reconstruible.
 
-La versión de política que se congela al iniciar el workflow está abierta. La obligación de registrar la versión evaluada no.
+El workflow reutiliza la versión de política congelada por T04 al iniciar la validación y la registra. No vuelve a congelar una versión distinta. La obligación de registrar la versión evaluada se mantiene.
 
 ## 5. Puntos de bloqueo
 
@@ -153,7 +168,7 @@ Dos actores o procesos pueden intentar cambiar la misma operación a la vez. Tam
 
 ### 6.2 Principio de diseño
 
-Primero se identifica el estado mutable compartido. Si dos actores solo publican hechos independientes, se elimina el write compartido y se conservan hechos separados. Si una única decisión vigente por operación es un invariante real, se serializa de forma estructural: propiedad exclusiva por operación, fases secuenciales, compare-and-swap o un escritor único. Un lock es el último recurso, no el diseño por defecto.
+Primero se identifica el estado mutable compartido. Si dos actores solo publican hechos independientes, se elimina el write compartido y se conservan hechos separados. Se adopta el invariante de una única decisión vigente por operación y versión de evidencia, impuesto con compare-and-swap conceptual o un escritor único. Un lock es el último recurso, no el diseño por defecto.
 
 No se elige aquí la tecnología de persistencia ni el mecanismo concreto de bloqueo. La base de datos está abierta.
 
@@ -164,7 +179,7 @@ No se elige aquí la tecnología de persistencia ni el mecanismo concreto de blo
 - Una decisión tomada con una versión anterior de política, presupuesto o documento no cubre en silencio la versión nueva.
 - Los eventos duplicados no crean una segunda aprobación ni una segunda operación.
 - Una operación cerrada no revive por un evento tardío o fuera de orden.
-- Un cambio material después de aprobar obliga a evaluar invalidación o nueva aprobación.
+- Un cambio material después de aprobar obliga a evaluar invalidación o nueva aprobación. Se consideran materiales, como mínimo: importe, moneda, proveedor, cuenta bancaria, versión de factura, contrato o anexo, política, presupuesto y evidencia.
 - La denegación por conflicto de concurrencia es explícita, no un error silencioso.
 
 ### 6.4 Escenarios
@@ -176,7 +191,8 @@ No se elige aquí la tecnología de persistencia ni el mecanismo concreto de blo
 | El presupuesto se agota o se actualiza | Se reevalúa; la decisión anterior puede invalidarse. | Aprobar contra un presupuesto que ya no está vigente. |
 | La factura se modifica después de aprobar | Se evalúa invalidación o nueva aprobación. | Conservar la aprobación sobre otra versión. |
 | La delegación vence o se revoca | La transición no se completa con esa delegación. | Aceptar una delegación vencida o revocada. |
-| El aprobador está ausente | Se aplica la salida que defina la política; no hay sustituto implícito. | Escalar al administrador “para que la demo fluya”. |
+| El aprobador está ausente | Se aplica una delegación válida o el escalamiento que defina la política; no hay sustituto implícito. | Escalar al administrador “para que la demo fluya”. |
+| La solicitud de información vence | Pasa a bloqueo o escalamiento, nunca a aprobación. | Convertir el silencio en conformidad. |
 | Llega un evento duplicado o tardío | Se trata de forma idempotente y no revive una operación cerrada. | Procesar el duplicado como una decisión nueva. |
 
 ## 7. Quorum, delegación y override
@@ -307,25 +323,27 @@ La factura cambia después de una aprobación. La aprobación anterior no cubre 
 - El workflow no envía dinero.
 - La IA no aprueba, no autoriza, no delega y no forma quorum.
 - Cada transición deja evidencia reconstruible.
+- El workflow reutiliza la versión de política congelada por T04 al iniciar la validación.
+- El presupuesto no se reserva al iniciar; se reevalúa al decidir y se registra consumido/comprometido.
+- Los cambios materiales son importe, moneda, proveedor, cuenta bancaria, versión de factura, contrato o anexo, política, presupuesto o evidencia; invalidan o reabren la aprobación pendiente.
+- Un aprobador ausente solo se cubre con delegación válida o escalamiento; no hay sustituto implícito.
+- Un timeout de solicitud de información vence a bloqueo o escalamiento, nunca a aprobación.
+- Existe una sola decisión vigente por operación y versión de evidencia, impuesta con compare-and-swap conceptual o escritor único y con rastro de intentos.
 
 ### Hipótesis
 
 - Un flujo lineal con escalamiento por monto cubre la demo. Es reversible; el hecho conocido es que las jerarquías varían y hay pagos en serie.
 - La espera de una aprobación humana encaja mejor en un proceso durable que en una petición HTTP larga. Es una hipótesis de mecanismo, no una elección de Cloudflare Workflows.
-- Una sola decisión vigente por operación es el invariante principal de concurrencia. La forma de imponerlo está abierta.
+- Una sola decisión vigente por operación y versión de evidencia es el invariante principal de concurrencia. El mecanismo concreto para imponerlo sigue abierto.
 
 ### Abierto
 
 - Modelo exacto de aprobaciones, delegación y quorum.
 - Precedencia cuando dos políticas chocan.
 - Umbrales inclusivos o exclusivos.
-- Qué pasa con un aprobador ausente: delegado, revocado o sin permiso.
-- Tiempos de espera y caducidad de una solicitud de información.
+- Duraciones exactas de espera y caducidad de una solicitud de información.
 - Nombres técnicos, enum y persistencia de las situaciones; el catálogo conceptual está adoptado en [12-estados-transiciones.md](12-estados-transiciones.md).
-- Si se congela la versión de política al iniciar el workflow.
-- Si el presupuesto se reserva al iniciar el workflow.
-- Qué cambios son materiales después de una aprobación.
-- Mecanismo concreto de concurrencia e idempotencia.
+- Mecanismo concreto de concurrencia e idempotencia; el invariante y el compare-and-swap conceptual están decididos.
 - Si hace falta cola o workflow durable.
 - Esquema de identidad, roles y permisos.
 

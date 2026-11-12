@@ -78,6 +78,8 @@ El alcance de fuentes del MVP está adoptado en [docs/modelo/15-contratos-presup
 
 La validación congela la versión de política y presupuesto al iniciar. La confirmación interna se registra como tarea del workflow con evidencia; el correo solo notifica. Detalle en [docs/modelo/04-validacion.md](docs/modelo/04-validacion.md).
 
+El ciclo de aprobación está adoptado en [docs/modelo/05-workflows-aprobacion.md](docs/modelo/05-workflows-aprobacion.md): reutiliza la política congelada por la validación, no reserva presupuesto al iniciar, reabre ante cambios materiales, cubre la ausencia con delegación válida o escalamiento y trata el timeout como bloqueo o escalamiento, nunca como aprobación. Números de quorum, precedencia y mecanismo concreto siguen abiertos.
+
 ## 6. Autoridad y autonomía
 
 Niveles conceptuales:
