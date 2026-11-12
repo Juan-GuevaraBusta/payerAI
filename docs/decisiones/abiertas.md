@@ -15,7 +15,7 @@ La hipótesis de cliente (empresas medianas y grandes, con proveedores, monedas,
 
 ## Diseño que aún no es esquema
 
-- Arquitectura concreta y stack de frontend.
+- Arquitectura concreta, ubicación de cada responsabilidad y stack de frontend. El mapa de responsabilidades y fronteras está adoptado en [modelo 08](../modelo/08-arquitectura.md); `Execution` no se crea en el MVP.
 - Identidad y onboarding: proveedor, protocolo, MFA, recuperación, SSO/SCIM, autoservicio frente a invitación y verificación de dominio. El modelo conceptual está adoptado en [modelo 13](../modelo/13-identidad-aprobaciones.md).
 - Proveedores: identificadores verificados por jurisdicción, umbral de coincidencia, roles exactos de maker-checker, revocación/suspensión y listas de riesgo. La matriz está adoptada en [modelo 03](../modelo/03-proveedores.md).
 - Catálogo definitivo de roles, nombres finales y roles personalizados. Los arquetipos de referencia están en [modelo 13](../modelo/13-identidad-aprobaciones.md).

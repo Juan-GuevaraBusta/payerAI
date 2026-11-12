@@ -109,11 +109,13 @@ Módulos conceptuales:
 - Decision Engine: combina resultados verificables y señales de inteligencia en una decisión estructurada.
 - Authorization Engine: verifica si el actor o proceso tiene autoridad para la acción.
 - Workflow Engine: aprobaciones, escalamiento, solicitudes de información, delegación, esperas y reanudación.
-- Execution Engine: preparación o envío de acciones externas futuras, con idempotencia y verificación.
+- Execution Engine: frontera futura para preparación o envío de acciones externas, con idempotencia y verificación. No se crea en el MVP.
 - Spend Intelligence: recurrencias, redundancias y recomendaciones.
 - Audit & Compliance: evidencia, decisiones, actores, versiones y resultados.
 
 No usar agentes autónomos para tareas que el código determinista puede resolver.
+
+El mapa de responsabilidades, dependencias y fronteras está adoptado en [docs/modelo/08-arquitectura.md](docs/modelo/08-arquitectura.md): modular monolith o equivalente, sin microservicios, bus, colas, durable o base vectorial sin requisito medido. `Execution` no se crea en el MVP; el workflow termina en aprobado, rechazado o pendiente.
 
 ## 8. IA, JEV y costo
 

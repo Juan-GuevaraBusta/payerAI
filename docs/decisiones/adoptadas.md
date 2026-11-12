@@ -104,6 +104,18 @@ Adoptado el 2026-11-09.
 - Detalle en [modelo 14](../modelo/14-riesgo-severidad-umbrales.md) y [tarea 14](../tareas/14-riesgo-severidad-umbrales.md).
 - Quedan abiertos: valores numéricos, señales incluidas en el MVP, puntaje compuesto, datos y momento de calibración, monedas y tasas, plazos de revisión, gobernanza de cambios, evidencia para bajar severidad y calibración por tenant o común.
 
+## Arquitectura y separación
+
+Adoptado el 2026-11-10.
+
+- Nueve responsabilidades conceptuales con dependencias sin ciclos: Ingestion, Document Intelligence, Deterministic Core/Rules, Decision, Authorization, Workflow, Execution, Spend Intelligence y Audit & Compliance.
+- Modular monolith o equivalente como opción inicial; microservicios, bus, colas, durable, base vectorial y agentes autónomos exigen requisito medido.
+- `Execution` no se crea en el MVP: no hay módulo, interfaz vacía ni simulación. El workflow termina en aprobado, rechazado o pendiente.
+- La IA solo interpreta o señala; no decide, autoriza, ejecuta, delega ni forma quorum.
+- D1 es el default de demo; PostgreSQL serverless es la salida para piloto o producción.
+- Detalle en [modelo 08](../modelo/08-arquitectura.md) y [tarea 08](../tareas/08-arquitectura-y-separacion.md).
+- Quedan abiertos: arquitectura concreta, frontend, migración, cola/durable, correo, OCR, modelos, JEV e integraciones.
+
 ## Spend intelligence
 
 Adoptado el 2026-11-10.
