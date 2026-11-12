@@ -1,5 +1,7 @@
 # Spend intelligence
 
+**Estado:** adoptado el 2026-11-10. El MVP emite solo ahorro potencial; validado y realizado quedan como definiciones, sin registro en la demo. Umbrales, fuentes y comparabilidad siguen abiertos. No implementar.
+
 Especificación conceptual de la tarea 06. Define qué recomendaciones puede emitir el módulo B, con qué evidencia mínima y con qué clase de ahorro. No es un esquema, ni una API, ni un algoritmo de scoring, ni una elección de proveedor.
 
 ## Fuentes y alcance
@@ -29,12 +31,23 @@ Contexto: [master prompt](../../MASTER_PROMPT_FINANCIAL_OPERATIONS.md). Este doc
 - Todo dato y todo resultado pertenece a un tenant. No se comparten documentos, cálculos, cachés ni resultados entre tenants.
 - El módulo no ejecuta la reducción que recomienda.
 
+## Decisión adoptada (2026-11-10)
+
+- El MVP emite solo recomendaciones de ahorro potencial, con fuentes, cálculo, periodo y supuestos.
+- El MVP no registra ahorro validado ni realizado. Quedan como definiciones para una etapa posterior; no se muestran como si existieran.
+- El módulo es de solo lectura: no cancela, modifica ni contrata servicios.
+- Una recomendación sin la evidencia mínima no se emite o se emite como pregunta.
+- No se declara una licencia sin uso sin evidencia verificable de uso o de no uso.
+- Dos herramientas parecidas quedan como superposición aparente, no como redundancia.
+- Cada recomendación usa solo datos del tenant actual.
+- Quedan abiertos: umbrales, mínimo de ocurrencias, tolerancia entre fechas, comparabilidad, tasas de cambio, fuente de fechas de compromiso y retención.
+
 ## Las tres clases de ahorro
 
 | Clase | Qué afirma | Quién la establece | En el MVP |
 | --- | --- | --- | --- |
 | Potencial | Estimación pendiente de validación | El cálculo del sistema, con fuentes y supuestos explícitos | Sí |
-| Validado | La empresa confirmó la oportunidad | Una persona autorizada, con actor, fecha y evidencia | Solo si existe esa confirmación; el mecanismo está abierto |
+| Validado | La empresa confirmó la oportunidad | En una etapa posterior, una persona autorizada con actor, fecha y evidencia | No. Aparece solo como definición; el MVP no lo registra |
 | Realizado | La reducción ocurrió y pudo comprobarse | Una fuente de verdad que demuestre la reducción | No. Aparece solo como definición |
 
 Un cálculo no convierte un ahorro potencial en validado. Un modelo no convierte ninguno de los dos en realizado. La clase realizada exige evidencia posterior a la reducción, que el MVP no produce porque no ejecuta la baja ni la contratación.
@@ -223,6 +236,7 @@ Datos sintéticos de un tenant de demostración. No son datos de un cliente.
 - Una licencia no se declara sin uso sin evidencia verificable de uso o de no uso.
 - Dos herramientas parecidas no son redundantes por defecto.
 - Ahorro potencial, validado y realizado son clases distintas y no se mezclan.
+- El MVP emite solo ahorro potencial; no registra ahorro validado ni realizado.
 - El cálculo del ahorro potencial muestra fuentes, supuestos y lo que no se pudo comparar.
 - Cada recomendación pertenece a un tenant y no usa datos de otro.
 - La detección de duplicado exacto no depende de un modelo.
@@ -236,14 +250,13 @@ Datos sintéticos de un tenant de demostración. No son datos de un cliente.
 ## Abierto
 
 - Fuente de fechas de cancelación y de compromiso si no están en el contrato.
-- Cómo confirma la empresa un ahorro validado y quién puede hacerlo.
+- Cuándo y cómo se registrará un ahorro validado fuera del MVP, y quién podrá confirmarlo.
 - Integración futura con identity providers o sistemas de uso. No es MVP.
 - Umbral a partir del cual un aumento de precio es un hallazgo.
 - Número mínimo de ocurrencias y tolerancia entre fechas para proponer una recurrencia.
 - Criterios exactos de comparabilidad de alcance, plan y periodo.
 - Tasas y fechas de conversión entre monedas.
 - Forma de presentar la incertidumbre sin inventar un puntaje de confianza.
-- Si el MVP registra ahorros validados y con qué evidencia.
 - Retención y auditoría de las recomendaciones.
 - Profundidad de datos disponible para comparar proveedores.
 

@@ -1,6 +1,6 @@
 # Tarea 06 — Spend intelligence
 
-**Estado:** discovery. El módulo B es alcance del MVP. Su profundidad de datos no.
+**Estado:** adoptado el 2026-11-10. Módulo B en el MVP solo con ahorro potencial; validado y realizado no se registran. Umbrales y fuentes abiertos. No implementar.
 **Orquestador:** `.cursor/agents/spend-intelligence.md`. Skill: `show-me-your-work`.
 **Fuente:** documento maestro, sección 5.2, módulo B.
 **Depende de:** facturas y documentos ya modelados en las tareas 01 y 04. No depende de bancos ni de un IdP.
@@ -8,6 +8,17 @@
 ## Objetivo
 
 Definir recomendaciones justificadas sobre gasto recurrente. Separar lo que una factura puede probar de lo que solo prueba un dato de uso.
+
+## Decisión adoptada (2026-11-10)
+
+- El MVP emite solo ahorro potencial, con fuentes, cálculo, periodo y supuestos.
+- El MVP no registra ahorro validado ni realizado; quedan como definiciones.
+- El módulo no cancela, modifica ni contrata servicios.
+- Una recomendación sin evidencia mínima no se emite o se emite como pregunta.
+- No se declara una licencia sin uso sin evidencia verificable.
+- Dos herramientas parecidas quedan como superposición aparente, no como redundancia.
+- Cada recomendación usa solo datos del tenant actual.
+- Quedan abiertos: umbrales, recurrencia mínima, tolerancia de fechas, comparabilidad, tasas, fechas de compromiso y retención.
 
 ## Decidido
 
@@ -34,6 +45,8 @@ Definiciones obligatorias:
 - Validado: la empresa confirmó la oportunidad.
 - Realizado: la reducción ocurrió y se pudo comprobar.
 
+El MVP emite solo ahorro potencial; no registra ahorro validado ni realizado.
+
 ## Hipótesis
 
 - La recurrencia se puede proponer con proveedor, importe, moneda y periodicidad observados en facturas. Es una señal, no una suscripción confirmada.
@@ -42,7 +55,7 @@ Definiciones obligatorias:
 ## Abierto
 
 - Fuente de fechas de cancelación y de compromiso si no están en el contrato.
-- Cómo confirma la empresa un ahorro validado, y quién puede hacerlo.
+- Cuándo y cómo se registrará un ahorro validado fuera del MVP, y quién podrá confirmarlo.
 - Integración futura con identity providers o sistemas de uso. No es MVP.
 - Umbral a partir del cual un aumento de precio es hallazgo.
 
@@ -68,7 +81,7 @@ Si falta la evidencia de la fila, la recomendación no se emite o se emite como 
 
 ## Entregable
 
-Un catálogo corto de tipos de recomendación, cada uno con evidencia mínima, supuesto explícito y clase de ahorro (potencial, validado o realizado). La clase realizada no aparece en el MVP salvo como definición, porque el MVP no ejecuta la reducción.
+Un catálogo corto de tipos de recomendación, cada uno con evidencia mínima, supuesto explícito y clase de ahorro. En el MVP solo se emite ahorro potencial; validado y realizado quedan como definiciones, porque el MVP no ejecuta ni registra la reducción.
 
 ## Criterios de aceptación
 

@@ -104,6 +104,20 @@ Adoptado el 2026-11-09.
 - Detalle en [modelo 14](../modelo/14-riesgo-severidad-umbrales.md) y [tarea 14](../tareas/14-riesgo-severidad-umbrales.md).
 - Quedan abiertos: valores numéricos, señales incluidas en el MVP, puntaje compuesto, datos y momento de calibración, monedas y tasas, plazos de revisión, gobernanza de cambios, evidencia para bajar severidad y calibración por tenant o común.
 
+## Spend intelligence
+
+Adoptado el 2026-11-10.
+
+- El MVP emite solo recomendaciones de ahorro potencial, con fuentes, cálculo, periodo y supuestos.
+- No registra ahorro validado ni realizado; ambos quedan como definiciones para una etapa posterior.
+- El módulo es de solo lectura: no cancela, modifica ni contrata servicios.
+- Una recomendación sin evidencia mínima no se emite o se emite como pregunta.
+- No se declara una licencia sin uso sin evidencia verificable de uso o de no uso.
+- Dos herramientas parecidas quedan como superposición aparente, no como redundancia.
+- Cada recomendación usa solo datos del tenant actual.
+- Detalle en [modelo 06](../modelo/06-spend-intelligence.md) y [tarea 06](../tareas/06-spend-intelligence.md).
+- Quedan abiertos: umbrales, recurrencia mínima, tolerancia de fechas, comparabilidad, tasas, fechas de compromiso y retención.
+
 ## Workflows de aprobación
 
 Adoptado el 2026-11-10.
