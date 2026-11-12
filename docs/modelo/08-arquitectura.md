@@ -1,6 +1,6 @@
 # Arquitectura y separación
 
-**Estado:** discovery. Hay responsabilidades conceptuales. No hay arquitectura concreta, código de producto ni stack de frontend.
+**Estado:** adoptado el 2026-11-10. Responsabilidades, dependencias y fronteras fijadas; no hay módulo Execution en el MVP. Arquitectura concreta, frontend, cola/durable y proveedores siguen abiertos. No implementar.
 **Tarea:** 08.
 **Depende de:** las tareas 01 a 07.
 **Orquestador:** `.cursor/agents/arquitectura-separacion.md`.
@@ -9,9 +9,20 @@
 
 ## Fuentes y alcance
 
-Este documento fija dónde vive cada responsabilidad y qué no le está permitido hacer a cada módulo. No elige microservicios, agentes autónomos, bus de eventos, colas, base vectorial, base de datos, frontend, proveedor de correo, OCR, modelo de IA ni JEV.
+Este documento fija dónde vive cada responsabilidad y qué no le está permitido hacer a cada módulo. No elige microservicios, agentes autónomos, bus de eventos, colas, base vectorial, base de datos de piloto o producción, frontend, proveedor de correo, OCR, modelo de IA ni JEV. D1 es el default de demo según T09.
 
 La forma concreta se elige cuando exista un requisito medible. Mientras no exista, gana la alternativa más simple que cumpla el requisito.
+
+## Decisión adoptada (2026-11-10)
+
+- Se adopta el mapa de nueve responsabilidades y sus dependencias sin ciclos.
+- La opción inicial es un modular monolith o equivalente; no se introducen microservicios, bus, colas, workflow durable, base vectorial ni agentes autónomos sin un requisito medido.
+- `Execution` no se crea en el MVP: no hay módulo, interfaz vacía ni simulación. Queda como frontera futura para L3. El workflow termina en aprobado, rechazado o pendiente, nunca en enviado.
+- La IA solo interpreta o señala; no decide, autoriza, ejecuta, delega ni forma quorum.
+- `Decision`, `Authorization`, `Workflow`, `Execution` y `Audit & Compliance` no se colapsan.
+- D1 es la persistencia por defecto de la demo y PostgreSQL serverless la salida para piloto o producción, según T09.
+- La ruta de IA es T0–T4, según T16; la validación y el workflow usan la política congelada de T04.
+- Quedan abiertos: arquitectura concreta, ubicación de cada responsabilidad, frontend, cola o proceso durable, correo, OCR, modelos, JEV e integraciones futuras.
 
 ## Cómo leer este documento
 
@@ -31,7 +42,7 @@ Los nombres de los módulos son responsabilidades conceptuales. No son repositor
 | **Decision** | Armar una decisión o propuesta estructurada con reglas, evidencia, motivo y evidencia faltante | Otorgarse permisos, autorizar, ejecutar ni sustituir la autorización |
 | **Authorization** | Verificar actor o proceso, tenant, acción, operación, política, alcance, vigencia y segregación | Interpretar la factura, proponer la decisión, conceder autoridad propia ni ejecutar |
 | **Workflow** | Coordinar etapas, esperas, escalamiento, delegación, solicitud de información y reanudación | Aprobar por sí solo, conceder permisos, interpretar la factura ni enviar pagos |
-| **Execution** | Frontera futura para preparar o enviar una acción ya autorizada y verificar su resultado | Existir como pago real en el MVP, decidir, autorizar, simular un pago ni declarar éxito sin la fuente de verdad |
+| **Execution** | Frontera futura para preparar o enviar una acción ya autorizada y verificar su resultado; no se crea en el MVP | Existir como módulo, interfaz vacía o pago real en el MVP; decidir, autorizar, simular un pago ni declarar éxito sin la fuente de verdad |
 | **Spend Intelligence** | Producir recomendaciones con evidencia sobre recurrencia, superposición, licencias y renovaciones | Contratar, cancelar, modificar, aprobar ni ejecutar |
 | **Audit & Compliance** | Conservar la reconstrucción de decisiones, actores, versiones, evidencias y resultados | Decidir, conceder autoridad, guardar secretos, retener datos de más ni editar en silencio |
 
@@ -86,7 +97,7 @@ No se adoptan sin un requisito medible:
 - base vectorial;
 - múltiples agentes o un agente por módulo;
 - repositorios separados;
-- base de datos;
+- base de datos de piloto o producción; D1 queda como default de demo;
 - stack de frontend;
 - proveedor y protocolo de correo;
 - OCR;
@@ -205,17 +216,18 @@ Cada uno tiene un hueco posible, no una justificación actual. Si no se puede me
 - El código determinista calcula, compara y aplica reglas y transiciones.
 - `Authorization` comprueba permisos de forma independiente.
 - `Workflow` coordina humanos y etapas; no ejecuta dinero.
-- `Execution` no mueve dinero en el MVP y no se simula.
+- `Execution` no se crea en el MVP, no mueve dinero y no se simula.
+- D1 es la persistencia por defecto de la demo; PostgreSQL serverless es la salida para piloto o producción.
+- La ruta de IA es T0–T4, según T16.
 - Aislamiento multi-tenant en backend y persistencia.
 - Auditoría reconstruible y append-only o equivalente, como requisito de diseño.
-- El stack de frontend, la base de datos, el correo, el OCR, el modelo de IA y JEV siguen abiertos.
+- El stack de frontend, la arquitectura concreta, la base de piloto/producción, el correo, el OCR, los modelos de IA y JEV siguen abiertos.
 
 ### Hipótesis
 
 - Un solo deploy con módulos internos cubre la demo y el primer piloto. Es reversible si aparecen límites medidos de aislamiento, escala o tiempo de espera.
-- No crear `Execution` hasta que L3 sea alcance real. Hasta entonces, el workflow termina en aprobado, rechazado o pendiente, nunca en enviado.
+- No crear `Execution` hasta que L3 sea alcance real. Decidido: el workflow termina en aprobado, rechazado o pendiente, nunca en enviado.
 - Cloudflare-first es una preferencia de despliegue, no una decisión irrevocable de cada componente.
-- D1 y PostgreSQL serverless siguen siendo alternativas a comparar; ninguna está elegida.
 - La separación de responsabilidades se puede sostener sin separar despliegues.
 
 ### Abierto
@@ -223,16 +235,16 @@ Cada uno tiene un hueco posible, no una justificación actual. Si no se puede me
 - Arquitectura concreta.
 - Stack de frontend.
 - Dónde corre cada responsabilidad dentro de Cloudflare o fuera.
-- Base de datos: D1 frente a PostgreSQL serverless.
+- Migración de D1 a PostgreSQL serverless y criterios de disparo.
 - Si hace falta cola o workflow durable. Solo si hay una espera, un reintento o un trabajo que no cabe en la petición.
 - Proveedor y protocolo de correo.
 - OCR y extracción de documentos escaneados.
-- Modelo de IA y política de escalamiento entre modelo ligero, modelo capaz y humano.
+- Modelos, versiones y precios de IA; umbrales de confianza y topes. La ruta T0–T4 está adoptada en [escalamiento de IA](16-escalamiento-ia.md).
 - Implementación, interfaz, licencia, costo y utilidad real de JEV.
-- Esquema de identidad, roles y onboarding de empresas.
-- Modelo exacto de aprobaciones, delegación y quorum.
+- Proveedor de identidad y onboarding; el modelo conceptual está adoptado en [identidad](13-identidad-aprobaciones.md).
+- Números de quorum, precedencia y plazos; el ciclo está adoptado en [workflows](05-workflows-aprobacion.md).
 - Nombres técnicos, enum y persistencia de los estados; el catálogo conceptual está adoptado en [12-estados-transiciones.md](12-estados-transiciones.md).
-- Reglas de riesgo, umbrales y calibración de severidad.
+- Valores y calibración de riesgo y severidad; la estructura está adoptada en [riesgo](14-riesgo-severidad-umbrales.md).
 - Integraciones futuras con ERP, CRM, bancos, contabilidad, HRIS o sistemas de uso.
 - Modos futuros de L3 y su verificación externa.
 
@@ -256,7 +268,7 @@ Cada uno tiene un hueco posible, no una justificación actual. Si no se puede me
 - `Execution` no figura como transferencia del MVP ni como simulación de pago.
 - El mapa no propone microservicios desplegables, bus, colas ni base vectorial como componentes.
 - Cada componente no adoptado tiene el hueco que vendría a cubrir.
-- El frontend, la base de datos, el correo, el OCR, el modelo de IA y JEV quedan sin elegir.
+- El frontend, la base de piloto/producción, el correo, el OCR, los modelos de IA y JEV quedan sin elegir; D1 es solo el default de demo.
 - Las dependencias son explícitas y sin ciclos.
 - `Decision`, `Authorization`, `Workflow`, `Execution` y `Audit & Compliance` no se colapsan.
 - Multi-tenancy, idempotencia, concurrencia y auditoría aparecen como responsabilidades, no como tecnologías elegidas.
