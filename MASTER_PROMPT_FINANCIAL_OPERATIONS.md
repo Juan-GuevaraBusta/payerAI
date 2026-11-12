@@ -76,6 +76,8 @@ Detectar duplicados exactos y posibles duplicados semánticos o parciales como h
 
 El alcance de fuentes del MVP está adoptado en [docs/modelo/15-contratos-presupuestos-evidencia.md](docs/modelo/15-contratos-presupuestos-evidencia.md): contrato o anexo, presupuesto y confirmación interna. La orden de compra no es obligatoria y queda abierta. Una confirmación interna no sustituye contrato ni presupuesto.
 
+La validación congela la versión de política y presupuesto al iniciar. La confirmación interna se registra como tarea del workflow con evidencia; el correo solo notifica. Detalle en [docs/modelo/04-validacion.md](docs/modelo/04-validacion.md).
+
 ## 6. Autoridad y autonomía
 
 Niveles conceptuales:

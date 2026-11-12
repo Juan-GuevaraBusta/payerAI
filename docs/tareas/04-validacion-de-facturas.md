@@ -1,6 +1,6 @@
 # Tarea 04 — Validación de facturas
 
-**Estado:** discovery. El orden de validación está decidido. Las reglas numéricas no.
+**Estado:** adoptado el 2026-11-10; política congelada al iniciar y confirmación en tarea del workflow. Umbrales y tasas abiertos. No implementar.
 **Orquestador:** `.cursor/agents/validacion-facturas.md`. Skill: `principle-explain-the-number`.
 **Fuente:** documento maestro, secciones 5.2 (módulo A), 8 y 13.
 **Depende de:** [dominio](01-modelo-de-dominio-y-estados.md), [ingesta](02-ingesta-correo-y-documentos.md) y [proveedores](03-proveedores-identidad-y-autorizacion.md).
@@ -8,6 +8,12 @@
 ## Objetivo
 
 Definir cómo una solicitud de pago se contrasta con historial, contrato, confirmación interna y política, sin inventar la evidencia que falte.
+
+## Decisión adoptada (2026-11-10)
+
+- La validación congela la versión de política y presupuesto al iniciar. Un cambio posterior se registra y puede exigir una nueva validación.
+- La confirmación interna se registra como tarea del workflow con actor, fecha, pregunta y contenido. El correo solo notifica.
+- Quedan abiertos: umbrales de duplicado y exceso, tasas y fechas de cambio, plazo y destinatario de la confirmación.
 
 ## Decidido
 
@@ -30,14 +36,15 @@ También decidido:
 ## Hipótesis
 
 - Muchas facturas del primer demo traerán pocos campos estructurados y ningún contrato. El sistema debe seguir siendo útil: muestra qué falta, no finge una validación completa.
-- La confirmación interna vuelve por el mismo hilo de correo o por una tarea en el workflow. El canal de respuesta no está elegido.
+- La confirmación interna se registra como tarea del workflow; falta definir plazo y destinatario exacto.
 
 ## Abierto
 
 - Umbrales de duplicado probable, de exceso sobre contrato y de severidad.
 - De dónde salen contratos y presupuestos, y con qué detalle.
 - Tasas y fechas de conversión entre monedas. El caso existe; la fuente de la tasa no.
-- Qué versión de política se congela al empezar una validación.
+- Plazo y destinatario exacto de la confirmación interna.
+- Efecto de un cambio de política o presupuesto durante una validación ya iniciada.
 
 ## Fuera de esta tarea
 
