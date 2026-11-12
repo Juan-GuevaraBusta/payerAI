@@ -104,6 +104,22 @@ Adoptado el 2026-11-09.
 - Detalle en [modelo 14](../modelo/14-riesgo-severidad-umbrales.md) y [tarea 14](../tareas/14-riesgo-severidad-umbrales.md).
 - Quedan abiertos: valores numéricos, señales incluidas en el MVP, puntaje compuesto, datos y momento de calibración, monedas y tasas, plazos de revisión, gobernanza de cambios, evidencia para bajar severidad y calibración por tenant o común.
 
+## Workflows de aprobación
+
+Adoptado el 2026-11-10.
+
+- Ciclo configurable con aprobar, rechazar, pedir información, escalar y bloquear temporalmente, con autoridad verificable y evidencia por transición.
+- El workflow reutiliza la versión de política congelada por T04 al iniciar la validación.
+- No hay reserva de presupuesto al iniciar; se reevalúa al decidir y se registra consumido/comprometido.
+- Cambios materiales: importe, moneda, proveedor, cuenta bancaria, versión de factura, contrato o anexo, política, presupuesto o evidencia. Invalidan o reabren la aprobación pendiente.
+- Aprobador ausente: delegación válida o escalamiento, sin sustituto implícito.
+- Timeout de solicitud de información: bloqueo o escalamiento, nunca aprobación.
+- Concurrencia: una decisión vigente por operación y versión de evidencia, con compare-and-swap conceptual y rastro de intentos, sin last-write-wins.
+- Aprobar no es pagar; el workflow no mueve dinero ni declara un pago.
+- La IA no aprueba, no autoriza, no delega y no forma quorum.
+- Detalle en [modelo 05](../modelo/05-workflows-aprobacion.md) y [tarea 05](../tareas/05-workflows-de-aprobacion.md).
+- Quedan abiertos: números de quorum, precedencia exacta, duraciones de timeout, mecanismo concreto y proceso durable.
+
 ## Autoridad, autonomía e IA
 
 Adoptado el 2026-11-10.

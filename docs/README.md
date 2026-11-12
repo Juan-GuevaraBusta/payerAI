@@ -33,7 +33,7 @@ Cada tarea dice qué debe quedar definido, qué ya está decidido y qué no hay 
 | 02 | [Ingesta de correo y documentos](tareas/02-ingesta-correo-y-documentos.md) | Modelo adoptado; demo manual + correo sintético; proveedor y OCR abiertos |
 | 03 | [Proveedores: identidad y autorización](tareas/03-proveedores-identidad-y-autorizacion.md) | Modelo adoptado; maker-checker en alta y cambio bancario |
 | 04 | [Validación de facturas](tareas/04-validacion-de-facturas.md) | Modelo adoptado; política congelada al iniciar y confirmación en workflow |
-| 05 | [Workflows de aprobación](tareas/05-workflows-de-aprobacion.md) | Módulo A, pasos 9–11 |
+| 05 | [Workflows de aprobación](tareas/05-workflows-de-aprobacion.md) | Modelo adoptado; ciclo, cambios materiales, timeout y concurrencia |
 | 06 | [Spend intelligence](tareas/06-spend-intelligence.md) | Módulo B |
 | 07 | [Autoridad, autonomía e IA](tareas/07-autoridad-autonomia-e-ia.md) | Modelo adoptado; L0–L3, capas separadas y prohibiciones de IA |
 | 08 | [Arquitectura y separación](tareas/08-arquitectura-y-separacion.md) | Módulos conceptuales |

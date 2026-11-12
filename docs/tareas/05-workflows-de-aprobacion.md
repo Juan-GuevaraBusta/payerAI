@@ -1,6 +1,6 @@
 # Tarea 05 — Workflows de aprobación
 
-**Estado:** planificación el 2026-11-10; T07 adoptado. Política y presupuesto decididos; faltan cambios materiales, aprobador ausente, timeouts y concurrencia. No adoptada.
+**Estado:** adoptado el 2026-11-10; T07 integrado. Ciclo, política, presupuesto, cambios materiales, aprobador ausente, timeout y concurrencia definidos. Números, precedencia y mecanismo concreto abiertos. No implementar.
 **Orquestador:** `.cursor/agents/workflows-aprobacion.md`. Skill: `principle-separate-before-serializing-shared-state`.
 **Fuente:** documento maestro, secciones 5.2 (puntos 9–11), 9 y 13.
 **Depende de:** [validación](04-validacion-de-facturas.md) y [autoridad](07-autoridad-autonomia-e-ia.md). **Orden acordado:** la autoridad (07) se define antes que este workflow.
@@ -9,20 +9,18 @@
 
 Describir el ciclo configurable de aprobar, rechazar, pedir información o escalar, con trazabilidad. Sin fijar un organigrama único para todas las empresas.
 
-## Plan de cierre (2026-11-10)
+## Decisión adoptada (2026-11-10)
 
-Prerrequisito cumplido: T07 adoptado. Decisiones tomadas:
+Prerrequisito cumplido: T07 adoptado.
 
 - El workflow reutiliza la versión de política congelada por T04 al iniciar la validación.
 - No hay reserva de presupuesto al iniciar; se reevalúa al decidir y se registra consumido/comprometido.
-
-Pendiente antes de adoptar:
-
-1. Lista de cambios materiales que invalidan una aprobación pendiente.
-2. Regla de aprobador ausente.
-3. Efecto de timeout de solicitud de información.
-4. Mecanismo de concurrencia.
-5. Relación con quorum y delegación de T13, sin números.
+- Cambios materiales: importe, moneda, proveedor, cuenta bancaria, versión de factura, contrato o anexo, política, presupuesto o evidencia. Invalidan o reabren la aprobación pendiente.
+- Aprobador ausente: delegación válida o escalamiento, sin sustituto implícito.
+- Timeout de solicitud de información: bloqueo o escalamiento, nunca aprobación.
+- Concurrencia: una decisión vigente por operación y versión de evidencia, con compare-and-swap conceptual y rastro de intentos, sin last-write-wins.
+- Quorum y delegación se consumen de T13, sin números en esta tarea.
+- Quedan abiertos: números de quorum, precedencia exacta, duraciones de timeout, mecanismo concreto y proceso durable.
 
 ## Decidido
 
@@ -38,6 +36,11 @@ Pendiente antes de adoptar:
 - Si después de aprobar cambian la factura, el contrato, los datos bancarios o la política, hay que evaluar invalidar o reaprobar. La regla exacta está abierta; la obligación de evaluarlo no.
 - Dos actores o procesos no pueden cerrar la misma operación a la vez sin control de concurrencia.
 - El workflow no envía dinero.
+- El workflow reutiliza la versión de política congelada por T04 y no reserva presupuesto al iniciar.
+- Los cambios materiales invalidan o reabren la aprobación pendiente.
+- Aprobador ausente: delegación válida o escalamiento, sin sustituto implícito.
+- Timeout de información: bloqueo o escalamiento, nunca aprobación.
+- Concurrencia: una decisión vigente por operación y versión de evidencia, sin last-write-wins.
 
 ## Hipótesis
 
@@ -49,10 +52,8 @@ Pendiente antes de adoptar:
 - Modelo exacto de aprobaciones, delegación y quorum.
 - Precedencia cuando dos políticas chocan. El requisito es resolver el conflicto de forma explícita; el orden no está elegido.
 - Umbrales inclusivos o exclusivos.
-- Qué pasa con un aprobador ausente: delegado, revocado o sin permiso. El caso debe tener salida; la salida por empresa no está definida.
-- Tiempos de espera y caducidad de una solicitud de información.
-- Lista de cambios materiales que invalidan una aprobación pendiente.
-- Mecanismo de concurrencia y control de la decisión vigente por operación y versión de evidencia.
+- Duraciones exactas de espera y caducidad de una solicitud de información.
+- Mecanismo concreto de concurrencia; el invariante y el compare-and-swap conceptual están decididos.
 
 ## Fuera de esta tarea
 
