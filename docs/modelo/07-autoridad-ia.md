@@ -1,6 +1,19 @@
 # Autoridad, autonomía e IA
 
+**Estado:** adoptado el 2026-11-10. Límites de autoridad, separación de capas y prohibiciones de IA cerrados. Modelos, JEV, precios, umbrales y combinación de autonomía siguen abiertos. No implementar.
+
 Especificación conceptual de la tarea 07. Define qué puede proponer un modelo, qué decide una regla determinista, de dónde sale la autoridad y qué le está prohibido a cualquier modelo. No es un esquema, ni una API, ni un enum, ni una elección de proveedor.
+
+## Decisión adoptada (2026-11-10)
+
+- Se adopta la separación entre interpretación, decisión, autorización y ejecución. Ninguna capa hereda autoridad de otra.
+- La autoridad es por acción, tenant, recurso y momento; se verifica con política, permiso, alcance, vigencia y segregación, y se deniega por defecto.
+- Un modelo puede interpretar, extraer, clasificar, resumir, señalar y proponer. No concede autoridad, no aprueba, no autoriza, no delega, no forma quorum y no reduce severidad por sí solo.
+- El MVP opera en L0–L2 y no mueve dinero. L3 es evolución y no se simula.
+- Cada uso de IA deja el registro mínimo definido, aunque la salida se descarte.
+- Las prohibiciones de la sección 7 son absolutas y no admiten excepción por política del tenant.
+- JEV sigue como opción a evaluar, no como dependencia aprobada.
+- Quedan abiertos: modelo y proveedor, JEV, precios y topes, umbrales, combinación de atributos de autonomía, esquema de roles, precedencia de políticas, plazos y retención.
 
 ## Fuentes y alcance
 
