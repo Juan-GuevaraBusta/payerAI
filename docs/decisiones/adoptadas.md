@@ -104,6 +104,19 @@ Adoptado el 2026-11-09.
 - Detalle en [modelo 14](../modelo/14-riesgo-severidad-umbrales.md) y [tarea 14](../tareas/14-riesgo-severidad-umbrales.md).
 - Quedan abiertos: valores numéricos, señales incluidas en el MVP, puntaje compuesto, datos y momento de calibración, monedas y tasas, plazos de revisión, gobernanza de cambios, evidencia para bajar severidad y calibración por tenant o común.
 
+## Validación de facturas
+
+Adoptado el 2026-11-10.
+
+- Orden: extracción y normalización, historial, contrato si existe, confirmación interna cuando haga falta, políticas y presupuestos.
+- Cada paso devuelve evidencia o declara que no la tiene; nunca convierte la ausencia en aprobación ni en rechazo.
+- La validación congela la versión de política y presupuesto al iniciar. Un cambio posterior se registra y puede exigir una nueva validación.
+- La confirmación interna se registra como tarea del workflow con actor, fecha, pregunta y contenido. El correo solo notifica; no confirma por sí mismo.
+- Duplicado exacto y probable son hallazgos distintos; la diferencia contra contrato no se clasifica sola como fraude ni como cargo legítimo.
+- Cálculos, comparaciones, duplicados exactos y límites son deterministas; un modelo no sustituye reglas ni baja severidad.
+- Detalle en [modelo 04](../modelo/04-validacion.md) y [tarea 04](../tareas/04-validacion-de-facturas.md).
+- Quedan abiertos: umbrales, tasas de cambio, plazo/destinatario de confirmación y efecto de cambios de política a mitad de validación.
+
 ## Proveedores: identidad y autorización
 
 Adoptado el 2026-11-10.

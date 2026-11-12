@@ -1,5 +1,7 @@
 # Validación de facturas
 
+**Estado:** adoptado el 2026-11-10; política y presupuesto congelados al iniciar, confirmación en tarea del workflow. Umbrales y tasas siguen abiertos. No implementar.
+
 Especificación conceptual de la tarea 04. Define cómo una solicitud de pago se contrasta con historial, contrato, confirmación interna y política, sin inventar la evidencia que falte. No es un esquema, ni una API, ni un motor de reglas cerrado.
 
 ## Fuentes y alcance
@@ -22,6 +24,14 @@ Especificación conceptual de la tarea 04. Define cómo una solicitud de pago se
 - Los cálculos, comparaciones, duplicados exactos y límites son trabajo determinista.
 - Un modelo no sustituye las reglas duras ni baja la severidad de una alerta.
 - La validación deja constancia de lo que evaluó, de lo que no pudo evaluar y de por qué.
+
+## Decisión adoptada (2026-11-10)
+
+- La validación congela la versión de política y de presupuesto al iniciar. Los pasos usan esa versión, no la última publicada.
+- Si la política o el presupuesto cambian durante la validación, se registra el cambio. Se decide si la factura necesita una nueva validación; no se mezclan versiones en el mismo resultado.
+- La confirmación interna se registra como tarea del workflow con actor, fecha, pregunta y contenido. El correo puede notificar, pero no confirma por sí mismo.
+- Una respuesta fuera de la tarea no se convierte en confirmación sin registrarse con la misma evidencia.
+- Quedan abiertos: umbrales de duplicado y exceso, fuente y fecha de tasas de cambio, plazo de confirmación y destinatario exacto.
 
 ## Los cinco pasos
 
@@ -69,7 +79,8 @@ Si hay servicios adicionales, diferencias no explicadas o evidencia insuficiente
 - **Hay evidencia:** solicitud registrada, con la pregunta concreta, la evidencia que la motiva y el departamento destinatario.
 - **No hay evidencia:** la respuesta no llegó. No se inventa la respuesta ni se asume conformidad.
 - **No puede hacer:** convertir el silencio en aprobación ni en rechazo.
-- **Hipótesis:** la confirmación vuelve por el mismo hilo de correo o por una tarea del workflow. El canal no está elegido.
+- **Decidido:** la confirmación se registra como tarea del workflow con evidencia. El correo solo notifica.
+- **No puede hacer:** aceptar una respuesta de correo como confirmación sin registrarla en la tarea.
 
 La solicitud de confirmación es evidencia de que se pidió, no evidencia de que se obtuvo.
 
@@ -82,7 +93,7 @@ Se aplican las reglas, presupuestos, límites y autorizaciones configurados por 
 - **No puede hacer:** inventar un tope, aplicar una política de otro tenant ni dejar que un modelo conceda autoridad.
 - **Determinista:** el cálculo y la comparación contra límites configurados.
 
-La versión de política que se congela al empezar una validación está abierta.
+La versión de política y presupuesto se congela al iniciar la validación. Un cambio posterior se registra y puede exigir una nueva validación.
 
 ## Duplicados
 
@@ -136,19 +147,21 @@ Resultado: discrepancia abierta con pedido de evidencia. No es fraude, no es un 
 - Cálculos, comparaciones, duplicados exactos y límites son trabajo determinista. Un modelo no los sustituye.
 - Un modelo no baja la severidad de una alerta.
 - La validación no aprueba ni rechaza la factura.
+- La política y el presupuesto se congelan al iniciar la validación.
+- La confirmación interna se registra como tarea del workflow con evidencia; el correo solo notifica.
 
 ## Hipótesis
 
 - Muchas facturas del primer demo traerán pocos campos estructurados y ningún contrato. El sistema debe seguir siendo útil: muestra qué falta y no finge una validación completa.
-- La confirmación interna vuelve por el mismo hilo de correo o por una tarea del workflow. El canal de respuesta no está elegido.
+- La confirmación interna se registra como tarea del workflow; falta definir plazo y destinatario exacto.
 
 ## Abierto
 
 - Valores de los umbrales de duplicado probable, de exceso sobre contrato y de severidad. La estructura está adoptada en [riesgo, severidad y umbrales](14-riesgo-severidad-umbrales.md); los valores no.
 - Detalle de contratos y presupuestos; inclusión de la orden de compra; vigencia y precedencia entre anexos; granularidad y fuente de consumido/comprometido; quién confirma excepciones; tasas y redondeo; canal y plazo de confirmación. El alcance de fuentes está adoptado en [contratos y presupuestos como evidencia](15-contratos-presupuestos-evidencia.md).
 - Tasas y fechas de conversión entre monedas. El caso existe; la fuente de la tasa no.
-- Qué versión de política se congela al empezar una validación.
-- Canal y plazo de la confirmación interna.
+- Plazo y destinatario exacto de la confirmación interna.
+- Efecto de un cambio de política o presupuesto durante una validación ya iniciada.
 - Grado de asistencia de un modelo en extracción o clasificación, si se usa.
 
 ## Criterios de aceptación cubiertos
