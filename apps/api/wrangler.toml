@@ -1,0 +1,18 @@
+name = "payerai-api"
+main = "src/index.ts"
+compatibility_date = "2026-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+ENVIRONMENT = "demo"
+DEMO_AUTH_ENABLED = "true"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "payerai-demo"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "../packages/db/migrations"
+
+[[r2_buckets]]
+binding = "DOCUMENTS"
+bucket_name = "payerai-documents"
