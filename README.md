@@ -2,7 +2,7 @@
 
 Nombre de trabajo. No es el nombre comercial.
 
-Plataforma B2B de inteligencia y control sobre operaciones financieras. El primer dominio es cuentas por pagar. El repositorio está en discovery: hay decisiones firmes y hipótesis sin validar. No hay aplicación ni código de producto.
+Plataforma B2B de inteligencia y control sobre operaciones financieras. El primer dominio es cuentas por pagar. El repositorio está en discovery: hay decisiones firmes y hipótesis sin validar. La implementación del MVP empezó con una demo local; no hay producto terminado ni integraciones reales.
 
 Este repositorio no es un producto, socio, proveedor ni proyecto respaldado por Blinka.
 
@@ -27,4 +27,17 @@ El orquestador de ingeniería está en [`docs/orchestrator/uso.md`](docs/orchest
 bash scripts/ci.sh
 ```
 
-El pipeline es solo CI. No hay despliegue porque todavía no existe código de producto ni destino de despliegue.
+El pipeline es solo CI. No hay despliegue porque todavía no existe un destino de despliegue.
+
+## Desarrollo
+
+```bash
+pnpm install
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm build
+bash scripts/ci.sh
+```
+
+La demo local usa datos sintéticos. El plan y los defaults están en [`docs/implementacion/`](docs/implementacion/).

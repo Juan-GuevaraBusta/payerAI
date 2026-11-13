@@ -1,6 +1,6 @@
 # Documentación del producto
 
-Estado del repositorio: definición de producto y arquitectura en discovery. No hay código de producto. Estos archivos no son una especificación de implementación ni un backlog de tickets de código.
+Estado del repositorio: definición de producto y arquitectura en discovery, con una demo local de implementación en curso. No hay producto terminado. Estos archivos no son una especificación de implementación ni un backlog de tickets de código; la implementación vive en `apps/` y `packages/`.
 
 ## Leyenda
 
@@ -25,7 +25,7 @@ No inventar estadísticas, entrevistas, clientes, integraciones ni endorsements.
 
 ## Tareas
 
-Cada tarea dice qué debe quedar definido, qué ya está decidido y qué no hay que construir. El entregable de esta fase es criterio escrito, no software.
+Cada tarea dice qué debe quedar definido, qué ya está decidido y qué no hay que construir. El entregable de discovery es criterio escrito. La demo de implementación se documenta en [`implementacion/`](implementacion/).
 
 | # | Tarea | Toca del MVP |
 | --- | --- | --- |

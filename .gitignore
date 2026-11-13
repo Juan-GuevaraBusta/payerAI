@@ -4,3 +4,10 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .DS_Store
+node_modules/
+dist/
+coverage/
+.wrangler/
+.dev.vars
+.vite/
+*.tsbuildinfo
