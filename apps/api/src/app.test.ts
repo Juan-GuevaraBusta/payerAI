@@ -135,6 +135,13 @@ const createFakeStore = (options: { seedError?: Error } = {}): Store & {
       if (options.seedError !== undefined) {
         throw options.seedError;
       }
+    },
+    ingestSyntheticInvoice: async (context, command) => {
+      calls.push(context);
+      if (command.externalId === "conflict") {
+        return { ok: false, reason: "IDEMPOTENCY_CONFLICT" };
+      }
+      return { ok: true, invoice: invoice(context.tenantId), created: true };
     }
   };
 };
@@ -217,6 +224,102 @@ describe("api", () => {
     );
     expect(missing.status).toBe(404);
     await expect(missing.json()).resolves.toEqual({ error: "INVOICE_NOT_FOUND" });
+  });
+
+  it("ingests a synthetic invoice in the request tenant", async () => {
+    const store = createFakeStore();
+    const app = createApp({ createStore: () => store });
+    const response = await app.request(
+      "/api/invoices/ingest",
+      {
+        method: "POST",
+        headers: { ...headers(), "content-type": "application/json" },
+        body: JSON.stringify({
+          externalId: "ext-001",
+          sender: "billing@acme.example",
+          subject: "Factura INV-001",
+          receivedAt: "2026-01-15T10:00:00.000Z",
+          document: {
+            filename: "factura-001.pdf",
+            mimeType: "application/pdf",
+            sizeBytes: 2048,
+            storageKey: "demo/tenant-demo/factura-001.pdf",
+            content: "Factura sintética"
+          },
+          invoice: {
+            number: "INV-001",
+            issuedOn: "2026-01-10",
+            dueOn: "2026-02-10",
+            amountMinor: 100000,
+            currency: "USD",
+            supplier: { legalName: "Acme Servicios S.A.", taxId: "TAX-ACME-001" },
+            lines: [
+              { description: "Servicios", amountMinor: 100000, currency: "USD" }
+            ]
+          }
+        })
+      },
+      env
+    );
+
+    expect(response.status).toBe(201);
+    await expect(response.json()).resolves.toMatchObject({
+      created: true,
+      invoice: { id: "invoice-tenant-demo-001" }
+    });
+    expect(store.calls.at(-1)?.tenantId).toBe("tenant-demo");
+  });
+
+  it("rejects an invalid ingestion payload", async () => {
+    const app = createApp({ createStore: () => createFakeStore() });
+    const response = await app.request(
+      "/api/invoices/ingest",
+      {
+        method: "POST",
+        headers: { ...headers(), "content-type": "application/json" },
+        body: JSON.stringify({ externalId: "ext-001" })
+      },
+      env
+    );
+
+    expect(response.status).toBe(400);
+    await expect(response.json()).resolves.toMatchObject({ error: "INVALID_INGESTION" });
+  });
+
+  it("returns a conflict when the idempotency key changes payload", async () => {
+    const app = createApp({ createStore: () => createFakeStore() });
+    const response = await app.request(
+      "/api/invoices/ingest",
+      {
+        method: "POST",
+        headers: { ...headers(), "content-type": "application/json" },
+        body: JSON.stringify({
+          externalId: "conflict",
+          sender: "billing@acme.example",
+          subject: "Factura",
+          receivedAt: "2026-01-15T10:00:00.000Z",
+          document: {
+            filename: "factura.pdf",
+            mimeType: "application/pdf",
+            sizeBytes: 1,
+            storageKey: "demo/factura.pdf",
+            content: "x"
+          },
+          invoice: {
+            number: "INV-001",
+            issuedOn: "2026-01-10",
+            dueOn: "2026-02-10",
+            amountMinor: 1,
+            currency: "USD",
+            supplier: { legalName: "Acme" }
+          }
+        })
+      },
+      env
+    );
+
+    expect(response.status).toBe(409);
+    await expect(response.json()).resolves.toEqual({ error: "IDEMPOTENCY_CONFLICT" });
   });
 
   it("seeds only when the demo is not production", async () => {

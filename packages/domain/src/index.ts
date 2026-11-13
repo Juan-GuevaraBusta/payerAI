@@ -185,11 +185,55 @@ export interface InvoiceFilters {
   readonly supplierId?: SupplierId;
 }
 
+export interface SupplierInput {
+  readonly legalName: string;
+  readonly displayName?: string;
+  readonly taxId?: string;
+}
+
+export interface InvoiceLineInput {
+  readonly description: string;
+  readonly amountMinor: number;
+  readonly currency: string;
+  readonly reference?: string;
+}
+
+export interface SyntheticIngestionCommand {
+  readonly externalId: string;
+  readonly sender: string;
+  readonly subject: string;
+  readonly receivedAt: string;
+  readonly document: {
+    readonly filename: string;
+    readonly mimeType: string;
+    readonly sizeBytes: number;
+    readonly storageKey: string;
+    readonly content: string;
+  };
+  readonly invoice: {
+    readonly number: string;
+    readonly issuedOn: string;
+    readonly dueOn: string;
+    readonly amountMinor: number;
+    readonly currency: string;
+    readonly supplier: SupplierInput;
+    readonly lines: readonly InvoiceLineInput[];
+  };
+}
+
+export type IngestionResult =
+  | { readonly ok: true; readonly invoice: Invoice; readonly created: boolean }
+  | { readonly ok: false; readonly reason: "IDEMPOTENCY_CONFLICT" };
+
 export interface Store {
   listInvoices(context: TenantContext, filters?: InvoiceFilters): Promise<readonly Invoice[]>;
   getInvoice(context: TenantContext, id: InvoiceId): Promise<InvoiceDetail | null>;
   listAudit(context: TenantContext, entityId?: string): Promise<readonly AuditEvent[]>;
   seedDemo(context: TenantContext): Promise<void>;
+  ingestSyntheticInvoice(
+    context: TenantContext,
+    command: SyntheticIngestionCommand
+  ): Promise<IngestionResult>;
 }
 
 export interface TenantContext {

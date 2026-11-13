@@ -17,15 +17,17 @@ import {
   type Finding,
   type Invoice,
   type InvoiceDetail,
+  type IngestionResult,
   type InvoiceFilters,
   type InvoiceId,
   type PolicySnapshot,
   type Store,
   type Supplier,
+  type SyntheticIngestionCommand,
   type TenantContext,
   type Workflow
 } from "@payerai/domain";
-import type { D1Database } from "./index";
+import type { D1Database, D1PreparedStatement } from "./index";
 
 interface InvoiceRow {
   readonly id: string;
@@ -103,6 +105,11 @@ interface AuditRow {
   readonly actor_id: string | null;
   readonly payload_json: string;
   readonly created_at: string;
+}
+
+interface IdempotencyRow {
+  readonly request_hash: string;
+  readonly response_json: string | null;
 }
 
 const mapInvoice = (row: InvoiceRow): Invoice => ({
@@ -602,9 +609,335 @@ const seedDemo = async (db: D1Database, context: TenantContext): Promise<void> =
   }
 };
 
+const sha256Hex = async (value: string): Promise<string> => {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+  return Array.from(new Uint8Array(digest))
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+};
+
+const findInvoiceByMessage = async (
+  db: D1Database,
+  tenantId: string,
+  messageId: string
+): Promise<InvoiceRow | null> =>
+  first<InvoiceRow>(
+    db,
+    `SELECT i.id, i.tenant_id, i.document_id, i.supplier_id, i.number, i.issued_on, i.due_on,
+            i.amount_minor, i.currency, i.state, i.version, i.created_at, i.updated_at
+       FROM invoices i
+       JOIN documents d ON d.id = i.document_id
+      WHERE i.tenant_id = ? AND d.message_id = ?
+      LIMIT 1`,
+    tenantId,
+    messageId
+  );
+
+const findInvoiceByDocument = async (
+  db: D1Database,
+  tenantId: string,
+  documentId: string
+): Promise<InvoiceRow | null> =>
+  first<InvoiceRow>(
+    db,
+    `SELECT id, tenant_id, document_id, supplier_id, number, issued_on, due_on,
+            amount_minor, currency, state, version, created_at, updated_at
+       FROM invoices
+      WHERE tenant_id = ? AND document_id = ?
+      LIMIT 1`,
+    tenantId,
+    documentId
+  );
+
+const ingestSyntheticInvoice = async (
+  db: D1Database,
+  context: TenantContext,
+  command: SyntheticIngestionCommand
+): Promise<IngestionResult> => {
+  const requestHash = await sha256Hex(JSON.stringify(command));
+  const existingKey = await first<IdempotencyRow>(
+    db,
+    `SELECT request_hash, response_json
+       FROM idempotency_keys
+      WHERE tenant_id = ? AND scope = 'ingest' AND key = ?`,
+    context.tenantId,
+    command.externalId
+  );
+
+  if (existingKey !== null) {
+    if (existingKey.request_hash !== requestHash) {
+      return { ok: false, reason: "IDEMPOTENCY_CONFLICT" };
+    }
+    if (existingKey.response_json !== null) {
+      const response = JSON.parse(existingKey.response_json) as { invoiceId?: string };
+      if (response.invoiceId !== undefined) {
+        const existing = await first<InvoiceRow>(
+          db,
+          `SELECT id, tenant_id, document_id, supplier_id, number, issued_on, due_on,
+                  amount_minor, currency, state, version, created_at, updated_at
+             FROM invoices WHERE tenant_id = ? AND id = ?`,
+          context.tenantId,
+          response.invoiceId
+        );
+        if (existing !== null) {
+          return { ok: true, invoice: mapInvoice(existing), created: false };
+        }
+      }
+    }
+    return { ok: false, reason: "IDEMPOTENCY_CONFLICT" };
+  }
+
+  const existingMessage = await first<{ id: string }>(
+    db,
+    `SELECT id FROM messages WHERE tenant_id = ? AND external_id = ?`,
+    context.tenantId,
+    command.externalId
+  );
+  if (existingMessage !== null) {
+    const existingInvoice = await findInvoiceByMessage(db, context.tenantId, existingMessage.id);
+    if (existingInvoice !== null) {
+      return { ok: true, invoice: mapInvoice(existingInvoice), created: false };
+    }
+    return { ok: false, reason: "IDEMPOTENCY_CONFLICT" };
+  }
+
+  const contentHash = await sha256Hex(command.document.content);
+  const existingDocument = await first<DocumentRow>(
+    db,
+    `SELECT id, tenant_id, message_id, content_hash, filename, mime_type, size_bytes,
+            storage_key, state, created_at, updated_at
+       FROM documents WHERE tenant_id = ? AND content_hash = ?`,
+    context.tenantId,
+    contentHash
+  );
+  if (existingDocument !== null) {
+    const existingInvoice = await findInvoiceByDocument(db, context.tenantId, existingDocument.id);
+    if (existingInvoice !== null) {
+      return { ok: true, invoice: mapInvoice(existingInvoice), created: false };
+    }
+  }
+
+  const supplier = command.invoice.supplier;
+  const existingSupplier =
+    supplier.taxId === undefined
+      ? await first<SupplierRow>(
+          db,
+          `SELECT id, tenant_id, legal_name, display_name, tax_id, status, created_at, updated_at
+             FROM suppliers WHERE tenant_id = ? AND legal_name = ? LIMIT 1`,
+          context.tenantId,
+          supplier.legalName
+        )
+      : await first<SupplierRow>(
+          db,
+          `SELECT id, tenant_id, legal_name, display_name, tax_id, status, created_at, updated_at
+             FROM suppliers WHERE tenant_id = ? AND tax_id = ? LIMIT 1`,
+          context.tenantId,
+          supplier.taxId
+        );
+
+  const now = new Date().toISOString();
+  const supplierId = existingSupplier?.id ?? crypto.randomUUID();
+  const messageId = crypto.randomUUID();
+  const documentId = existingDocument?.id ?? crypto.randomUUID();
+  const invoiceId = crypto.randomUUID();
+  const statement = (query: string, values: readonly unknown[]): D1PreparedStatement =>
+    db.prepare(query).bind(...values);
+  const statements: D1PreparedStatement[] = [];
+
+  if (existingSupplier === null) {
+    statements.push(
+      statement(
+        `INSERT INTO suppliers
+           (id, tenant_id, legal_name, display_name, tax_id, status, created_at, updated_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          supplierId,
+          context.tenantId,
+          supplier.legalName,
+          supplier.displayName ?? supplier.legalName,
+          supplier.taxId ?? null,
+          "DETECTED",
+          now,
+          now
+        ]
+      )
+    );
+  }
+
+  statements.push(
+    statement(
+      `INSERT INTO messages
+         (id, tenant_id, external_id, sender, subject, body, received_at, content_hash, raw_json, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        messageId,
+        context.tenantId,
+        command.externalId,
+        command.sender,
+        command.subject,
+        command.document.content,
+        command.receivedAt,
+        contentHash,
+        JSON.stringify(command),
+        now
+      ]
+    )
+  );
+
+  if (existingDocument === null) {
+    statements.push(
+      statement(
+        `INSERT INTO documents
+           (id, tenant_id, message_id, content_hash, filename, mime_type, size_bytes, storage_key, state, created_at, updated_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          documentId,
+          context.tenantId,
+          messageId,
+          contentHash,
+          command.document.filename,
+          command.document.mimeType,
+          command.document.sizeBytes,
+          command.document.storageKey,
+          "STORED",
+          now,
+          now
+        ]
+      )
+    );
+    statements.push(
+      statement(
+        `INSERT INTO document_versions
+           (id, tenant_id, document_id, version, content_hash, storage_key, created_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [crypto.randomUUID(), context.tenantId, documentId, 1, contentHash, command.document.storageKey, now]
+      )
+    );
+  }
+
+  statements.push(
+    statement(
+      `INSERT INTO invoices
+         (id, tenant_id, document_id, supplier_id, number, issued_on, due_on, amount_minor, currency, state, version, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        invoiceId,
+        context.tenantId,
+        documentId,
+        supplierId,
+        command.invoice.number,
+        command.invoice.issuedOn,
+        command.invoice.dueOn,
+        command.invoice.amountMinor,
+        command.invoice.currency,
+        InvoiceState.REGISTERED,
+        1,
+        now,
+        now
+      ]
+    )
+  );
+
+  for (const line of command.invoice.lines) {
+    statements.push(
+      statement(
+        `INSERT INTO invoice_lines
+           (id, tenant_id, invoice_id, description, amount_minor, currency, reference, created_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          crypto.randomUUID(),
+          context.tenantId,
+          invoiceId,
+          line.description,
+          line.amountMinor,
+          line.currency,
+          line.reference ?? null,
+          now
+        ]
+      )
+    );
+  }
+
+  statements.push(
+    statement(
+      `INSERT INTO idempotency_keys
+         (tenant_id, scope, key, request_hash, response_json, created_at)
+       VALUES (?, 'ingest', ?, ?, ?, ?)`,
+      [context.tenantId, command.externalId, requestHash, JSON.stringify({ invoiceId, created: true }), now]
+    )
+  );
+
+  statements.push(
+    statement(
+      `INSERT INTO audit_events
+         (id, tenant_id, entity_type, entity_id, event_type, actor_id, payload_json, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        crypto.randomUUID(),
+        context.tenantId,
+        "invoice",
+        invoiceId,
+        "INVOICE_INGESTED",
+        context.actorId,
+        JSON.stringify({
+          externalId: command.externalId,
+          contentHash,
+          supplierStatus: existingSupplier?.status ?? "DETECTED"
+        }),
+        now
+      ]
+    )
+  );
+
+  try {
+    await db.batch(statements);
+  } catch (error) {
+    const retryKey = await first<IdempotencyRow>(
+      db,
+      `SELECT request_hash, response_json
+         FROM idempotency_keys
+        WHERE tenant_id = ? AND scope = 'ingest' AND key = ?`,
+      context.tenantId,
+      command.externalId
+    );
+    if (retryKey !== null && retryKey.request_hash === requestHash && retryKey.response_json !== null) {
+      const response = JSON.parse(retryKey.response_json) as { invoiceId?: string };
+      if (response.invoiceId !== undefined) {
+        const existing = await first<InvoiceRow>(
+          db,
+          `SELECT id, tenant_id, document_id, supplier_id, number, issued_on, due_on,
+                  amount_minor, currency, state, version, created_at, updated_at
+             FROM invoices WHERE tenant_id = ? AND id = ?`,
+          context.tenantId,
+          response.invoiceId
+        );
+        if (existing !== null) {
+          return { ok: true, invoice: mapInvoice(existing), created: false };
+        }
+      }
+    }
+    throw error;
+  }
+
+  const created = await first<InvoiceRow>(
+    db,
+    `SELECT id, tenant_id, document_id, supplier_id, number, issued_on, due_on,
+            amount_minor, currency, state, version, created_at, updated_at
+       FROM invoices WHERE tenant_id = ? AND id = ?`,
+    context.tenantId,
+    invoiceId
+  );
+  if (created === null) {
+    throw new Error("INGESTION_NOT_PERSISTED");
+  }
+
+  return { ok: true, invoice: mapInvoice(created), created: true };
+};
+
 export const createD1Store = (db: D1Database): Store => ({
   listInvoices: (context, filters) => listInvoices(db, context, filters),
   getInvoice: (context, id) => getInvoice(db, context, id),
   listAudit: (context, entityId) => listAudit(db, context, entityId),
-  seedDemo: (context) => seedDemo(db, context)
+  seedDemo: (context) => seedDemo(db, context),
+  ingestSyntheticInvoice: (context, command) => ingestSyntheticInvoice(db, context, command)
 });
