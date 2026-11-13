@@ -21,16 +21,16 @@ packages/db       migraciones D1 y repositorios
 
 ## Lanes
 
-| Lane | Resultado |
-| --- | --- |
-| 0 Fundación | workspace, API mínima, web mínima, CI y decisiones de demo |
-| 1 Dominio y D1 | estados, invariantes, migraciones, repositorios y auditoría |
-| 2 Ingesta | carga manual, evento sintético, hash, versiones e idempotencia |
-| 3 Validación | extracción por fixtures, duplicado, contrato, presupuesto y hallazgos |
-| 4 Workflow | decisión, autorización, quorum y auditoría |
-| 5 Frontend | inbox, detalle, aprobación, auditoría y spend |
-| 6 Spend | recurrencia y ahorro potencial con evidencia |
-| 7 Hardening | aislamiento, concurrencia, timeout, seed y smoke E2E |
+| Lane | Resultado | Estado |
+| --- | --- | --- |
+| 0 Fundación | workspace, API mínima, web mínima, CI y decisiones de demo | Hecho |
+| 1 Dominio y D1 | estados, invariantes, migraciones, repositorios y auditoría | Hecho |
+| 2 Ingesta | carga manual, evento sintético, hash, versiones e idempotencia | Pendiente |
+| 3 Validación | extracción por fixtures, duplicado, contrato, presupuesto y hallazgos | Pendiente |
+| 4 Workflow | decisión, autorización, quorum y auditoría | Pendiente |
+| 5 Frontend | inbox, detalle, aprobación, auditoría y spend | Pendiente |
+| 6 Spend | recurrencia y ahorro potencial con evidencia | Pendiente |
+| 7 Hardening | aislamiento, concurrencia, timeout, seed y smoke E2E | Pendiente |
 
 ## Reglas de implementación
 
@@ -52,4 +52,15 @@ pnpm typecheck
 pnpm test
 pnpm build
 bash scripts/ci.sh
+```
+
+D1 local y seed de demo:
+
+```bash
+pnpm --filter @payerai/api exec wrangler d1 migrations apply payerai-demo --local
+pnpm --filter @payerai/api dev
+curl -X POST http://localhost:8787/api/dev/seed \
+  -H 'x-tenant-id: tenant-demo' \
+  -H 'x-user-id: user-tenant-demo-admin' \
+  -H 'x-roles: admin,approver'
 ```
