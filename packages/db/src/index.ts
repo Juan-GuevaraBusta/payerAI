@@ -55,3 +55,5 @@ export const requireTenant = (tenantId: string): TenantId => {
   }
   return tenantId as TenantId;
 };
+
+export * from "./store";

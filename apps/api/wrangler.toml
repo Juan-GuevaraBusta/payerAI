@@ -11,7 +11,7 @@ DEMO_AUTH_ENABLED = "true"
 binding = "DB"
 database_name = "payerai-demo"
 database_id = "00000000-0000-0000-0000-000000000000"
-migrations_dir = "../packages/db/migrations"
+migrations_dir = "../../packages/db/migrations"
 
 [[r2_buckets]]
 binding = "DOCUMENTS"

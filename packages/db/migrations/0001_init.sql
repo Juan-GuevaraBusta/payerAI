@@ -1,5 +1,3 @@
-PRAGMA foreign_keys = ON;
-
 CREATE TABLE tenants (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,

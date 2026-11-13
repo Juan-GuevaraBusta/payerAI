@@ -101,6 +101,31 @@ export interface BudgetSnapshot {
   readonly consumedMinor: number;
 }
 
+export interface Supplier {
+  readonly id: SupplierId;
+  readonly tenantId: TenantId;
+  readonly legalName: string;
+  readonly displayName: string;
+  readonly taxId: string | null;
+  readonly status: string;
+  readonly createdAt: string;
+  readonly updatedAt: string;
+}
+
+export interface Document {
+  readonly id: DocumentId;
+  readonly tenantId: TenantId;
+  readonly messageId: string | null;
+  readonly contentHash: string;
+  readonly filename: string;
+  readonly mimeType: string;
+  readonly sizeBytes: number;
+  readonly storageKey: string;
+  readonly state: string;
+  readonly createdAt: string;
+  readonly updatedAt: string;
+}
+
 export interface Invoice {
   readonly id: InvoiceId;
   readonly tenantId: TenantId;
@@ -146,6 +171,25 @@ export interface AuditEvent {
   readonly actorId: ActorId | null;
   readonly payload: Readonly<Record<string, unknown>>;
   readonly createdAt: string;
+}
+
+export interface InvoiceDetail extends Invoice {
+  readonly supplier: Supplier;
+  readonly document: Document;
+  readonly findings: readonly Finding[];
+  readonly workflow: Workflow | null;
+}
+
+export interface InvoiceFilters {
+  readonly state?: InvoiceState;
+  readonly supplierId?: SupplierId;
+}
+
+export interface Store {
+  listInvoices(context: TenantContext, filters?: InvoiceFilters): Promise<readonly Invoice[]>;
+  getInvoice(context: TenantContext, id: InvoiceId): Promise<InvoiceDetail | null>;
+  listAudit(context: TenantContext, entityId?: string): Promise<readonly AuditEvent[]>;
+  seedDemo(context: TenantContext): Promise<void>;
 }
 
 export interface TenantContext {
